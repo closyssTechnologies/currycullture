@@ -1,0 +1,24 @@
+<odoo>
+    <record id="view_inherit_quality_check_wizard_form" model="ir.ui.view">
+        <field name="name">quality.check.wizard.form.inherit</field>
+        <field name="model">quality.check.wizard</field>
+        <field name="inherit_id" ref="quality_control.view_quality_check_wizard" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='additional_note']" position="after">
+<!--                <field name="quality_check_param_ids"/>-->
+                <field name="quality_check_param_ids" widget="one2many_list" nolabel="1">
+                        <tree editable="bottom" create="0" delete="0">
+                            <field name="parameter_id" string="Parameter" readonly="1"/>
+                            <field name="type_id" string="Type" readonly="1"/>
+                            <field name="range" string="Range" readonly="1"/>
+                            <field name="result" string="Result" />
+                            <field name="remarks" string="Remarks" />
+                            <field name="visibility" string="Visible" widget="boolean_toggle" />
+                        </tree>
+                </field>
+
+            </xpath>
+
+        </field>
+    </record>
+</odoo>

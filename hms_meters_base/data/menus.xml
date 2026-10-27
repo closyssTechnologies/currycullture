@@ -1,0 +1,46 @@
+<odoo>
+  <data>
+
+    <record model="ir.actions.act_window" id="hms_meter_types_action">
+      <field name="name">Meter types</field>
+      <field name="res_model">hms.meter.type</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="hms_meters_action">
+      <field name="name">Meters</field>
+      <field name="res_model">hms.meter</field>
+      <field name="view_mode">tree,kanban,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="hms_meter_data_action">
+      <field name="name">Meter data</field>
+      <field name="res_model">hms.meter.data</field>
+      <field name="view_mode">tree,graph,form</field>
+    </record>
+
+    <!-- menus -->
+    <menuitem name="HMS Meters" id="hms_meters_root_menu" 
+              web_icon="hms_meters_base,static/description/icon.png" sequence="100"/>
+
+    <menuitem name="Meters" id="hms_meters_meters_top_menu" parent="hms_meters_root_menu"
+              sequence="10"/>
+
+    <menuitem name="Configuration" id="hms_meters_config_top_menu" parent="hms_meters_root_menu"
+              sequence="50"/>
+
+    <menuitem name="Meter types" id="hms_meter_types_menu" parent="hms_meters_config_top_menu"
+              action="hms_meter_types_action" 
+              groups="group_hms_meter_type_can_cud"
+              sequence="10"/>
+
+
+    <menuitem name="Meters" id="hms_meters_meters_menu" parent="hms_meters_meters_top_menu"
+              action="hms_meters_action" 
+              sequence="10"/>
+    <menuitem name="Meters data" id="hms_meters_data_menu" parent="hms_meters_meters_top_menu"
+              action="hms_meter_data_action" 
+              sequence="50"/>
+
+  </data>
+</odoo>

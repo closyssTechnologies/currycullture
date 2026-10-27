@@ -1,0 +1,66 @@
+<odoo>
+    <data>
+        <record id="wizard_device_assignment_form" model="ir.ui.view">
+            <field name="name">wizard.device.assignment.form</field>
+            <field name="model">wizard.device.assignment</field>
+            <field name="arch" type="xml">
+                <form string="Device Assignment">
+                    <group>
+                        <group>
+                            <field name="unassigned_device_id" options="{'no_create': True}"  required="1"/>
+                            <field name="device_friendly_name" invisible="unassigned_device_id == False" required="unassigned_device_id != False"/>
+                            <field name="device_tz" invisible="unassigned_device_id == False" required="unassigned_device_id != False"/>
+                        </group>
+                        <group>
+                            <field name="biometric_group" required="1"/>
+                        </group>
+
+                    </group>
+                    <footer>
+                       <button name="assign_device_company_group" string="Save" type="object" class="btn-primary"/>
+                        <button string="Cancel" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="action_device_assignment_wizard" model="ir.actions.act_window">
+            <field name="name">Device assignment</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">wizard.device.assignment</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+
+
+<!--        =========================================================-->
+    <record id="biometric_group_wizard_form" model="ir.ui.view">
+                <field name="name">biometric.group.wizard.form</field>
+                <field name="model">biometric.group.wizard</field>
+                <field name="arch" type="xml">
+                    <form string="Add Groups">
+                        <group>
+                            <group>
+                                <field name="biometric_group_name" place="Type Group Name" required="1"/>
+                            </group>
+
+                        </group>
+                        <footer>
+                            <button name="create_group" string="Save" type="object" class="btn-primary"/>
+
+                            <button string="Cancel" special="cancel"/>
+                        </footer>
+                    </form>
+                </field>
+            </record>
+            <record id="action_biometric_group_wizard" model="ir.actions.act_window">
+                <field name="name">Add Groups</field>
+                <field name="type">ir.actions.act_window</field>
+                <field name="res_model">biometric.group.wizard</field>
+                <field name="view_mode">form</field>
+                <field name="target">new</field>
+            </record>
+
+
+    </data>
+</odoo>

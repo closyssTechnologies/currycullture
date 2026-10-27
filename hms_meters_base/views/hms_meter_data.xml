@@ -1,0 +1,61 @@
+<odoo>
+  <data>
+    
+    <record model="ir.ui.view" id="hms_meter_data_view_tree">
+      <field name="name">hms meter data tree</field>
+      <field name="model">hms.meter.data</field>
+      <field name="arch" type="xml">
+        <tree string="HMS Meters Data">
+          <field name="meter_id"/>
+          <field name="meter_type_id"/>
+          <field name="data_datetime"/>
+          <field name="opening_data"/>
+          <field name="closing_data"/>
+          <field name="data"/>
+          <field name="create_uid" optional="hide"/>
+          <field name="create_date" optional="hide"/>
+        </tree>
+      </field>
+    </record>
+    
+    <record model="ir.ui.view" id="hms_meter_data_view_search">
+      <field name="name">hms meter data search</field>
+      <field name="model">hms.meter.data</field>
+      <field name="arch" type="xml">
+        <search string="Search HMS Meters Data">
+          <field name="meter_id" string="Meter name, type, code" filter_domain="['|','|',('meter_id.name','ilike',self),('meter_id.code','ilike',self),('meter_type_id.name','ilike',self)]"/>
+          <separator/>
+        </search>
+      </field>
+    </record>
+
+    <record id="view_hms_meter_data_form" model="ir.ui.view">
+        <field name="name">hms.meter.data.view.form</field>
+        <field name="model">hms.meter.data</field>
+        <field name="arch" type="xml">
+            <form string="HMS Meter Data">
+                <header>
+                </header>
+                <sheet>
+                    <group name="meter_data_info_group">
+                        <field name="meter_id"/>
+                        <field name="meter_type_id" options="{'no_open': True}"/>
+                        <field name="data_datetime"/>
+                        <field name="opening_data"/>
+                        <field name="closing_data"/>
+                        <field name="data"/>
+                        <field name="meter_photo" widget="image"/>
+                    </group>
+                </sheet>
+                <div class="o_attachment_preview"/>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+  </data>
+</odoo>

@@ -1,0 +1,35 @@
+<odoo>
+    <record id="view_mrp_bom_category_form" model="ir.ui.view">
+        <field name="name">mrp.bom.category.form</field>
+        <field name="model">mrp.bom.category</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="description"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_mrp_bom_category_tree" model="ir.ui.view">
+        <field name="name">mrp.bom.category.tree</field>
+        <field name="model">mrp.bom.category</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_mrp_bom_category" model="ir.actions.act_window">
+        <field name="name">BOM Categories</field>
+        <field name="res_model">mrp.bom.category</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- <menuitem id="menu_mrp_bom_category" name="BOM Categories"
+        parent="mrp.menu_mrp_root" action="action_mrp_bom_category"/> -->
+</odoo>

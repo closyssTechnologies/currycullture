@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Inherit Stock Picking Form View -->
+        <record id="view_picking_form_inherit_gate_inward_new" model="ir.ui.view">
+            <field name="name">stock.picking.form.inherit.gate.inward</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='origin']" position="after">
+                    <field name="origin_po_id" invisible="1"/>
+                    <field name="gate_inward_id"
+                           invisible="picking_type_code != 'incoming'"
+                           domain="[('purchase_order_id', '=', origin_po_id)]"/>
+                    <!-- New fields for inward information -->
+                    <field name="gate_vehicle_no"
+                           string="Vehicle No"
+                           readonly="1"
+                           invisible="picking_type_code != 'incoming' or not gate_inward_id"/>
+                    <field name="gate_vendor_invoice_no"
+                           string="Vendor Invoice No"
+                           readonly="1"
+                           invisible="picking_type_code != 'incoming' or not gate_inward_id"/>
+                    <field name="gate_invoice_date"
+                           string="Vendor Invoice Date"
+                           readonly="1"
+                           invisible="picking_type_code != 'incoming' or not gate_inward_id"/>
+                    <field name="gate_received_date"
+                           string="Received Date - Time"
+                           readonly="1"
+                           invisible="picking_type_code != 'incoming' or not gate_inward_id"/>
+                    <field name="origin_sale_id" invisible="1"/>
+                    <field name="outward_gate_entry_id"
+                           string="Gate Outward No"
+                           invisible="picking_type_code != 'outgoing'"
+                           domain="[('sale_order_id', '=', origin_sale_id)]"
+                           options="{'no_create': True}"/>
+                    <!-- New Vehicle Number field for outward operations -->
+                    <field name="outward_vehicle_no"
+                           string="Vehicle Number"
+                           readonly="1"
+                           invisible="picking_type_code != 'outgoing' or not outward_gate_entry_id"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

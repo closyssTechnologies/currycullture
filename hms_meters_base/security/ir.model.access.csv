@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_hms_meter_type_can_read,hms.meter.type.can.read,model_hms_meter_type,base.group_user,1,1,1,1
+access_hms_meter_type_can_cud,hms.meter.type.can.cud,model_hms_meter_type,group_hms_meter_type_can_cud,1,1,1,1
+
+access_hms_meter_can_read,hms.meter.can.read,model_hms_meter,base.group_user,1,1,1,1
+access_hms_meter_can_cud,hms.meter.can.cud,model_hms_meter,group_hms_meter_can_cud,1,1,1,1
+
+access_hms_meter_data_can_read,hms.meter.data.can.read,model_hms_meter_data,base.group_user,1,1,1,1
+access_hms_meter_data_can_cud,hms.meter.data.can.cud,model_hms_meter_data,group_hms_meter_data_can_cud,1,1,1,1
+

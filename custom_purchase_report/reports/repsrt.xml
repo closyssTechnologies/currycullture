@@ -1,0 +1,184 @@
+<odoo>
+    <template id="custom_purchase_report">
+         <t t-call="web.basic_layout">
+             <t t-foreach="doc" t-as="o">
+                  <t t-set="company" t-value="doc.company_id"/>
+                 <div class="page">
+
+                     <!-- Header Section -->
+                     <div class="row">
+                         <div class="col-6">
+                             <!--                    <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" class="img-fluid" width="120"/>-->
+                             <p t-field="company.name"/>
+                             <p t-field="company.street"/>
+                             <br/>
+                             <p t-field="company.city"/>,<p t-field="company.zip"/>,
+                             <p t-field="company.country_id.name"/>
+                             <p t-field="company.phone"/>
+                             <p t-field="company.website"/>
+                         </div>
+                         <div class="col-6 text-right">
+                             <h2>Purchase Order</h2>
+                             <p>
+                                 <strong>PO No:</strong>
+                                 <span t-field="doc.name"/>
+                             </p>
+                             <p>
+                                 <strong>PO Date:</strong>
+                                 <span t-field="doc.date_order"/>
+                             </p>
+                             <p>
+                                 <strong>PO Release Date:</strong>
+                                 <span t-field="doc.release_date"/>
+                             </p>
+                             <p>
+                                 <strong>Payment Terms:</strong>
+                                 <span t-field="doc.payment_term_id.name"/>
+                             </p>
+                             <p>
+                                 <strong>PO Expiry Date:</strong>
+                                 <span t-field="doc.expiry_date"/>
+                             </p>
+                         </div>
+                     </div>
+
+                     <!-- Vendor Details Section -->
+                     <table class="table table-sm mt-2">
+                         <thead>
+                             <tr>
+                                 <th>Vendor Details</th>
+                                 <th>P.O. Details</th>
+                             </tr>
+                         </thead>
+                         <tbody>
+                             <tr>
+                                 <!--                        <t t-if="doc">-->
+                                 <!--                            <td t-field="doc"/>-->
+                                 <!--                        </t>-->
+                                 <td>
+                                     <strong>PO No:</strong>
+                                     <span t-field="doc.name"/>
+                                 </td>
+                             </tr>
+                             <tr>
+                                 <td>
+                                     <strong>PO Date:</strong>
+                                     <span t-field="doc.date_order"/>
+                                 </td>
+                             </tr>
+                             <!--                    <tr>-->
+                             <!--                        <td t-field="doc.partner_id.city"/>-->
+                             <!--                        <td><strong>PO Release Date:</strong> <span t-field="doc.release_date"/></td>-->
+                             <!--                    </tr>-->
+                             <!--                    <tr>-->
+                             <!--                        <td t-field="doc.partner_id.phone"/>-->
+                             <!--                        <td><strong>Payment Terms:</strong> <span t-field="doc.payment_term_id.name"/></td>-->
+                             <!--                    </tr>-->
+                             <!--                    <tr>-->
+                             <!--                        <td t-field="doc.partner_id.email"/>-->
+                             <!--                        <td><strong>PO Expiry Date:</strong> <span t-field="doc.expiry_date"/></td>-->
+                             <!--                    </tr>-->
+                         </tbody>
+                     </table>
+
+                     <!-- Order Line Section -->
+                     <table class="table table-bordered">
+                         <thead>
+                             <tr>
+                                 <th>Sl No</th>
+                                 <th>Item Description</th>
+                                 <th>HSN Code</th>
+                                 <th>Quantity</th>
+                                 <th>UOM</th>
+                                 <th>Rate</th>
+                                 <th>Taxable Value</th>
+                                 <th>CGST</th>
+                                 <th>SGST</th>
+                                 <th>IGST</th>
+                                 <th>Total Amount</th>
+                             </tr>
+                         </thead>
+                         <tbody>
+                             <t t-foreach="doc.order_line" t-as="line">
+                                 <!--                        <tr>-->
+                                 <!--                            <td><t t-esc="loop.index"/></td>-->
+                                 <!--                            <td t-field="line.name"/>-->
+                                 <!--                            <td t-field="line.product_id.hsn_code"/>-->
+                                 <!--                            <td t-field="line.product_qty"/>-->
+                                 <!--                            <td t-field="line.product_uom.name"/>-->
+                                 <!--                            <td t-field="line.price_unit"/>-->
+                                 <!--                            <td t-esc="line.price_subtotal"/>-->
+                                 <!--                            <td t-field="line.tax_ids.amount" t-if="line.tax_ids.filtered(lambda tax: tax.tax_group_id.name == 'CGST')"/>-->
+                                 <!--                            <td t-field="line.tax_ids.amount" t-if="line.tax_ids.filtered(lambda tax: tax.tax_group_id.name == 'SGST')"/>-->
+                                 <!--                            <td t-field="line.tax_ids.amount" t-if="line.tax_ids.filtered(lambda tax: tax.tax_group_id.name == 'IGST')"/>-->
+                                 <!--                            <td t-field="line.price_total"/>-->
+                                 <!--                        </tr>-->
+                             </t>
+                         </tbody>
+                     </table>
+
+                     <!-- Summary Section -->
+                     <table class="table table-bordered">
+                         <tr>
+                             <td>
+                                 <strong>Total Taxable Amount</strong>
+                             </td>
+                             <td>
+                                 <strong>60000</strong>
+                             </td>
+                             <!--                    <td t-field="doc.amount_untaxed"/>-->
+                         </tr>
+                         <tr>
+                             <td>
+                                 <strong>CGST</strong>
+                             </td>
+                             <td>
+                                 <strong>70000</strong>
+                             </td>
+                             <!--                    <td t-field="doc.amount_tax" t-if="doc.currency_id.name == 'INR'"/>-->
+                         </tr>
+                         <tr>
+                             <td>
+                                 <strong>Total</strong>
+                             </td>
+                             <td>
+                                 <strong>2000</strong>
+                             </td>
+                             <!--                    <td t-field="doc.amount_total"/>-->
+                         </tr>
+                     </table>
+
+                     <!-- Footer Section -->
+                     <p>
+                         <strong>Amount in Words:</strong>
+                         <span t-esc="doc.currency_id.amount_to_text(doc.amount_total)"/>
+                     </p>
+                     <table class="table table-sm mt-2">
+                         <tr>
+                             <td>Prepared By</td>
+                             <td>Verified By</td>
+                             <td>Authorized Signature</td>
+                         </tr>
+                     </table>
+
+                     <!-- Terms and Conditions Section -->
+                     <h4>Terms and Conditions</h4>
+                     <ul>
+                         <li>Compliance with Laws and Regulations: The vendor shall comply with all applicable central,
+                             state, and local laws...
+                         </li>
+                         <!-- Add more terms as per your template -->
+                     </ul>
+                 </div>
+             </t>
+         </t>
+    </template>
+
+    <report
+        id="action_report_custom_purchase"
+        model="purchase.order"
+        string="Custom Purchase Report"
+        report_type="qweb-pdf"
+        name="custom_purchase_report.custom_purchase_report"
+        file="custom_purchase_report.custom_purchase_report"/>
+</odoo>

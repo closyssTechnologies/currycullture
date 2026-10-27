@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Outward Gate Entry Form View -->
+        <record id="view_outward_gate_entry_form" model="ir.ui.view">
+            <field name="name">outward.gate.entry.form</field>
+            <field name="model">outward.gate.entry</field>
+            <field name="arch" type="xml">
+                <form string="Outward Gate Entry">
+                    <header>
+                        <button name="action_hold" string="Hold" type="object" class="oe_highlight" invisible="state != 'entry'"/>
+                        <button name="action_exit" string="Exit" type="object" class="oe_highlight" invisible="state not in ['entry', 'hold']" confirm="Are you sure you want to mark this as Exit? This action cannot be undone."/>
+                        <field name="state" widget="statusbar" statusbar_visible="entry,hold,exit"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="gate_entry_no" readonly="1"/>
+                                <field name="sale_order_id" options="{'no_create': False, 'no_open': False}" readonly="state == 'exit'"/>
+                                <field name="customer_id" readonly="state == 'exit'"/>
+                                <field name="gatekeeper_id" string="Gatekeeper/ User" readonly="state == 'exit'"/>
+                                <field name="total_weight" string="Weight" readonly="state == 'exit'"/>
+                            </group>
+                            <group>
+                                <field name="vehicle_no" readonly="state == 'exit'"/>
+                                <field name="driver_name" readonly="state == 'exit'"/>
+                                <field name="driver_phone" readonly="state == 'exit'"/>
+                                <field name="eway_bill_no" string="E- Way Bill" readonly="state == 'exit'"/>
+                                <field name="tax_invoice_no" string="Tax Invoice Number" readonly="state == 'exit'"/>
+                            </group>
+                        </group>
+
+                        <field name="outward_line_ids" nolabel="1" readonly="state == 'exit'">
+                            <tree editable="bottom" create="true" delete="true">
+                                <field name="product_id" string="Product" options="{'no_create': True}"/>
+                                <field name="ordered_quantity" string="Ordered Qty" readonly="1" force_save="1"/>
+                                <field name="product_uom_id" string="UOM" options="{'no_create': True}" force_save="1"/>
+                                <field name="gate_quantity" string="Gate Outward Quantity"/>
+                            </tree>
+                        </field>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Outward Gate Entry Tree View -->
+        <record id="view_outward_gate_entry_tree" model="ir.ui.view">
+            <field name="name">outward.gate.entry.tree</field>
+            <field name="model">outward.gate.entry</field>
+            <field name="arch" type="xml">
+                <tree string="Outward Gate Entries" decoration-info="state == 'entry'" decoration-muted="state == 'exit'">
+                    <field name="gate_entry_no"/>
+                    <field name="sale_order_id" optional="show"/>
+                    <field name="customer_id" optional="show"/>
+                    <field name="vehicle_no" optional="show"/>
+                    <field name="eway_bill_no" optional="show"/>
+                    <field name="tax_invoice_no" optional="show"/>
+                    <field name="state" widget="badge" decoration-success="state == 'entry'" decoration-warning="state == 'hold'" decoration-danger="state == 'exit'"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Outward Gate Entry Action -->
+        <record id="action_outward_gate_entry" model="ir.actions.act_window">
+            <field name="name">Outward Gate Entry</field>
+            <field name="res_model">outward.gate.entry</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Sequence for Outward Gate Entry -->
+        <record id="seq_outward_gate_entry" model="ir.sequence">
+            <field name="name">Outward Gate Entry</field>
+            <field name="code">outward.gate.entry</field>
+            <field name="prefix">GO/%(year)s/%(month)s/</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+            <field name="use_date_range">True</field>
+        </record>
+    </data>
+</odoo>

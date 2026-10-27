@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_consignment_details_template">
+        <table class="main-table" style="border-top: none;">
+            <tr>
+                <td colspan="10" class="bold bg-grey" style="text-align: center; border-bottom: 1px solid black;">
+                    Consignment Details
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="width: 20%;">
+                    <div class="label">Pre Carriage By</div>
+                    <div class="bold" t-out="o.pre_carriage_by or 'N/A'"/>
+                </td>
+                <td colspan="3" style="width: 30%;">
+                    <div class="label">Place of Receipt By Pre Carrier</div>
+                    <div class="bold" t-out="o.place_of_receipt or 'N/A'"/>
+                </td>
+                <td colspan="5" style="width: 50%;">
+                    <div class="label">Country of Origin of Goods</div>
+                    <div class="bold" t-out="o.country_origin or 'N/A'"/>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div class="label">Vessel/Flight No</div>
+                    <div class="bold" t-out="o.vessel_flight_no or 'N/A'"/>
+                </td>
+                <td colspan="3">
+                    <div class="label">Port of Loading Name</div>
+                    <div class="bold" t-out="o.port_loading or 'N/A'"/>
+                </td>
+                <td colspan="5">
+                    <div class="label">Port of Discharge</div>
+                    <div class="bold" t-out="o.port_discharge or 'N/A'"/>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="5">
+                    <div class="label">Final Destination</div>
+                    <div class="bold" t-out="o.final_destination or 'N/A'"/>
+                </td>
+                <td colspan="3">
+                    <div class="label">Mark</div>
+                    <div class="bold" t-out="o.mark_no or 'N/A'"/>
+                </td>
+                <td colspan="2">
+                    <div class="label">Container No:</div>
+                    <div class="bold" t-out="o.container_no or 'N/A'"/>
+                </td>
+            </tr>
+        </table>
+    </template>
+</odoo>

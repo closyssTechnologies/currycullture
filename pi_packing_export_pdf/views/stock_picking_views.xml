@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Sale Order Inherit: Keep this tab for data entry -->
+    <record id="view_order_form_inherit_consignment" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit.consignment</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Consignment Details" name="consignment_details">
+                    <group>
+                        <group string="Transportation">
+                            <field name="pre_carriage_by"/>
+                            <field name="place_of_receipt"/>
+                            <field name="vessel_flight_no"/>
+                            <field name="country_origin"/>
+                        </group>
+                        <group string="Ports &amp; Destination">
+                            <field name="port_loading"/>
+                            <field name="port_discharge"/>
+                            <field name="final_destination"/>
+                        </group>
+                        <group string="Marks &amp; IDs">
+                            <field name="mark_no"/>
+                            <field name="container_no"/>
+                            <field name="buyer_fda_no"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

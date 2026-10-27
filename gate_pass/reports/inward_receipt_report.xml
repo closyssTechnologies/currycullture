@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_inward_receipt_picking_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-if="doc.picking_type_code == 'incoming' and doc.gate_inward_id">
+                        <t t-call="web.external_layout">
+                            <div class="page">
+                                <!-- Header -->
+                                <div class="row" style="margin-bottom: 30px;">
+                                    <div class="col-12 text-center">
+                                        <h3><strong>Inward Receipt : <span t-field="doc.gate_inward_id.name"/></strong></h3>
+                                    </div>
+                                </div>
+
+                                <!-- Receipt Details Table -->
+                                <div class="row" style="margin-bottom: 40px;">
+                                    <div class="col-12">
+                                        <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+                                            <thead>
+                                                <tr style="border-top: 2px solid black; border-bottom: 2px solid black;">
+                                                    <th style="padding: 8px; text-align: left; font-weight: bold;">Vehicle no.</th>
+                                                    <th style="padding: 8px; text-align: left; font-weight: bold;">Vendor</th>
+                                                    <th style="padding: 8px; text-align: left; font-weight: bold;">E-Way Bill</th>
+                                                    <th style="padding: 8px; text-align: left; font-weight: bold;">Invoice Date</th>
+                                                    <th style="padding: 8px; text-align: left; font-weight: bold;">Receiving Date</th>
+                                                    <th style="padding: 8px; text-align: left; font-weight: bold;">Gatekeeper</th>
+                                                    <th style="padding: 8px; text-align: left; font-weight: bold;">Purchase Order</th>
+                                                    <th style="padding: 8px; text-align: left; font-weight: bold;">Weight</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td style="padding: 8px; border-bottom: 1px solid black;"><span t-field="doc.gate_inward_id.vehicle_no"/></td>
+                                                    <td style="padding: 8px; border-bottom: 1px solid black;"><span t-field="doc.gate_inward_id.vendor_id.name"/></td>
+                                                    <td style="padding: 8px; border-bottom: 1px solid black;"><span t-field="doc.gate_inward_id.eway_bill"/></td>
+                                                    <td style="padding: 8px; border-bottom: 1px solid black;"><span t-field="doc.gate_inward_id.invoice_date"/></td>
+                                                    <td style="padding: 8px; border-bottom: 1px solid black;"><span t-field="doc.gate_inward_id.receiving_date"/></td>
+                                                    <td style="padding: 8px; border-bottom: 1px solid black;"><span t-field="doc.gate_inward_id.gatekeeper_user_id.name"/></td>
+                                                    <td style="padding: 8px; border-bottom: 1px solid black;"><span t-field="doc.gate_inward_id.purchase_order_id.name"/></td>
+                                                    <td style="padding: 8px; border-bottom: 1px solid black;"><span t-field="doc.gate_inward_id.weight"/></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <!-- Product Details -->
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h4 style="text-align: center; margin-bottom: 20px;"><strong>Product Details</strong></h4>
+                                        <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+                                            <thead>
+                                                <tr style="border-top: 2px solid black; border-bottom: 2px solid black;">
+                                                    <th style="padding: 8px; text-align: left; font-weight: bold;">Product</th>
+                                                    <th style="padding: 8px; text-align: center; font-weight: bold;">Demand Qty</th>
+                                                    <th style="padding: 8px; text-align: center; font-weight: bold;">Received Qty</th>
+                                                    <th style="padding: 8px; text-align: center; font-weight: bold;">Remaining Qty</th>
+                                                    <th style="padding: 8px; text-align: center; font-weight: bold;">UOM</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- Show actual receipt operations data from stock.picking -->
+                                                <t t-if="doc.move_ids_without_package">
+                                                    <t t-foreach="doc.move_ids_without_package" t-as="move">
+                                                        <tr>
+                                                            <td style="padding: 8px; border-bottom: 1px solid #ddd;"><span t-field="move.product_id.name"/></td>
+                                                            <td style="padding: 8px; text-align: center; border-bottom: 1px solid #ddd;"><span t-field="move.product_uom_qty"/></td>
+                                                            <td style="padding: 8px; text-align: center; border-bottom: 1px solid #ddd;"><span t-field="move.quantity"/></td>
+                                                            <td style="padding: 8px; text-align: center; border-bottom: 1px solid #ddd;">
+                                                                <t t-esc="move.product_uom_qty - move.quantity"/>
+                                                            </td>
+                                                            <td style="padding: 8px; text-align: center; border-bottom: 1px solid #ddd;"><span t-field="move.product_uom.name"/></td>
+                                                        </tr>
+                                                    </t>
+                                                </t>
+                                                <!-- Fallback if no moves available -->
+                                                <t t-if="not doc.move_ids_without_package">
+                                                    <tr>
+                                                        <td colspan="5" style="padding: 20px; text-align: center; color: #666;">
+                                                            No product operations found in this receipt.
+                                                        </td>
+                                                    </tr>
+                                                </t>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </t>
+                    <t t-if="doc.picking_type_code == 'incoming' and not doc.gate_inward_id">
+                        <t t-call="web.external_layout">
+                            <div class="page">
+                                <div class="alert alert-warning text-center">
+                                    <h4>No Gate Inward Entry Selected</h4>
+                                    <p>Please select a Gate Inward Entry in the receipt to generate the inward report.</p>
+                                </div>
+                            </div>
+                        </t>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+        <!-- Report Template for Inward Operation -->
+        <template id="report_inward_receipt_inward_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <!-- Header -->
+                            <div class="row" style="margin-bottom: 30px;">
+                                <div class="col-12 text-center">
+                                    <h3><strong>Inward Receipt : <span t-field="doc.name"/></strong></h3>
+                                </div>
+                            </div>
+
+                            <!-- Receipt Details Table -->
+                            <div class="row" style="margin-bottom: 40px;">
+                                <div class="col-12">
+                                    <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+                                        <thead>
+                                            <tr style="border-top: 2px solid black; border-bottom: 2px solid black;">
+                                                <th style="padding: 8px; text-align: left; font-weight: bold;">Vehicle no.</th>
+                                                <th style="padding: 8px; text-align: left; font-weight: bold;">Vendor</th>
+                                                <th style="padding: 8px; text-align: left; font-weight: bold;">E-Way Bill</th>
+                                                <th style="padding: 8px; text-align: left; font-weight: bold;">Invoice Date</th>
+                                                <th style="padding: 8px; text-align: left; font-weight: bold;">Receiving Date</th>
+                                                <th style="padding: 8px; text-align: left; font-weight: bold;">Gatekeeper</th>
+                                                <th style="padding: 8px; text-align: left; font-weight: bold;">Purchase Order</th>
+                                                <th style="padding: 8px; text-align: left; font-weight: bold;">Weight</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td style="padding: 8px; border-bottom: 1px solid black;"><span t-field="doc.vehicle_no"/></td>
+                                                <td style="padding: 8px; border-bottom: 1px solid black;"><span t-field="doc.vendor_id.name"/></td>
+                                                <td style="padding: 8px; border-bottom: 1px solid black;"><span t-field="doc.eway_bill"/></td>
+                                                <td style="padding: 8px; border-bottom: 1px solid black;"><span t-field="doc.invoice_date"/></td>
+                                                <td style="padding: 8px; border-bottom: 1px solid black;"><span t-field="doc.receiving_date"/></td>
+                                                <td style="padding: 8px; border-bottom: 1px solid black;"><span t-field="doc.gatekeeper_user_id.name"/></td>
+                                                <td style="padding: 8px; border-bottom: 1px solid black;"><span t-field="doc.purchase_order_id.name"/></td>
+                                                <td style="padding: 8px; border-bottom: 1px solid black;"><span t-field="doc.weight"/></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- Product Details - Show from related receipt instead of purchase order -->
+                            <div class="row">
+                                <div class="col-12">
+                                    <h4 style="text-align: center; margin-bottom: 20px;"><strong>Product Details</strong></h4>
+                                    <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+                                        <thead>
+                                            <tr style="border-top: 2px solid black; border-bottom: 2px solid black;">
+                                                <th style="padding: 8px; text-align: left; font-weight: bold;">Product</th>
+                                                <th style="padding: 8px; text-align: center; font-weight: bold;">Demand Qty</th>
+                                                <th style="padding: 8px; text-align: center; font-weight: bold;">Received Qty</th>
+                                                <th style="padding: 8px; text-align: center; font-weight: bold;">Remaining Qty</th>
+                                                <th style="padding: 8px; text-align: center; font-weight: bold;">UOM</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Find and show related receipt operations -->
+                                            <t t-set="related_pickings" t-value="request.env['stock.picking'].search([('gate_inward_id', '=', doc.id), ('picking_type_code', '=', 'incoming')])"/>
+                                            <t t-if="related_pickings">
+                                                <t t-foreach="related_pickings" t-as="picking">
+                                                    <t t-foreach="picking.move_ids_without_package" t-as="move">
+                                                        <tr>
+                                                            <td style="padding: 8px; border-bottom: 1px solid #ddd;"><span t-field="move.product_id.name"/></td>
+                                                            <td style="padding: 8px; text-align: center; border-bottom: 1px solid #ddd;"><span t-field="move.product_uom_qty"/></td>
+                                                            <td style="padding: 8px; text-align: center; border-bottom: 1px solid #ddd;"><span t-field="move.quantity"/></td>
+                                                            <td style="padding: 8px; text-align: center; border-bottom: 1px solid #ddd;">
+                                                                <t t-esc="move.product_uom_qty - move.quantity"/>
+                                                            </td>
+                                                            <td style="padding: 8px; text-align: center; border-bottom: 1px solid #ddd;"><span t-field="move.product_uom.name"/></td>
+                                                        </tr>
+                                                    </t>
+                                                </t>
+                                            </t>
+                                            <!-- Fallback to inward operation lines if no related pickings -->
+                                            <t t-if="not related_pickings and doc.product_line_ids">
+                                                <t t-foreach="doc.product_line_ids" t-as="line">
+                                                    <tr>
+                                                        <td style="padding: 8px; border-bottom: 1px solid #ddd;"><span t-field="line.product_id.name"/></td>
+                                                        <td style="padding: 8px; text-align: center; border-bottom: 1px solid #ddd;"><span t-field="line.ordered_qty"/></td>
+                                                        <td style="padding: 8px; text-align: center; border-bottom: 1px solid #ddd;"><span t-field="line.receiving_qty"/></td>
+                                                        <td style="padding: 8px; text-align: center; border-bottom: 1px solid #ddd;"><span t-field="line.balance_qty"/></td>
+                                                        <td style="padding: 8px; text-align: center; border-bottom: 1px solid #ddd;"><span t-field="line.uom_id.name"/></td>
+                                                    </tr>
+                                                </t>
+                                            </t>
+                                            <!-- Final fallback message -->
+                                            <t t-if="not related_pickings and not doc.product_line_ids">
+                                                <tr>
+                                                    <td colspan="5" style="padding: 20px; text-align: center; color: #666;">
+                                                        No related receipt operations found for this gate entry.
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

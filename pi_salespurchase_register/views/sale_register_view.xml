@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_sale_register_report_tree" model="ir.ui.view">
+        <field name="name">sale.register.report.tree</field>
+        <field name="model">sale.register.report</field>
+        <field name="arch" type="xml">
+            <tree string="Sales Register" create="0" edit="0" delete="0">
+                <field name="date_order" widget="date" string="Order Date"/>
+                <field name="order_no" string="Order Number"/>
+                <!-- <field name="partner_id" string="Customer"/> -->
+                <field name="product_id" string="Product"/>
+                <field name="categ_id" string="Product Category"/>
+                <field name="product_uom" groups="uom.group_uom" string="UOM"/>
+                <field name="product_qty" string="Order Quantity" sum="Total Order Qty"/>
+                <field name="qty_delivered" string="Delivered Quantity" sum="Total Delivered Qty"/>
+                <field name="net_weight" string="Net Weight" sum="Total Net Weight"/>
+                <field name="price_unit" string="Unit Price"/>
+                <field name="discount" string="Discount (%)"/>
+                <field name="hsn_code" string="HSN Code"/>
+                <field name="price_tax" string="Tax Amount" sum="Total Tax"/>
+                <field name="tax_percentage" string="Tax Label"/>
+                <field name="price_total" string="Total Amount" sum="Total Amount"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_sale_register_report_search" model="ir.ui.view">
+        <field name="name">sale.register.report.search</field>
+        <field name="model">sale.register.report</field>
+        <field name="arch" type="xml">
+            <search string="Sales Register Search">
+                <field name="order_no"/>
+                <!-- <field name="partner_id"/> -->
+                <field name="product_id"/>
+                <field name="categ_id"/>
+                <separator/>
+                <filter string="Order Date" name="filter_date_order" date="date_order"/>
+                <group expand="1" string="Group By">
+                    <!-- <filter string="Customer" name="group_partner" context="{'group_by':'partner_id'}"/> -->
+                    <filter string="Product" name="group_product" context="{'group_by':'product_id'}"/>
+                    <filter string="Category" name="group_category" context="{'group_by':'categ_id'}"/>
+                    <filter string="Order Date" name="group_date" context="{'group_by':'date_order'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_sale_register_report" model="ir.actions.act_window">
+        <field name="name">Sales Register</field>
+        <field name="res_model">sale.register.report</field>
+        <field name="view_mode">tree</field>
+        <field name="search_view_id" ref="view_sale_register_report_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Sales Register data found!
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_sale_register_report"
+              name="Sales Register"
+              parent="sale.menu_sale_report"
+              action="action_sale_register_report"
+              sequence="10"/>
+</odoo>

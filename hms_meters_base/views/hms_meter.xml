@@ -1,0 +1,138 @@
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="hms_meter_view_tree">
+            <field name="name">hms meter tree</field>
+            <field name="model">hms.meter</field>
+            <field name="arch" type="xml">
+                <tree string="HMS Meters">
+                    <field name="name"/>
+                    <field name="code" optional="show"/>
+                    <field name="meter_type_id" optional="show"/>
+                    <field name="latest_data_datetime" optional="show"/>
+                    <field name="latest_data" optional="show"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="hms_meter_view_search">
+            <field name="name">hms meter search</field>
+            <field name="model">hms.meter</field>
+            <field name="arch" type="xml">
+                <search string="Search HMS Meters">
+                    <field name="name" string="Meter name and code"
+                           filter_domain="['|',('name','ilike',self),('code','ilike',self)]"/>
+                    <filter name="data_needed" string="Data needed" domain="[('is_data_needed', '=', True)]"/>
+                    <separator/>
+                    <filter name="inactive" string="Archived" domain="[('active', '=', False)]"/>
+                    <separator/>
+
+                    <filter name="groupby_type" string="Type" context="{'group_by': 'meter_type_id'}"/>
+                    <filter name="groupby_latest_data_datetime" string="Latest data date"
+                            context="{'group_by': 'latest_data_datetime'}"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="view_hms_meter_form" model="ir.ui.view">
+            <field name="name">hms.meter.view.form</field>
+            <field name="model">hms.meter</field>
+            <field name="arch" type="xml">
+                <form string="HMS Meter">
+                    <field name="sequence" invisible="1"/>
+                    <field name="active" invisible="1"/>
+                    <field name="latest_data_id" invisible="1"/>
+                    <header>
+                    </header>
+                    <sheet>
+                        <div name="button_box" class="oe_button_box">
+                            <button
+                                    name="action_view_data"
+                                    class="oe_stat_button"
+                                    icon="fa-bars"
+                                    type="object">
+                                <field
+                                        name="meter_data_count"
+                                        widget="statinfo"
+                                        string="Data"
+                                        help="Meter data"
+                                />
+                            </button>
+                            <button name="toggle_needed" type="object" class="oe_stat_button" icon="fa-question"
+                                    help="Is data needed?">
+                                <field name="is_data_needed" widget="boolean_button"
+                                       options='{"terminology": "disabled"}' help="Is data needed?"/>
+                            </button>
+                        </div>
+                        <widget name="web_ribbon" title="Archived" bg_color="bg-danger" invisible="active == True"/>
+                        <group name="meter_info_group">
+                            <field name="meter_type_id"/>
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="unit_costing"/>
+                            <!-- <field name="latest_data_datetime" invisible="latest_data_id == False"/>
+                            <field name="latest_data" invisible="latest_data_id == False"/>
+                            <field name="latest_closing_data" invisible="latest_data_id == False"/> -->
+                        </group>
+                        <hr/>
+                        <field name="meter_data_ids" context="{'default_meter_id': active_id}" nolabel="1">
+                            <tree editable="bottom">
+                                <field name="data_datetime"/>
+                                <field name="opening_data"/>
+                                <field name="closing_data"/>
+                                <field name="data"/>
+                            </tree>
+                        </field>
+                    </sheet>
+                    <div class="o_attachment_preview"/>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        <record id="hms_meter_view_kanban" model="ir.ui.view">
+            <field name="name">hms.meter.view.kanban</field>
+            <field name="model">hms.meter</field>
+            <field name="arch" type="xml">
+                <kanban string="HMS Meters" default_order="sequence">
+                    <field name="id"/>
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="meter_type_id"/>
+                    <field name="latest_data_id"/>
+                    <field name="latest_data_datetime"/>
+                    <field name="latest_data"/>
+                    <field name="sequence" widget="handle"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_card oe_kanban_global_click">
+                                <div class="card-body">
+                                    <h3>
+                                        <field name="meter_type_id"/>
+                                    </h3>
+                                    <h4>
+                                        <span>
+                                            <field name="name"/>
+                                            -
+                                            <field name="code"/>
+                                        </span>
+                                    </h4>
+                                    <span t-if="record.latest_data_id.raw_value">Latest:
+                                        <field name="latest_data_datetime"/>
+                                        -
+                                        <field name="latest_data"/>
+
+                                    </span>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+    </data>
+</odoo>

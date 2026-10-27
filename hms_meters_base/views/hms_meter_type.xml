@@ -1,0 +1,31 @@
+<odoo>
+  <data>
+    
+    <record model="ir.ui.view" id="hms_meter_type_view_tree">
+      <field name="name">hms meter type tree</field>
+      <field name="model">hms.meter.type</field>
+      <field name="arch" type="xml">
+        <tree string="HMS Meter Types">
+          <field name="name"/>
+        </tree>
+      </field>
+    </record>
+    
+    <record model="ir.ui.view" id="hms_meter_type_view_form">
+      <field name="name">hms meter type form</field>
+      <field name="model">hms.meter.type</field>
+      <field name="arch" type="xml">
+        <form string="HMS Meter Type">
+          <header name="form_header">
+          </header>
+          <sheet name="form_sheet">
+            <group name="meter_type_properties">
+              <field name="name"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+  </data>
+</odoo>

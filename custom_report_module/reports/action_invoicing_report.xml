@@ -1,0 +1,9 @@
+<odoo>
+      <report
+            id="action_report_custom_sale"
+            model="account.move"
+            string="Tax Invoicing  CCL Report"
+            report_type="qweb-html"
+            name="custom_report_module.custom_invoice_report"
+            file="custom_report_module.custom_invoice_report"/>
+</odoo>

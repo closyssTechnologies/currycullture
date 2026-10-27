@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_pi_consumption_report_wizard_form" model="ir.ui.view">
+        <field name="name">pi.consumption.report.wizard.form</field>
+        <field name="model">pi.consumption.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Consumption Report Wizard">
+                <field name="file_name" invisible="1"/>
+                <div invisible="not excel_file" class="alert alert-success" role="alert">
+                    Your Excel report is ready. 
+                    <field name="excel_file" filename="file_name" readonly="1" widget="binary" string="Download File"/>
+                </div>
+                <group invisible="excel_file">
+                    <group>
+                        <field name="date_from"/>
+                    </group>
+                    <group>
+                        <field name="date_to"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="action_get_report" string="View Tree" type="object" class="btn-primary" invisible="excel_file"/>
+                    <button name="action_export_excel" string="Download Excel" type="object" class="btn-info" invisible="excel_file"/>
+                    <button string="Close" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_pi_consumption_report_wizard" model="ir.actions.act_window">
+        <field name="name">Consumption Report Wizard</field>
+        <field name="res_model">pi.consumption.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem 
+        id="menu_pi_consumption_report_wizard"
+        name="Consumption Report Filter"
+        parent="stock.menu_warehouse_report"
+        action="action_pi_consumption_report_wizard"
+        sequence="501"
+    />
+</odoo>

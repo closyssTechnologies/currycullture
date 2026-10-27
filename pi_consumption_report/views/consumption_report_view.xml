@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_pi_consumption_report_tree" model="ir.ui.view">
+        <field name="name">pi.consumption.report.tree</field>
+        <field name="model">pi.consumption.report</field>
+        <field name="arch" type="xml">
+            <tree string="Daily Consumption Report" create="false" edit="false" delete="false">
+                <field name="date"/>
+                <field name="source"/>
+                <field name="product_id"/>
+                <field name="category_id"/>
+                <field name="uom_id"/>
+                <field name="quantity" sum="Total Quantity"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_pi_consumption_report_pivot" model="ir.ui.view">
+        <field name="name">pi.consumption.report.pivot</field>
+        <field name="model">pi.consumption.report</field>
+        <field name="arch" type="xml">
+            <pivot string="Daily Consumption Report" display_quantity="false">
+                <field name="date" interval="day" type="row"/>
+                <field name="product_id" type="row"/>
+                <field name="quantity" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_pi_consumption_report_search" model="ir.ui.view">
+        <field name="name">pi.consumption.report.search</field>
+        <field name="model">pi.consumption.report</field>
+        <field name="arch" type="xml">
+            <search string="Daily Consumption Report Search">
+                <field name="date"/>
+                <field name="source"/>
+                <field name="product_id"/>
+                <field name="category_id"/>
+                <filter string="Today" name="today" domain="[('date', '=', context_today().strftime('%%Y-%%m-%%d'))]"/>
+                <separator/>
+                <group expand="1" string="Group By">
+                    <filter string="Date" name="group_by_date" context="{'group_by': 'date:day'}"/>
+                    <filter string="Product" name="group_by_product" context="{'group_by': 'product_id'}"/>
+                    <filter string="Category" name="group_by_category" context="{'group_by': 'category_id'}"/>
+                    <filter string="Source" name="group_by_source" context="{'group_by': 'source'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_pi_consumption_report" model="ir.actions.act_window">
+        <field name="name">Daily Consumption Report</field>
+        <field name="res_model">pi.consumption.report</field>
+        <field name="view_mode">tree,pivot</field>
+        <field name="search_view_id" ref="view_pi_consumption_report_search"/>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Daily Consumption Report
+          </p><p>
+            Track daily material/product usage.
+          </p>
+        </field>
+    </record>
+
+    <menuitem 
+        id="menu_pi_consumption_report"
+        name="Daily Consumption Report"
+        parent="stock.menu_warehouse_report"
+        action="action_pi_consumption_report"
+        sequence="500"
+    />
+</odoo>

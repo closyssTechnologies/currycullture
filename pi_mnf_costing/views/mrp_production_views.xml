@@ -1,0 +1,39 @@
+<odoo>
+    <record id="view_mrp_production_form_inherit_costing" model="ir.ui.view">
+        <field name="name">mrp.production.form.inherit.costing</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+        <field name="arch" type="xml">
+            <!-- <xpath expr="//button[@name='action_open_label_type']" position="after">
+                <button name="action_allocate_meter_costs"
+                        string="Calculate Costing"
+                        type="object"
+                        class="oe_highlight"/>
+            </xpath> -->
+            <xpath expr="//page[@name='miscellaneous']" position="after">
+                <page string="Costing">                    
+                    <div class="oe_form_field" style="margin-top: 10px;">
+
+                        <label class="w-50" for="electricity_cost"/>
+                        <field name="electricity_cost" readonly="1" style="text-align:right; width:50%"/>
+
+                        <label class="w-50" for="water_cost"/>
+                        <field name="water_cost" readonly="1" style="text-align:right; width:50%"/>
+
+                        <label class="w-50" for="gas_cost"/>
+                        <field name="gas_cost" readonly="1" style="text-align:right; width:50%"/>
+                        <hr/>
+                        <label class="w-50" for="landed_cost"/>
+                        <field name="landed_cost" readonly="1" style="text-align:right; width:50%"/>
+
+                        <label class="w-50" for="labor_cost"/>
+                        <field name="labor_cost" readonly="1" style="text-align:right; width:50%"/>
+                        <hr/>
+                        <label class="w-50" for="total_cost"/>
+                        <field name="total_cost" readonly="1" style="text-align:right; width:50%"/>
+                    </div>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

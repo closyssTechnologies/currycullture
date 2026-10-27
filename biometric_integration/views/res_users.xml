@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="res_users_view_form" model="ir.ui.view">
+            <field name="name">res.users.form.inherit</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//page[@name='preferences']" position="after">
+                    <page string="Biometric Configuration" name="biometric_configuration">
+                        <group>
+
+                            <field name="biometric_configure_base_url"/>
+                            <field name="biometric_configure_user_id"/>
+                            <field name="biometric_configure_password" password="True"/>
+                            <field name="biometric_configure_company_code"/>
+                            <label for="biometric_configure_auth_token"/>
+                            <div class="o_row" col="2">
+                                <field name="biometric_configure_auth_token" password="True"/>
+                                <button string="Generate Auth Token"
+                                        type="object"
+                                        name="action_biometric_get_token"
+                                        class="btn-primary"
+                                        icon="fa-refresh"
+                                />
+                            </div>
+                            <field name="biometric_configure"/>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

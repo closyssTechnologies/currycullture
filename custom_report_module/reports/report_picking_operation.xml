@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_picking_inherit" inherit_id="stock.report_picking">
+        <xpath expr="//table[@class='table table-sm']//thead/tr" position="inside">
+            <th t-if="o.picking_type_id.code == 'outgoing'" name="th_packaging_qty">
+                <strong>Packaging Qty</strong>
+            </th>
+        </xpath>
+
+        <xpath expr="//table[@class='table table-sm']//tbody/tr" position="inside">
+            <td t-if="o.picking_type_id.code == 'outgoing'" name="td_packaging_qty">
+                <span t-field="ml.move_id.sale_line_id.product_packaging_qty"/>
+            </td>
+        </xpath>
+    </template>
+</odoo>

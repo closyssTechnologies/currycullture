@@ -1,0 +1,39 @@
+<odoo>
+  <data>
+   <odoo>
+    <record id="view_quality_point_form" model="ir.ui.view">
+        <field name="name">quality.point.form</field>
+        <field name="model">quality.point</field>
+        <field name="inherit_id" ref="quality.quality_point_view_form" />
+        <field name="arch" type="xml">
+            <!-- Add a new tab for CCL Parameters -->
+            <xpath expr="//notebook" position="inside">
+                <page string="CCL Parameters">
+                    <field name="ccl_parameter_ids" widget="one2many_list" nolabel="1">
+                        <tree editable="bottom">
+                            <field name="parameter_id" string="Parameter" />
+                            <field name="type_id" string="Type" />
+                            <field name="range" string="Range" />
+                            <field name="result" string="Result" />
+                            <field name="remarks" string="Remarks" />
+                            <field name="visibility" string="Visible" widget="boolean_toggle" />
+                        </tree>
+                        <form>
+                            <group>
+                                <field name="parameter_id" />
+                                <field name="type_id" />
+                                <field name="range" />
+                                <field name="result" />
+                                <field name="remarks" />
+                                <field name="visibility" widget="boolean_toggle" />
+                            </group>
+                        </form>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>
+
+  </data>
+</odoo>

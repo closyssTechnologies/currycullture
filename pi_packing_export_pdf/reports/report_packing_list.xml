@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_packing_list_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.basic_layout">
+                    <t t-set="bank_journal" t-value="request.env['account.journal'].search([('type', '=', 'bank'), ('company_id', '=', o.company_id.id)], limit=1)"/>
+                    <t t-set="bank_acc" t-value="bank_journal.bank_account_id if bank_journal else o.company_id.partner_id.bank_ids[:1]"/>
+                    
+                    <div class="page" style="font-family: Arial, sans-serif; font-size: 11px; color: black; padding: 0; margin: 0;">
+                        <style>
+                            .main-table {
+                                width: 100%;
+                                border-collapse: collapse;
+                                border: 1px solid black;
+                            }
+                            .main-table td {
+                                border: 1px solid black;
+                                vertical-align: top;
+                                padding: 8px 10px;
+                                line-height: 1.4;
+                            }
+                            .title {
+                                font-size: 20px;
+                                font-weight: bold;
+                                text-align: center;
+                                padding: 15px;
+                                border: 1px solid black;
+                                border-bottom: none;
+                                text-transform: uppercase;
+                            }
+                            .label {
+                                font-weight: bold;
+                                text-decoration: underline;
+                                display: block;
+                                margin-bottom: 5px;
+                            }
+                            .bold {
+                                font-weight: bold;
+                            }
+                            .text-center {
+                                text-align: center;
+                            }
+                            .text-right {
+                                text-align: right;
+                            }
+                            .bg-grey { background-color: #f9f9f9; }
+                        </style>
+
+                        <div class="title">Packing List</div>
+
+                        <table class="main-table">
+                            <!-- Row 1: Exporter and Invoice Info -->
+                            <tr>
+                                <td colspan="5" style="width: 50%;">
+                                    <span class="label">Exporter:</span>
+                                    <div class="bold" style="font-size: 13px;">
+                                        <span t-out="o.company_id.name or ''"/>
+                                    </div>
+                                    <div style="margin-top: 5px;">
+                                        <span t-if="o.company_id.street" t-out="o.company_id.street"/>
+                                        <span t-if="o.company_id.street2" t-out="', ' + o.company_id.street2"/>
+                                        <span t-if="o.company_id.city" t-out="', ' + o.company_id.city"/>
+                                        <span t-if="o.company_id.state_id" t-out="', ' + o.company_id.state_id.name"/>
+                                        <span t-if="o.company_id.zip" t-out="' - ' + o.company_id.zip"/>
+                                        <span t-if="o.company_id.country_id" t-out="' (' + o.company_id.country_id.code + ')'"/>
+                                        <t t-if="not o.company_id.street"></t>
+                                    </div>
+                                </td>
+                                <td colspan="5" style="width: 50%;">
+                                    <div><span class="bold">Invoice No:-</span> <span  t-out="o.sale_id.client_order_ref or o.origin or ''"/></div>
+                                    <div style="margin-top: 10px;">
+                                        <span class="bold">Date:-</span> <span t-out="o.scheduled_date.strftime('%d/%m/%Y') if o.scheduled_date else ''"/> 
+                                        <span class="bold" style="margin-left: 40px;">Order Date :-</span> <span t-out="o.sale_id.date_order.strftime('%d/%m/%Y') if o.sale_id and o.sale_id.date_order else ''"/>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- Row 2: Consignee and Buyer Info -->
+                            <tr>
+                                <td colspan="5">
+                                    <span class="label">Consignee Name :</span>
+                                    <div class="bold" style="font-size: 12px;">
+                                        <span t-out="o.partner_id.name or ''"/>
+                                    </div>
+                                    <div style="margin-top: 5px;">
+                                        <span t-if="o.partner_id.street" t-out="o.partner_id.street"/>
+                                        <span t-if="o.partner_id.street2" t-out="', ' + o.partner_id.street2"/>
+                                        <span t-if="o.partner_id.city" t-out="', ' + o.partner_id.city"/>
+                                        <span t-if="o.partner_id.state_id" t-out="', ' + o.partner_id.state_id.name"/>
+                                        <span t-if="o.partner_id.zip" t-out="' - ' + o.partner_id.zip"/>
+                                        <span t-if="o.partner_id.country_id" t-out="' (' + o.partner_id.country_id.code + ')'"/>
+                                        <t t-if="not o.partner_id.street"></t>
+                                    </div>
+                                </td>
+                                <td colspan="2" style="width: 25%;">
+                                    <div class="bold">Buyer Order No &amp; Date</div>
+                                    <div style="margin-top: 5px;" t-out="o.origin or o.sale_id.name or ''"/>
+                                    <div t-out="o.sale_id.date_order.strftime('%d/%m/%Y') if o.sale_id and o.sale_id.date_order else ''"/>
+                                </td>
+                                <td colspan="3" style="width: 25%;">
+                                    <div class="bold">Buyer FDA No</div>
+                                    <div style="height: 40px;" t-out="o.buyer_fda_no or o.sale_id.buyer_fda_no or ''"/>
+                                </td>
+                            </tr>
+
+                            <!-- Heading: Consignment Details -->
+                            <tr>
+                                <td colspan="10" class="bold bg-grey" style="text-align: center; border-top: 1px solid black; border-bottom: 1px solid black;">
+                                    Consignment Details
+                                </td>
+                            </tr>
+
+                            <!-- Row 3: Shipping Details 1 -->
+                            <tr>
+                                <td colspan="3" style="width: 25%;">
+                                    <span class="label">Pre Carriage By:</span>
+                                    <div style="height: 20px;" t-out="o.pre_carriage_by or o.sale_id.pre_carriage_by or ''"/>
+                                </td>
+                                <td colspan="3" style="width: 25%;">
+                                    <span class="label">Place of Receipt By Pre Carrier</span>
+                                    <div style="height: 20px;" t-out="o.place_of_receipt or o.sale_id.place_of_receipt or ''"/>
+                                </td>
+                                <td colspan="4" class="text-center" style="vertical-align: middle;">
+                                    <div class="bold">Country of Origin of Goods</div>
+                                    <div class="bold" style="font-size: 14px; margin-top: 5px;" t-out="o.country_origin or o.sale_id.country_origin or 'India'"/>
+                                </td>
+                            </tr>
+
+                            <!-- Row 4: Shipping Details 2 -->
+                            <tr>
+                                <td colspan="3">
+                                    <span class="label">Vessel/Flight No:</span>
+                                    <div style="height: 20px;" t-out="o.vessel_flight_no or o.sale_id.vessel_flight_no or ''"/>
+                                </td>
+                                <td colspan="3">
+                                    <span class="label">Port of Loading Name</span>
+                                    <div style="margin-top: 5px;" t-out="o.port_loading or o.sale_id.port_loading or ''"/>
+                                </td>
+                                <td colspan="4" rowspan="2">
+                                    <div class="bold">Terms of Delivery &amp; Payment</div>
+                                    <div style="margin-top: 15px; font-size: 12px;">
+                                        <span t-out="o.sale_id.payment_term_id.name or ''"/>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- Row 5: Destination -->
+                            <tr>
+                                <td colspan="3">
+                                    <span class="label">Port of Discharge</span>
+                                    <div style="margin-top: 5px;" t-out="o.port_discharge or o.sale_id.port_discharge or ''"/>
+                                </td>
+                                <td colspan="3">
+                                    <span class="label">Final Destination</span>
+                                    <div style="margin-top: 5px;" t-out="o.final_destination or o.sale_id.final_destination or ''"/>
+                                </td>
+                            </tr>
+
+                            <!-- Row 6: Marks -->
+                            <tr>
+                                <td colspan="3">
+                                    <span class="label">Mark</span>
+                                    <div style="height: 20px;" t-out="o.mark_no or o.sale_id.mark_no or ''"/>
+                                </td>
+                                <td colspan="3">
+                                    <span class="label">Container No:</span>
+                                    <div style="height: 20px;" t-out="o.container_no or o.sale_id.container_no or ''"/>
+                                </td>
+                                <td colspan="4"></td>
+                            </tr>
+
+                            <!-- Item Table Header -->
+                           <tr class="bold text-center bg-grey">
+                                <td style="width: 9%;">PKG NO</td>
+                                <td style="width: 30%;">Description of Goods</td>
+                                <td style="width: 9%;">HSN/SAC</td>
+                                <td style="width: 7%;">No Cartons</td>
+                                <td style="width: 8%;">Pack Size</td>
+                                <td style="width: 9%;">Net Weight.</td>
+                                <td style="width: 9%;">No Pack/Cartons</td>
+                                <td style="width: 9%;">Gross Weight</td>
+                                <td style="width: 8%;">CBM Volume</td>
+                            </tr>
+                            
+                             <!-- Items: Iterate directly over move lines (Handles Waiting, Ready, and Done statuses) -->
+                             <t t-set="move_lines" t-value="o.move_ids_without_package or o.move_line_ids"/>
+                             <t t-if="move_lines">
+                                 <t t-foreach="move_lines" t-as="l">
+                                     <!-- Find the Sale Order Line by traversing links or matching by product in the Sale Order -->
+                                     <t t-set="sale_line" t-value="l.sale_line_id if ('sale_line_id' in l and l.sale_line_id) else (l.move_id.sale_line_id if ('move_id' in l and l.move_id and l.move_id.sale_line_id) else o.sale_id.order_line.filtered(lambda sol: sol.product_id == l.product_id)[:1])"/>
+                                     
+                                     <tr class="item-row">
+                                         <td class="text-center">
+                                             <!-- Fetch PKG NO from line, sale line, or linked sale order lines -->
+                                             <t t-set="line_package" t-value="l.package if (l and 'package' in l and l.package) else (sale_line.package if (sale_line and 'package' in sale_line) else '')"/>
+                                             <span t-out="line_package or ''"/>
+                                         </td>
+                                         <td>
+                                             <span t-out="l.product_id.name"/>
+                                             <t t-if="l.product_id.description_sale">
+                                                 <br/><span style="font-size: 9px; color: #666;" t-out="l.product_id.description_sale"/>
+                                             </t>
+                                         </td>
+                                         <td class="text-center"><span t-out="l.product_id.l10n_in_hsn_code or ''"/></td>
+                                         <td class="text-center"><span t-out="int(sale_line.product_uom_qty)"/></td>
+                                         <td class="text-center">
+                                             <span t-out="'%.2f' % l.product_id.packing_size if l.product_id.packing_size else ''"/>
+                                         </td>
+                                         <td class="text-center">
+                                             <t t-set="l_net_weight" t-value="sale_line.net_weight / sale_line.product_uom_qty * (l.quantity or l.product_uom_qty) if (sale_line and sale_line.product_uom_qty) else l.product_id.weight * (l.quantity or l.product_uom_qty)"/>
+                                             <span t-out="'%.3f' % l_net_weight"/>
+                                         </td>
+                                         <td class="text-center">
+                                             <t t-set="l_alt_qty" t-value="sale_line.x_studio_alternate_quantity if (sale_line and 'x_studio_alternate_quantity' in sale_line) else l.product_id.x_studio_alternate_quantity"/>
+                                             <span t-out="int(l_alt_qty) if l_alt_qty else ''"/>
+                                         </td>
+                                         <td class="text-center">
+                                             <t t-set="l_gross_weight" t-value="sale_line.gross_weight / sale_line.product_uom_qty * (l.quantity or l.product_uom_qty) if (sale_line and sale_line.product_uom_qty) else (l.product_id.weight + l.product_id.x_studio_gross_weight) * (l.quantity or l.product_uom_qty)"/>
+                                             <span t-out="'%.2f' % l_gross_weight"/>
+                                         </td>
+                                         <td class="text-center">
+                                             <t t-set="l_volume" t-value="sale_line.total_volume / sale_line.product_uom_qty * (l.quantity or l.product_uom_qty) if (sale_line and sale_line.product_uom_qty) else l.product_id.volume * (l.quantity or l.product_uom_qty)"/>
+                                             <span t-out="'%.3f' % l_volume"/>
+                                         </td>
+                                     </tr>
+                                 </t>
+                             </t>
+                             <t t-else="">
+                                 <tr><td colspan="9" class="text-center">No Delivery Lines Found ()</td></tr>
+                             </t>
+
+                             <!-- Totals Row -->
+                             <tr class="bold">
+                                <td colspan="3" class="text-center" style="padding: 10px;">Total</td>
+                                <td class="text-center">
+                                    <span t-out="int(sum(l.quantity or l.product_uom_qty for l in move_lines))"/>
+                                </td>
+                                 <td class="text-center">
+<!--                                     <span t-out="'%.2f' % sum(p.packing_size for p in products) if products else '0.00'"/>-->
+                                 </td>
+                                <td class="text-center">
+                                    <span t-out="'%.3f' % sum(l.sale_line_id.net_weight / l.sale_line_id.product_uom_qty * (l.quantity or l.product_uom_qty) if l.sale_line_id.product_uom_qty else l.product_id.weight * (l.quantity or l.product_uom_qty) for l in move_lines)"/>
+                                </td> 
+                                <td class="text-center">
+<!--                                    <span t-out="int(sum(p.x_studio_alternate_quantity for p in products)) if products else '0'"/>-->
+                                </td>
+                                <td class="text-center">
+                                    <span t-out="'%.2f' % sum(l.sale_line_id.gross_weight / l.sale_line_id.product_uom_qty * (l.quantity or l.product_uom_qty) if l.sale_line_id.product_uom_qty else (l.product_id.weight + l.product_id.x_studio_gross_weight) * (l.quantity or l.product_uom_qty) for l in move_lines)"/>
+                                </td> 
+                                 <td class="text-center">
+                                     <span t-out="'%.3f' % sum(l.sale_line_id.total_volume / l.sale_line_id.product_uom_qty * (l.quantity or l.product_uom_qty) if l.sale_line_id.product_uom_qty else l.product_id.volume * (l.quantity or l.product_uom_qty) for l in move_lines) if move_lines else '0.000'"/>
+                                 </td>
+                            </tr>
+                            <!-- Summary Row (Inside Box) -->
+                             <tr>
+                                <td colspan="9" style="padding: 15px 10px;">
+                                    <div style="margin-bottom: 5px;"><span class="bold">Total Cartons :</span> 
+                                        <span t-out="int(sum(l.quantity or l.product_uom_qty for l in move_lines))"/>
+                                    </div>
+                                    <div style="margin-bottom: 5px;"><span class="bold">Total Net.Weight (kg) :</span>
+                                        <span t-out="'%.3f' % sum(l.sale_line_id.net_weight / l.sale_line_id.product_uom_qty * (l.quantity or l.product_uom_qty) if l.sale_line_id.product_uom_qty else l.product_id.weight * (l.quantity or l.product_uom_qty) for l in move_lines)"/>
+                                    </div>
+                                    <div style="margin-bottom: 5px;"><span class="bold">Total Gross Weight (kg) :</span>
+                                        <span t-out="'%.2f' % sum(l.sale_line_id.gross_weight / l.sale_line_id.product_uom_qty * (l.quantity or l.product_uom_qty) if l.sale_line_id.product_uom_qty else (l.product_id.weight + l.product_id.x_studio_gross_weight) * (l.quantity or l.product_uom_qty) for l in move_lines)"/>
+                                    </div>
+                                     <div style="margin-bottom: 5px;"><span class="bold">Total CBM :</span> 
+                                         <span t-out="'%.3f' % sum(l.sale_line_id.total_volume / l.sale_line_id.product_uom_qty * (l.quantity or l.product_uom_qty) if l.sale_line_id.product_uom_qty else l.product_id.volume * (l.quantity or l.product_uom_qty) for l in move_lines) if move_lines else '0.000'"/>
+                                     </div>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <!-- Footer Bank Details -->
+                        <table class="main-table" style="border-top: none;">
+                            <tr>
+                                <td colspan="2" style="padding: 10px;">
+                                    <div class="bold" style="text-decoration: underline; margin-bottom: 8px;">Exporter Bank Details: -</div>
+                                    <div style="margin-bottom: 3px;">Bank Name: <span t-out="bank_acc.bank_id.name or ''"/></div>
+                                    <div style="margin-bottom: 3px;">Beneficiary Name :- <span style="margin-left: 20px;" t-out="o.company_id.name or ''"/></div>
+                                    <div style="margin-bottom: 3px;">Account No :- <span t-out="bank_acc.acc_number or ''"/></div>
+                                    <div style="margin-bottom: 3px;">Swift Code :- <span t-out="bank_acc.bank_id.bic or ''"/></div>
+                                    <div style="margin-bottom: 3px;">IFSC Code: - <span t-out="bank_acc.bank_id.l10n_in_ifsc if (bank_acc.bank_id and 'l10n_in_ifsc' in bank_acc.bank_id._fields) else ''"/></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 60%; padding: 15px 10px;">
+                                    <span class="label">Declaration :</span>
+                                    <div style="margin-top: 5px;">We declare that this invoice shows the actual price of the goods Described and that all Particulars true &amp; Correct</div>
+                                </td>
+                                <td style="width: 40%; text-align: center; vertical-align: top; padding: 15px 10px;">
+                                    <div class="bold">For: - <span t-out="o.company_id.name or ''"/></div>
+                                    <div style="margin-top: 60px;" class="bold">Authorized Signature</div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

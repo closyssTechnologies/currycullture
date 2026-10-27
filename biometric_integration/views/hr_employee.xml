@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="bio_inherited_hr_employee_form_inherit" model="ir.ui.view">
+            <field name="name">biometric_integration.inherited_hr_employee.form</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//group[@name='identification_group']" position="after">
+                    <group name="biometric_information" string="Biometric Information">
+                        <field name="biometric_group_id" groups="hr.group_hr_user"/>
+                    </group>
+
+                </xpath>
+                <xpath expr="//header" position="inside">
+                    <button name="create_biometric_employee" type="object" groups="hr.group_hr_user" string="Update Employee To Biometric System" readonly="not active" invisible=" not biometric_group_id or active==False"/>
+                    <button name="action_employee_inactive" type="object" groups="hr.group_hr_user" string="Inactive from PI Biosync" readonly="not active" invisible=" not biometric_group_id or active==False"/>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="action_assign_group_to_employee" model="ir.actions.server">
+            <field name="name">Biometric Group</field>
+            <field name="model_id" ref="hr.model_hr_employee"/>
+            <field name="binding_model_id" ref="hr.model_hr_employee"/>
+            <field name="binding_view_types">list</field>
+            <field name="state">code</field>
+            <field name="code">action = model.action_open_group_wizard()</field>
+        </record>
+    </data>
+</odoo>

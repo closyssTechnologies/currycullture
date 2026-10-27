@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Inward Operation Form View -->
+        <record id="view_inward_operation_form" model="ir.ui.view">
+            <field name="name">inward.operation.form</field>
+            <field name="model">inward.operation</field>
+            <field name="arch" type="xml">
+                <form string="Inward Operation">
+                    <header>
+                        <!-- Transition Buttons -->
+                        <button name="action_hold" string="Hold" type="object" class="oe_highlight" invisible="state != 'entry'"/>
+                        <button name="action_exit" string="Exit" type="object" class="oe_highlight" invisible="state not in ['entry', 'hold']" confirm="Are you sure you want to mark this as Exit? This action cannot be undone."/>
+                        
+                        <!-- Statusbar -->
+                        <field name="state" widget="statusbar" statusbar_visible="entry,hold,exit"/>
+                    </header>
+                    <sheet>
+                        <field name="is_saved" invisible="1"/>
+                        <group>
+                            <group>
+                                <field name="name" readonly="state == 'exit'"/>
+                                <field name="vendor_invoice_no" readonly="state == 'exit'"/>
+                                <field name="purchase_order_id" options="{'no_create': False, 'no_open': False}" readonly="state == 'exit'"/>
+                                <field name="vendor_id" readonly="1" force_save="1"/>
+                                <field name="gatekeeper_user_id" readonly="state == 'exit'"/>
+                                <field name="weight" readonly="state == 'exit'"/>
+                            </group>
+                            <group>
+                                <field name="vehicle_no" readonly="state == 'exit'"/>
+                                <field name="driver_name" readonly="state == 'exit'"/>
+                                <field name="driver_mobile_no" readonly="state == 'exit'"/>
+                                <field name="eway_bill" readonly="state == 'exit'"/>
+                                <field name="invoice_date" readonly="state == 'exit'"/>
+                                <field name="receiving_date" widget="datetime" readonly="state == 'exit'"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Products">
+                                <field name="product_line_ids" readonly="state == 'exit'" force_save="1">
+                                    <tree editable="bottom" create="false">
+                                        <field name="product_id" readonly="parent.is_saved" force_save="1"/>
+                                        <field name="ordered_qty" readonly="parent.is_saved" force_save="1"/>
+                                        <field name="receiving_qty"/>
+                                        <field name="balance_qty" readonly="1"/>
+                                        <field name="bill_quantity" readonly="parent.is_saved" force_save="1"/>
+                                        <field name="uom_id" readonly="parent.is_saved" force_save="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Inward Operation Tree View -->
+        <record id="view_inward_operation_tree" model="ir.ui.view">
+            <field name="name">inward.operation.tree</field>
+            <field name="model">inward.operation</field>
+            <field name="arch" type="xml">
+                <tree string="Inward Operations" decoration-info="state == 'entry'" decoration-muted="state == 'exit'">
+                    <field name="name"/>
+                    <field name="purchase_order_id" optional="show"/>
+                    <field name="vendor_id" optional="show"/>
+                    <field name="vehicle_no" optional="show"/>
+                    <field name="invoice_date" optional="show"/>
+                    <field name="receiving_date" optional="show"/>
+                    <field name="driver_name" optional="show"/>
+                    <field name="driver_mobile_no" optional="show"/>
+                    <field name="eway_bill" optional="show"/>
+                    <field name="gatekeeper_user_id" optional="show"/>
+                    <field name="weight" optional="show"/>
+                    <field name="vendor_invoice_no" optional="show"/>
+                    <field name="state" widget="badge" decoration-success="state == 'entry'" decoration-warning="state == 'hold'" decoration-danger="state == 'exit'"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Inward Operation Action -->
+        <record id="action_inward_operation" model="ir.actions.act_window">
+            <field name="name">Inward Operation</field>
+            <field name="res_model">inward.operation</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Sequence for Inward Operation -->
+        <record id="seq_inward_operation" model="ir.sequence">
+            <field name="name">Inward Operation</field>
+            <field name="code">inward.operation</field>
+            <field name="prefix">GI/%(year)s/%(month)s/</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+            <field name="use_date_range">True</field>
+        </record>
+    </data>
+</odoo>

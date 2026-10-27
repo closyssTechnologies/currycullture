@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_mrp_bom_category_manager,Manager access to BOM Categories,model_mrp_bom_category,mrp.group_mrp_manager,1,1,1,1
+access_mrp_bom_category_user,User access to BOM Categories,model_mrp_bom_category,mrp.group_mrp_user,1,0,0,0
+access_mrp_production_costing,access.mrp.production.costing,model_mrp_production,base.group_user,1,1,1,0
+access_mrp_meter_cost_line_user,Access Meter Cost Line,model_mrp_meter_cost_line,base.group_user,1,1,1,1
+access_stock_landed_cost_read_all,Read Access Landed Cost,model_stock_landed_cost,base.group_user,1,0,0,0

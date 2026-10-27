@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="seq_pi_certificate_analysis" model="ir.sequence">
+            <field name="name">Certificate of Analysis</field>
+            <field name="code">pi.certificate.analysis</field>
+            <field name="prefix">COA/%(year)s/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+
+<record id="paperformat_certificate_analysis_a4" model="report.paperformat">
+    <field name="name">Certificate of Analysis A4</field>
+    <field name="default" eval="True"/>
+    <field name="format">A4</field>
+    <field name="page_height">0</field>
+    <field name="page_width">0</field>
+    <field name="orientation">Portrait</field>
+    <field name="margin_top">10</field>
+    <field name="margin_bottom">10</field>
+    <field name="margin_left">10</field>
+    <field name="margin_right">10</field>
+    <field name="header_line" eval="False"/>
+    <field name="header_spacing">0</field>
+    <field name="dpi">90</field>
+</record>
+
+<template id="report_certificate_analysis_template">
+    <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="web.basic_layout">
+                <div class="page" style="font-family: Calibri, Arial, sans-serif; font-size: 12pt;">
+                    <style>
+                        * { box-sizing: border-box; }
+                    table { border-collapse: collapse; width: 100%; }
+                    .header-table { border: 1.5px solid #000; margin-bottom: 0; }
+                    .logo-cell { width: 20%; border-right: 1.5px solid #000; padding: 6px 8px; vertical-align: middle; text-align: left; }
+                    .cert-title-cell { width: 45%; border-right: 1.5px solid #000; padding: 6px 8px; vertical-align: middle; text-align: center; }
+                    .cert-title { font-size: 22pt; font-weight: bold; letter-spacing: 0.5px; line-height: 1.25; }
+                    .ref-cell { width: 35%; padding: 0; vertical-align: top; }
+                    .ref-row { padding: 3px 6px; font-size: 10pt; font-weight: bold; border-bottom: 1px solid #000; display: block; }
+                    .ref-row:last-child { border-bottom: none; }
+                    .address-cell { font-size: 10pt; padding: 4px 8px; border: 1.5px solid #000; border-top: none; }
+                    .data-table { border: 1.5px solid #000; border-top: none; font-size: 11pt; }
+                    .data-table td { border: 1px solid #000; padding: 4px 6px; vertical-align: top; }
+                    .field-label { font-weight: bold; width: 22%; }
+                    .field-value { width: 28%; }
+                    .param-table { border: 1.5px solid #000; border-top: none; font-size: 11pt; }
+                    .param-table td, .param-table th { border: 1px solid #000; padding: 4px 6px; vertical-align: top; }
+                    .param-header-row td { background-color: #c8c8c8; font-weight: bold; padding: 4px 6px; }
+                    .param-table th { background-color: #e8e8e8; font-weight: bold; text-align: center; }
+                    .center { text-align: center; }
+                    .bold { font-weight: bold; }
+                    .inspection-box { border: 1.5px solid #000; border-top: none; padding: 6px 8px; font-size: 11pt; font-weight: bold; }
+                    .note-box { border: 1.5px solid #000; border-top: none; padding: 6px 8px; font-size: 10pt; }
+                    .reg-box { border: 1.5px solid #000; border-top: none; padding: 6px 8px; font-size: 10pt; }
+                    .sign-table { border: 1.5px solid #000; border-top: none; font-size: 11pt; }
+                    .sign-table td { border: 1px solid #000; width: 50%; }
+                    .signature-wrapper img { max-height: 80px; max-width: 100%; }
+                </style>
+
+                <!-- ============ HEADER ROW: Logo | Title | Ref ============ -->
+                <table class="header-table">
+                    <tr>
+                        <!-- LOGO cell -->
+                        <td class="logo-cell">
+                            <img t-att-src="'data:image/png;base64,' + (o.env.company.logo.decode() if o.env.company.logo else '')"
+                                 style="max-height:75px; max-width:200px;"
+                                 t-if="o.env.company.logo"/>
+                            <span t-else="" style="font-size:14pt; font-weight:bold;">
+                                <t t-esc="o.env.company.name"/>
+                            </span>
+                        </td>
+                        <!-- CERTIFICATE OF ANALYSIS -->
+                        <td class="cert-title-cell">
+                            <div class="cert-title">CERTIFICATE OF ANALYSIS</div>
+                        </td>
+                        <!-- REF / ISSUE NO -->
+                        <td class="ref-cell">
+                            <table style="width:100%; height:100%; font-size:10pt; border-collapse:collapse;">
+                                <tr>
+                                    <td style="border-bottom:1.5px solid #000; padding:4px 6px; vertical-align:middle;"><span class="bold">REC-CCL-QA-01-03</span></td>
+                                </tr>
+                                <tr>
+                                    <td style="border-bottom:1.5px solid #000; padding:4px 6px; vertical-align:middle;">
+                                        <span class="bold">Issue No. &amp; Date: </span>
+                                        <t t-esc="o.name"/>
+                                        &amp;
+                                        <t t-esc="o.testing_date and o.testing_date.strftime('%d.%m.%Y') or ''"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:4px 6px; vertical-align:middle;">
+                                        <span class="bold">Rev: 00 &amp; Date: 00</span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+
+                <!-- ============ ADDRESS ROW ============ -->
+                <table style="width:100%;">
+                    <tr>
+                        <td class="address-cell">
+                            <span class="bold">Address: </span>
+                            <t t-esc="o.env.company.street or ''"/>
+                            <t t-if="o.env.company.street2">, <t t-esc="o.env.company.street2"/></t>
+                            <t t-if="o.env.company.city">, <t t-esc="o.env.company.city"/></t>
+                            <t t-if="o.env.company.state_id">, <t t-esc="o.env.company.state_id.name"/></t>
+                            <t t-if="o.env.company.zip"> - <t t-esc="o.env.company.zip"/></t>
+                            <t t-if="o.env.company.country_id">, <t t-esc="o.env.company.country_id.name"/></t>
+                        </td>
+                    </tr>
+                </table>
+
+                <!-- ============ MAIN DATA TABLE ============ -->
+                <table class="data-table">
+                    <tr>
+                        <td class="field-label">Testing Date :</td>
+                        <td class="field-value"><t t-esc="o.testing_date and o.testing_date.strftime('%d-%m-%Y') or ''"/></td>
+                        <td class="field-label">Batch No.:</td>
+                        <td class="field-value"><t t-esc="o.batch_no or ''"/></td>
+                    </tr>
+                    <tr>
+                        <td class="field-label">FSSAI License No.:</td>
+                        <td class="field-value"><t t-esc="o.fssai_license_no or ''"/></td>
+                        <td class="field-label">Date of Manufacturing:</td>
+                        <td class="field-value"><t t-esc="o.date_mfg and o.date_mfg.strftime('%d-%m-%Y') or ''"/></td>
+                    </tr>
+                    <tr>
+                        <td class="field-label">Product name:</td>
+                        <td class="field-value"><t t-esc="o.product_id.name if o.product_id else ''"/></td>
+                        <td class="field-label">Date of Expiry:</td>
+                        <td class="field-value"><t t-esc="o.date_expiry and o.date_expiry.strftime('%d-%m-%Y') or ''"/></td>
+                    </tr>
+                    <tr>
+                        <td class="field-label">Pack Size/Quantity:</td>
+                        <td class="field-value"><t t-esc="o.pack_size_qty or ''"/></td>
+                        <td class="field-label">Date of Batch Release:</td>
+                        <td class="field-value"><t t-esc="o.date_batch_release and o.date_batch_release.strftime('%d-%m-%Y') or ''"/></td>
+                    </tr>
+                    <tr>
+                        <td class="field-label">City Name (Warehouse location):</td>
+                        <td class="field-value"><t t-esc="o.city_name or ''"/></td>
+                        <td class="field-label">No of Pkt per carton:</td>
+                        <td class="field-value"><t t-esc="o.no_of_pkt_per_carton or ''"/></td>
+                    </tr>
+                    <tr>
+                        <td class="field-label">Buyer:</td>
+                        <td class="field-value"><t t-esc="o.buyer or ''"/></td>
+                        <td class="field-label">Consigned To:</td>
+                        <td class="field-value"><t t-esc="o.consigned_to or ''"/></td>
+                    </tr>
+                    <tr>
+                        <td class="field-label">Invoice No.:</td>
+                        <td class="field-value"><t t-esc="o.invoice_no or ''"/></td>
+                        <td class="field-label">Product Dispatch Temperature:</td>
+                        <td class="field-value"><t t-esc="o.product_dispatch_temp or ''"/></td>
+                    </tr>
+                    <tr>
+                        <td class="field-label">Batch of Quantity:</td>
+                        <td class="field-value"><t t-esc="o.batch_qty or ''"/></td>
+                        <td class="field-label">Final Product temperature(°C):</td>
+                        <td class="field-value"><t t-esc="o.final_product_temp or ''"/></td>
+                    </tr>
+                    <tr>
+                        <td class="field-label">Carton's net wt.:</td>
+                        <td class="field-value"><t t-esc="o.carton_net_wt or ''"/></td>
+                        <td class="field-label">Production details (Quantity)kg:</td>
+                        <td class="field-value"><t t-esc="o.production_qty or ''"/></td>
+                    </tr>
+                </table>
+
+                <!-- ============ PHYSICAL PARAMETERS ============ -->
+                <table class="param-table">
+                    <tr class="param-header-row">
+                        <td colspan="5">PHYSICAL PARAMETERS</td>
+                    </tr>
+                    <tr>
+                        <th style="width:7%;">Sr. No.</th>
+                        <th style="width:20%;">Parameter</th>
+                        <th style="width:25%;">Standard</th>
+                        <th style="width:25%;">Test Report</th>
+                        <th style="width:23%;">Test method</th>
+                    </tr>
+                    <t t-foreach="o.physical_ids" t-as="line">
+                        <tr>
+                            <td class="center"><t t-esc="line.sr_no_physical if line.sr_no_physical else ''"/></td>
+                            <td><t t-esc="line.name or ''"/></td>
+                            <td><t t-esc="line.standard or ''"/></td>
+                            <td><t t-esc="line.test_report or ''"/></td>
+                            <td><t t-esc="line.test_method or ''"/></td>
+                        </tr>
+                    </t>
+                </table>
+
+                <!-- ============ MICROBIOLOGICAL PARAMETERS ============ -->
+                <table class="param-table">
+                    <tr class="param-header-row">
+                        <td colspan="5">MICROBIOLOGICAL PARAMETERS</td>
+                    </tr>
+                    <t t-foreach="o.micro_ids" t-as="line">
+                        <tr>
+                            <td style="width:7%;" class="center"><t t-esc="line.sr_no_micro if line.sr_no_micro else ''"/></td>
+                            <td style="width:20%;"><t t-esc="line.name or ''"/></td>
+                            <td style="width:25%;"><t t-esc="line.standard or ''"/></td>
+                            <td style="width:25%;"><t t-esc="line.test_report or ''"/></td>
+                            <td style="width:23%;"><t t-esc="line.test_method or ''"/></td>
+                        </tr>
+                    </t>
+                </table>
+
+                <!-- ============ CHEMICAL PARAMETERS ============ -->
+                <table class="param-table">
+                    <tr class="param-header-row">
+                        <td colspan="5">CHEMICAL PARAMETERS</td>
+                    </tr>
+                    <t t-foreach="o.chemical_ids" t-as="line">
+                        <tr>
+                            <td style="width:7%;" class="center"><t t-esc="line.sr_no_chemical if line.sr_no_chemical else ''"/></td>
+                            <td style="width:20%;"><t t-esc="line.name or ''"/></td>
+                            <td style="width:25%;"><t t-esc="line.standard or ''"/></td>
+                            <td style="width:25%;"><t t-esc="line.test_report or ''"/></td>
+                            <td style="width:23%;"><t t-esc="line.test_method or ''"/></td>
+                        </tr>
+                    </t>
+                </table>
+
+                <!-- ============ INSPECTION STATUS ============ -->
+                <div class="inspection-box">
+                    Inspection Status: Accepted
+                </div>
+
+                <!-- ============ NOTE ============ -->
+                <div class="note-box">
+                    <span class="bold">NOTE:</span><br/>
+                    1. The above results are given at the time of dispatch.<br/>
+                    2. The above-mentioned product is processed as per the CURRY CULLTURE standard only.
+                </div>
+
+                <!-- ============ REGULATORY DECLARATION ============ -->
+                <div class="reg-box">
+                    <span class="bold">Regulatory declaration:</span> The material shall comply with all standards laid down under the Food Safety and Standards Regulations, 2011 and should not exceed the limits.
+                </div>
+
+                <!-- ============ SIGNATURES ============ -->
+                <table class="sign-table" style="width:100%; table-layout: fixed;">
+                    <tr>
+                        <td style="height:120px; vertical-align:bottom; text-align:center; padding: 10px;">
+                            <div class="signature-wrapper" style="min-height: 80px;">
+                                <t t-if="user.sign_initials">
+                                    <img t-att-src="image_data_uri(user.sign_initials)" style="max-height: 80px; max-width: 100%;"/>
+                                </t>
+                            </div>
+                            <div style="border-top: 1px solid #000; padding-top: 5px;">
+                                <strong>Sign. Quality Executive</strong>
+                            </div>
+                        </td>
+                        <td style="height:120px; vertical-align:bottom; text-align:center; padding: 10px;">
+                            <t t-set="qc_dept" t-value="o.env['hr.department'].sudo().search([('name', 'ilike', 'QUALITY CONTROL'), ('company_id', '=', o.env.company.id)], limit=1)"/>
+                            <t t-set="quality_manager" t-value="qc_dept.manager_id.user_id if qc_dept and qc_dept.manager_id else False"/>
+                            <div class="signature-wrapper" style="min-height: 80px;">
+                                <t t-if="quality_manager and quality_manager.sign_initials">
+                                    <img t-att-src="image_data_uri(quality_manager.sign_initials)" style="max-height: 80px; max-width: 100%;"/>
+                                </t>
+                            </div>
+                            <div style="border-top: 1px solid #000; padding-top: 5px;">
+                                <strong>Sign. Quality Manager</strong>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+                </div>
+            </t>
+        </t>
+    </t>
+</template>
+
+<!-- Report Action -->
+<record id="action_report_certificate_analysis" model="ir.actions.report">
+    <field name="name">Certificate of Analysis</field>
+    <field name="model">pi.certificate.analysis</field>
+    <field name="report_type">qweb-pdf</field>
+    <field name="report_name">pi_certificate_analysis.report_certificate_analysis_template</field>
+    <field name="report_file">pi_certificate_analysis.report_certificate_analysis_template</field>
+    <field name="print_report_name">'Certificate of Analysis - ' + (object.name or '')</field>
+    <field name="binding_model_id" ref="pi_certificate_analysis.model_pi_certificate_analysis"/>
+    <field name="binding_type">report</field>
+    <field name="paperformat_id" ref="pi_certificate_analysis.paperformat_certificate_analysis_a4"/>
+</record>
+
+</data>
+</odoo>

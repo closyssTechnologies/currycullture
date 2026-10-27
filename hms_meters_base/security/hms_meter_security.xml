@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data noupdate="0">
+    
+        <record id="group_hms_meter_type_can_cud" model="res.groups"><field name="name">HMS Meter type - can create/update/delete</field></record>
+        <record id="group_hms_meter_can_cud" model="res.groups"><field name="name">HMS Meter - can create/update/delete</field></record>
+        <record id="group_hms_meter_data_can_cud" model="res.groups"><field name="name">HMS Meter data - can create/update/delete</field></record>
+
+    </data>
+    
+</odoo>

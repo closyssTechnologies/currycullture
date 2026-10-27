@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_outward_receipt_picking_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-if="doc.picking_type_code == 'outgoing' and doc.outward_gate_entry_id">
+                        <t t-call="web.external_layout">
+                            <div class="page">
+                                <!-- Header -->
+                                <div class="row" style="margin-bottom: 30px;">
+                                    <div class="col-12 text-center">
+                                        <h3><strong>Outward Receipt : <span t-field="doc.outward_gate_entry_id.gate_entry_no"/></strong></h3>
+                                    </div>
+                                </div>
+
+                                <!-- Receipt Details Table -->
+                                <div class="row" style="margin-bottom: 40px;">
+                                    <div class="col-12">
+                                        <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+                                            <thead>
+                                                <tr style="border-top: 2px solid black; border-bottom: 2px solid black;">
+                                                    <th style="padding: 8px; text-align: left; font-weight: bold;">Vehicle no.</th>
+                                                    <th style="padding: 8px; text-align: left; font-weight: bold;">Driver Name</th>
+                                                    <th style="padding: 8px; text-align: left; font-weight: bold;">Driver Phone</th>
+                                                    <th style="padding: 8px; text-align: left; font-weight: bold;">Customer</th>
+                                                    <th style="padding: 8px; text-align: left; font-weight: bold;">E-Way Bill</th>
+                                                    <th style="padding: 8px; text-align: left; font-weight: bold;">Tax Invoice No.</th>
+                                                    <th style="padding: 8px; text-align: left; font-weight: bold;">Date</th>
+                                                    <th style="padding: 8px; text-align: left; font-weight: bold;">Gatekeeper</th>
+                                                    <th style="padding: 8px; text-align: left; font-weight: bold;">Weight</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td style="padding: 8px; border-bottom: 1px solid black;"><span t-field="doc.outward_gate_entry_id.vehicle_no"/></td>
+                                                    <td style="padding: 8px; border-bottom: 1px solid black;"><span t-field="doc.outward_gate_entry_id.driver_name"/></td>
+                                                    <td style="padding: 8px; border-bottom: 1px solid black;"><span t-field="doc.outward_gate_entry_id.driver_phone"/></td>
+                                                    <td style="padding: 8px; border-bottom: 1px solid black;"><span t-field="doc.outward_gate_entry_id.customer_id.name"/></td>
+                                                    <td style="padding: 8px; border-bottom: 1px solid black;"><span t-field="doc.outward_gate_entry_id.eway_bill_no"/></td>
+                                                    <td style="padding: 8px; border-bottom: 1px solid black;"><span t-field="doc.outward_gate_entry_id.tax_invoice_no"/></td>
+                                                    <td style="padding: 8px; border-bottom: 1px solid black;"><span t-field="doc.outward_gate_entry_id.date" t-options="{'widget': 'date'}"/></td>
+                                                    <td style="padding: 8px; border-bottom: 1px solid black;"><span t-field="doc.outward_gate_entry_id.gatekeeper_id.name"/></td>
+                                                    <td style="padding: 8px; border-bottom: 1px solid black;"><span t-field="doc.outward_gate_entry_id.total_weight"/></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <!-- Product Details -->
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h4 style="text-align: center; margin-bottom: 20px;"><strong>Product Details</strong></h4>
+                                        <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+                                            <thead>
+                                                <tr style="border-top: 2px solid black; border-bottom: 2px solid black;">
+                                                    <th style="padding: 8px; text-align: left; font-weight: bold;">Product</th>
+                                                    <th style="padding: 8px; text-align: center; font-weight: bold;">Ordered Qty</th>
+                                                    <th style="padding: 8px; text-align: center; font-weight: bold;">Gate Outward Qty</th>
+                                                    <th style="padding: 8px; text-align: center; font-weight: bold;">UOM</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- Method 1: Try outward gate entry product lines first -->
+                                                <t t-if="doc.outward_gate_entry_id.outward_line_ids">
+                                                    <t t-foreach="doc.outward_gate_entry_id.outward_line_ids" t-as="line">
+                                                        <tr>
+                                                            <td style="padding: 8px; border-bottom: 1px solid #ddd;"><span t-field="line.product_id.name"/></td>
+                                                            <td style="padding: 8px; text-align: center; border-bottom: 1px solid #ddd;"><span t-field="line.ordered_quantity"/></td>
+                                                            <td style="padding: 8px; text-align: center; border-bottom: 1px solid #ddd;"><span t-field="line.gate_quantity"/></td>
+                                                            <td style="padding: 8px; text-align: center; border-bottom: 1px solid #ddd;"><span t-field="line.product_uom_id.name"/></td>
+                                                        </tr>
+                                                    </t>
+                                                </t>
+                                                <!-- Method 2: Fallback to sale order lines if no gate entry products -->
+                                                <t t-if="not doc.outward_gate_entry_id.outward_line_ids and doc.outward_gate_entry_id.sale_order_id">
+                                                    <t t-foreach="doc.outward_gate_entry_id.sale_order_id.order_line" t-as="so_line">
+                                                        <tr>
+                                                            <td style="padding: 8px; border-bottom: 1px solid #ddd;"><span t-field="so_line.product_id.name"/></td>
+                                                            <td style="padding: 8px; text-align: center; border-bottom: 1px solid #ddd;"><span t-field="so_line.product_uom_qty"/></td>
+                                                            <td style="padding: 8px; text-align: center; border-bottom: 1px solid #ddd;"><span t-field="so_line.product_uom_qty"/></td>
+                                                            <td style="padding: 8px; text-align: center; border-bottom: 1px solid #ddd;"><span t-field="so_line.product_uom.name"/></td>
+                                                        </tr>
+                                                    </t>
+                                                </t>
+                                                <!-- Method 3: Final fallback to delivery moves -->
+                                                <t t-if="not doc.outward_gate_entry_id.outward_line_ids and not doc.outward_gate_entry_id.sale_order_id and doc.move_ids_without_package">
+                                                    <t t-foreach="doc.move_ids_without_package" t-as="move">
+                                                        <tr>
+                                                            <td style="padding: 8px; border-bottom: 1px solid #ddd;"><span t-field="move.product_id.name"/></td>
+                                                            <td style="padding: 8px; text-align: center; border-bottom: 1px solid #ddd;"><span t-field="move.product_uom_qty"/></td>
+                                                            <td style="padding: 8px; text-align: center; border-bottom: 1px solid #ddd;"><span t-field="move.quantity"/></td>
+                                                            <td style="padding: 8px; text-align: center; border-bottom: 1px solid #ddd;"><span t-field="move.product_uom.name"/></td>
+                                                        </tr>
+                                                    </t>
+                                                </t>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </t>
+                    <t t-if="doc.picking_type_code == 'outgoing' and not doc.outward_gate_entry_id">
+                        <t t-call="web.external_layout">
+                            <div class="page">
+                                <div class="alert alert-warning text-center">
+                                    <h4>No Outward Gate Entry Selected</h4>
+                                    <p>Please select an Outward Gate Entry in the delivery to generate the outward report.</p>
+                                </div>
+                            </div>
+                        </t>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+        <!-- Report Template for Outward Gate Entry -->
+        <template id="report_outward_receipt_outward_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <!-- Header -->
+                            <div class="row" style="margin-bottom: 30px;">
+                                <div class="col-12 text-center">
+                                    <h3><strong>Outward Receipt : <span t-field="doc.gate_entry_no"/></strong></h3>
+                                </div>
+                            </div>
+
+                            <!-- Receipt Details Table -->
+                            <div class="row" style="margin-bottom: 40px;">
+                                <div class="col-12">
+                                    <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+                                        <thead>
+                                            <tr style="border-top: 2px solid black; border-bottom: 2px solid black;">
+                                                <th style="padding: 8px; text-align: left; font-weight: bold;">Vehicle no.</th>
+                                                <th style="padding: 8px; text-align: left; font-weight: bold;">Driver Name</th>
+                                                <th style="padding: 8px; text-align: left; font-weight: bold;">Driver Phone</th>
+                                                <th style="padding: 8px; text-align: left; font-weight: bold;">Customer</th>
+                                                <th style="padding: 8px; text-align: left; font-weight: bold;">E-Way Bill</th>
+                                                <th style="padding: 8px; text-align: left; font-weight: bold;">Tax Invoice No.</th>
+                                                <th style="padding: 8px; text-align: left; font-weight: bold;">Date</th>
+                                                <th style="padding: 8px; text-align: left; font-weight: bold;">Gatekeeper</th>
+                                                <th style="padding: 8px; text-align: left; font-weight: bold;">Weight</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td style="padding: 8px; border-bottom: 1px solid black;"><span t-field="doc.vehicle_no"/></td>
+                                                <td style="padding: 8px; border-bottom: 1px solid black;"><span t-field="doc.driver_name"/></td>
+                                                <td style="padding: 8px; border-bottom: 1px solid black;"><span t-field="doc.driver_phone"/></td>
+                                                <td style="padding: 8px; border-bottom: 1px solid black;"><span t-field="doc.customer_id.name"/></td>
+                                                <td style="padding: 8px; border-bottom: 1px solid black;"><span t-field="doc.eway_bill_no"/></td>
+                                                <td style="padding: 8px; border-bottom: 1px solid black;"><span t-field="doc.tax_invoice_no"/></td>
+                                                <td style="padding: 8px; border-bottom: 1px solid black;"><span t-field="doc.date" t-options="{'widget': 'date'}"/></td>
+                                                <td style="padding: 8px; border-bottom: 1px solid black;"><span t-field="doc.gatekeeper_id.name"/></td>
+                                                <td style="padding: 8px; border-bottom: 1px solid black;"><span t-field="doc.total_weight"/></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- Product Details -->
+                            <div class="row">
+                                <div class="col-12">
+                                    <h4 style="text-align: center; margin-bottom: 20px;"><strong>Product Details</strong></h4>
+                                    <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+                                        <thead>
+                                            <tr style="border-top: 2px solid black; border-bottom: 2px solid black;">
+                                                <th style="padding: 8px; text-align: left; font-weight: bold;">Product</th>
+                                                <th style="padding: 8px; text-align: center; font-weight: bold;">Ordered Qty</th>
+                                                <th style="padding: 8px; text-align: center; font-weight: bold;">Gate Outward Qty</th>
+                                                <th style="padding: 8px; text-align: center; font-weight: bold;">UOM</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <t t-if="doc.outward_line_ids">
+                                                <t t-foreach="doc.outward_line_ids" t-as="line">
+                                                    <tr>
+                                                        <td style="padding: 8px; border-bottom: 1px solid #ddd;"><span t-field="line.product_id.name"/></td>
+                                                        <td style="padding: 8px; text-align: center; border-bottom: 1px solid #ddd;"><span t-field="line.ordered_quantity"/></td>
+                                                        <td style="padding: 8px; text-align: center; border-bottom: 1px solid #ddd;"><span t-field="line.gate_quantity"/></td>
+                                                        <td style="padding: 8px; text-align: center; border-bottom: 1px solid #ddd;"><span t-field="line.product_uom_id.name"/></td>
+                                                    </tr>
+                                                </t>
+                                            </t>
+                                            <t t-if="not doc.outward_line_ids and doc.sale_order_id">
+                                                <t t-foreach="doc.sale_order_id.order_line" t-as="so_line">
+                                                    <tr>
+                                                        <td style="padding: 8px; border-bottom: 1px solid #ddd;"><span t-field="so_line.product_id.name"/></td>
+                                                        <td style="padding: 8px; text-align: center; border-bottom: 1px solid #ddd;"><span t-field="so_line.product_uom_qty"/></td>
+                                                        <td style="padding: 8px; text-align: center; border-bottom: 1px solid #ddd;"><span t-field="so_line.product_uom_qty"/></td>
+                                                        <td style="padding: 8px; text-align: center; border-bottom: 1px solid #ddd;"><span t-field="so_line.product_uom.name"/></td>
+                                                    </tr>
+                                                </t>
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="res_config_biometric_integration_form_inherit" model="ir.ui.view">
+            <field name="name">biometric_integration.res_config_settings.form</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="hr_attendance.res_config_settings_view_form"/>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <xpath expr="//block[@name='overtime_settings']" position="after">
+                    <block title="PI BioSync Biometrics Attendance Credentials" id="biometric_integration_settings">
+                        <setting string="BioSync Configure Base URL"  id="biometric_configure_base_url">
+<!--                                <label for="biometric_configure_base_url"/>-->
+                            <div>
+                                <field name="biometric_configure_base_url" force_save="1"/>
+                            </div>
+                        </setting>
+                        <setting string="BioSync Configure Database Name"  id="biometric_configure_base_url">
+<!--                                <label for="biometric_configure_base_url"/>-->
+                            <div>
+                                <field name="biometric_configure_db_name" force_save="1"/>
+                            </div>
+                        </setting>
+                        <setting string="Device Status Interval Time(Min)" id="device_status_selection">
+                            <div>
+                                <field name="biometric_configure_device_sync_time_interval" force_save="1"/>
+                            </div>
+                        </setting>
+                        <setting string="Employee ID Type" id="device_status_selection">
+                            <div>
+                                <field name="biometric_employee_id" force_save="1"/>
+                            </div>
+                        </setting>
+                    </block>
+
+
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

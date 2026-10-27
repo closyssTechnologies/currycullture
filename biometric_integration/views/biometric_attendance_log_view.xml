@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="biometric_attendance_log_form_view" model="ir.ui.view">
+            <field name="name">biometric_attendance_log.form</field>
+            <field name="model">biometric.attendance.log</field>
+            <field name="arch" type="xml">
+                <form string="Biometric attendance log">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="device_id"/>
+                                <field name="emp_no"/>
+
+                            </group>
+                            <group>
+                                <field name="punch_time"/>
+                                <field name="inout_mode"/>
+                                <field name="is_odoo_synced"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="biometric_attendance_log_tree_view" model="ir.ui.view">
+            <field name="name">biometric_attendance_log.tree</field>
+            <field name="model">biometric.attendance.log</field>
+            <field name="arch" type="xml">
+                <tree string="Biometric Attendance Log">
+                    <field name="name"/>
+                    <field name="emp_no"/>
+                    <field name="punch_time"/>
+                    <field name="device_id"/>
+                    <field name="inout_mode"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="biometric_attendance_log_search_view" model="ir.ui.view">
+            <field name="name">ProjectName.biometric_attendance_log.search</field>
+            <field name="model">biometric.attendance.log</field>
+            <field name="arch" type="xml">
+                <search string="Biometric Attendance Log">
+                    <group expand="1" string="Group By">
+                        <filter string="Device" name="device_id" domain="[]"
+                                context="{'group_by':'device_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="biometric_attendance_log_act_window" model="ir.actions.act_window">
+            <field name="name">Biometric Attendance Log</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">biometric.attendance.log</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    There is no examples click here to add new Biometric attendance.
+                </p>
+            </field>
+        </record>
+
+        <menuitem name="Biometric Attendance Log" id="biometric_attendance_log_menu" parent="hr_attendance.menu_hr_attendance_root" sequence="25" action="biometric_attendance_log_act_window"/>
+
+    </data>
+</odoo>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Gate Entry Overview Kanban -->
+        <record id="view_gate_entry_overview_kanban" model="ir.ui.view">
+            <field name="name">gate.entry.overview.kanban</field>
+            <field name="model">gate.pass</field>
+            <field name="arch" type="xml">
+                <kanban create="false" edit="false" delete="false">
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="row" style="padding: 20px;">
+                                <div class="col-md-6">
+                                    <div class="card" style="background-color: #b8ddd9; color: black; padding: 60px; text-align: center; margin: 10px; cursor: pointer; border: 2px solid #5cb3a8;" onclick="window.location.href='/web#action=gate_pass.action_inward_gate_entry'">
+                                        <div style="font-size: 48px; margin-bottom: 10px;">→</div>
+                                        <h3>Inward Gate Entry</h3>
+                                        <p style="margin-top: 20px; font-size: 16px;">Enter</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card" style="background-color: #f5e6d3; color: black; padding: 60px; text-align: center; margin: 10px; cursor: pointer; border: 2px solid #d4a574;" onclick="window.location.href='/web#action=gate_pass.action_outward_gate_entry'">
+                                        <div style="font-size: 48px; margin-bottom: 10px;">←</div>
+                                        <h3>Outward Gate Entry</h3>
+                                        <p style="margin-top: 20px; font-size: 16px;">Exit</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- Gate Entry Overview Action -->
+        <record id="action_gate_entry_overview" model="ir.actions.client">
+            <field name="name">Gate Entry Overview</field>
+            <field name="tag">gate_entry_dashboard</field>
+            <field name="target">current</field>
+        </record>
+
+        <!-- Gate Pass Form -->
+        <record id="view_gate_pass_form" model="ir.ui.view">
+            <field name="name">gate.pass.form</field>
+            <field name="model">gate.pass</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="visitor_name"/>
+                            <field name="purpose"/>
+                            <field name="entry_type"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Gate Pass Tree -->
+        <record id="view_gate_pass_tree" model="ir.ui.view">
+            <field name="name">gate.pass.tree</field>
+            <field name="model">gate.pass</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="visitor_name"/>
+                    <field name="purpose"/>
+                    <field name="entry_type"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Inward Gate Entry Action -->
+        <record id="action_inward_gate_entry" model="ir.actions.act_window">
+            <field name="name">Inward Gate Entry</field>
+            <field name="res_model">gate.pass</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('entry_type', '=', 'inward')]</field>
+        </record>
+
+        <!-- Outward Gate Entry Action -->
+        <record id="action_outward_gate_entry" model="ir.actions.act_window">
+            <field name="name">Outward Gate Entry</field>
+            <field name="res_model">gate.pass</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('entry_type', '=', 'outward')]</field>
+        </record>
+
+        <!-- Gate Pass Action (keep for menu) -->
+        <record id="action_gate_pass" model="ir.actions.act_window">
+            <field name="name">Gate Pass</field>
+            <field name="res_model">gate.pass</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Create Security Group for Gate Pass Managers -->
+        <record id="group_gate_pass_manager" model="res.groups">
+            <field name="name">Gate Pass Manager</field>
+            <field name="category_id" ref="base.module_category_hidden"/>
+        </record>
+
+        <!-- Main Gate Entry Menu -->
+        <menuitem id="menu_gate_entry"
+                  name="Gate Entry"
+                  action="action_gate_entry_overview"
+                  groups="gate_pass.group_gate_pass_manager"
+                  sequence="10"/>
+
+        <!-- Overview submenu -->
+        <menuitem id="menu_gate_entry_overview"
+                  name="Overview"
+                  parent="menu_gate_entry"
+                  action="action_gate_entry_overview"
+                  sequence="1"/>
+    </data>
+</odoo>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_stock_landed_cost_form_hide_mrp" model="ir.ui.view">
+        <field name="name">stock.landed.cost.form.hide.mrp</field>
+        <field name="model">stock.landed.cost</field>
+        <field name="inherit_id" ref="mrp_landed_costs.view_mrp_landed_costs_form"/>
+        <field name="arch" type="xml">
+            <!-- Hide mrp_production_ids field from regular users, show only to managers -->
+            <field name="mrp_production_ids" position="attributes">
+                <attribute name="groups">stock.group_stock_manager</attribute>
+            </field>
+        </field>
+    </record>
+</odoo>

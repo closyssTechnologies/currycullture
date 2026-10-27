@@ -1,0 +1,11 @@
+<odoo>
+    <record id="action_report_purchase" model="ir.actions.report">
+        <field name="name">Purchase Order CCL Report</field>
+        <field name="model">purchase.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">custom_purchase_report.custom_purchase_report</field>
+        <field name="report_file">custom_purchase_report.custom_purchase_report</field>
+        <field name="binding_type">report</field>
+        <field name="binding_model_id" ref="purchase.model_purchase_order"/>
+    </record>
+</odoo>

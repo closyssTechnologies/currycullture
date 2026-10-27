@@ -1,0 +1,559 @@
+<odoo>
+    <template id="custom_purchase_report">
+        <t t-call="web.html_container">
+            <t t-call="custom_report_module.external_layout_custom_purchase_report">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-set="company" t-value="doc.company_id"/>
+                    <div class="page" style="padding-top:0px;background-color:#FFFFFF; font-size: 10px !important;">
+                        <!-- Header Section -->
+                        <!--                    <div style="background-color:#FFFFFF; border-top: 2px solid black; padding: 0px 0;padding-bottom:0px;margin-bottom:0px;">-->
+                        <!--                        <h2 style="text-align: center; padding-top:10px; font-style: bold; font-size:13px; margin:0;">Purchase Order</h2>-->
+                        <!--                    </div>-->
+                        <div style="background-color:#FFFFFF; border-top: 2px solid black; padding: 0; margin: 0;">
+                            <h2 style="text-align: center; font-style: bold !important; font-size: 13px; margin: 0; padding-top: 15px;">
+                                Purchase Order
+                            </h2>
+                        </div>
+
+                        <!-- Vendor and PO Details Section -->
+                        <table class="table"
+                               style="width: 100%; border: 1px solid black; background-color: #73a640; border-collapse: collapse;">
+                            <tr>
+                                <td style="text-align: center; font-size: 10px; font-weight: bold; padding: 5px; width: 50%; border-right: 1px solid black;">
+                                    Vendor Details
+                                </td>
+                                <td style="text-align: center; font-size: 10px; font-weight: bold; padding: 5px; width: 50%;">
+                                    PO Details
+                                </td>
+                            </tr>
+                        </table>
+
+                        <!-- Inner PO Details -->
+                        <table class="table" style="width: 100%; border: 1px solid black; background-color: #FFFFFF; border-collapse: collapse; font-family:arial !important; font-style: normal;">
+                            <tr>
+                                <td style="text-align: left; font-size: 10px; font-weight: bold; padding: 5px; width: 50%; border-right: 1px solid black; font-family:arial !important; font-style: normal;">
+                                    <!-- Remove the border from partner_id span -->
+                                    <div class="mt-1" t-field="doc.partner_id.name"/>
+
+                                    <div class="mt-1" t-field="doc.partner_id.street"/>
+
+                                    <div class="mt-1" t-field="doc.partner_id.street2"/>
+
+                                    <div class="mt-1" t-field="doc.partner_id.city"/>
+
+                                    <div class="mt-1" t-field="doc.partner_id.state_id.name"/>
+
+                                    <div class="mt-1" t-field="doc.partner_id.country_id.name"/>
+                                </td>
+                                <td style="text-align: center; font-size: 5px; font-weight: bold; width: 50%;">
+                                    <table style="width: 100%; padding:0px; margin:0px; border:0px; border-collapse: collapse;">
+                                        <tr>
+                                            <td style="font-size:10px;font-weight:bold;width:30%;border-right:1px solid black;border-bottom:1px solid black;">
+                                                PO No.
+                                            </td>
+                                            <td style="font-size:10px;width:70%; border-bottom:1px solid black;">
+                                                <span t-field="docs.name"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size:10px;font-weight:bold;width:30%;border-right:1px solid black;border-bottom:1px solid black;">
+                                                PO Date
+                                            </td>
+                                            <td style="font-size:10px;width:70%;border-bottom:1px solid black;">
+                                                <span t-field="docs.date_order"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size:10px;font-weight:bold;width:30%;border-right:1px solid black;border-bottom:1px solid black;">
+                                                PO Release Date
+                                            </td>
+                                            <td style="font-size:10px;width:70%;border-bottom:1px solid black;">
+                                                <span t-field="docs.date_approve"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size:10px;font-weight:bold;width:30%;border-right:1px solid black;border-bottom:1px solid black;">
+                                                Payment Terms
+                                            </td>
+                                            <td style="font-size:10px;width:70%;border-bottom:1px solid black;">
+                                                <span t-field="docs.payment_term_id"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size:10px;font-weight:bold;width:30%;border-right:1px solid black;border-bottom:1px solid black;">
+                                                Exp Delivery Date
+                                            </td>
+                                            <td style="font-size:10px;width:70%;border-bottom:1px solid black;">
+                                                <span t-field="docs.date_planned"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size:10px;font-weight:bold;width:30%;border-right:1px solid black;">
+                                                PO Expiry Date
+                                            </td>
+                                            <td style="font-size:10px;width:70%;">
+                                                <span t-field="docs.date_planned"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="table"
+                               style="width: 100%; border: 1px solid black; background-color: #73a640; border-collapse: collapse; font-family:arial !important;">
+                            <tr style="font-family:arial !important;">
+                                <td style="text-align: center; font-size: 10px; font-weight: bold; padding: 5px; width: 50%; border-right: 1px solid black;">
+                                    Billing Address
+                                </td>
+                                <td style="text-align: center; font-size: 10px; font-weight: bold; padding: 5px; width: 50%;">
+                                    Shipping Address
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="table"
+                               style="width: 100%; border: 1px solid black; background-color: #FFFFFF; border-collapse: collapse; font-family:arial !important; font-style: normal;">
+                            <tr style="font-family:arial !important;">
+                                <td style="text-align: left; font-size: 10px; font-weight: bold; font-family:arial !important; font-style: normal; padding: 5px; width: 50%; border-right: 1px solid black;">
+                                    <div class="mt-1" t-field="doc.company_id.partner_id.name"/>
+
+                                    <div class="mt-1" t-field="doc.company_id.partner_id.street"/>
+
+                                    <div class="mt-1" t-field="doc.company_id.partner_id.street2"/>
+
+                                    <div class="mt-1" t-field="doc.company_id.partner_id.city"/>
+
+                                    <div class="mt-1" t-field="doc.company_id.partner_id.state_id.name"/>
+
+                                    <div class="mt-1" t-field="doc.company_id.partner_id.country_id.name"/>
+                                </td>
+                                <td style="text-align: left; font-size: 10px; font-weight: bold; width: 50%; font-family:arial !important; font-style: normal;">
+                                    <div class="mt-1" t-field="doc.picking_type_id.warehouse_id.partner_id.name"/>
+
+                                    <div class="mt-1" t-field="doc.picking_type_id.warehouse_id.partner_id.street"/>
+
+                                    <div class="mt-1" t-field="doc.picking_type_id.warehouse_id.partner_id.street2"/>
+
+                                    <div class="mt-1" t-field="doc.picking_type_id.warehouse_id.partner_id.city"/>
+
+                                    <div class="mt-1"
+                                         t-field="doc.picking_type_id.warehouse_id.partner_id.state_id.name"/>
+
+                                    <div class="mt-1"
+                                         t-field="doc.picking_type_id.warehouse_id.partner_id.country_id.name"/>
+
+                                </td>
+                            </tr>
+                        </table>
+                        <!-- Footer Section -->
+                        <table style="width: 100%; padding:0px; margin:0px; border:0px; border-collapse: collapse; font-size: 10px;">
+                            <thead style="background-color:#73a640;">
+                                <tr>
+                                    <th style="border:1px solid #333;" rowspan="2">Sl No</th>
+                                    <th style="border:1px solid #333;" rowspan="2">Item Description</th>
+                                    <th style="border:1px solid #333;" rowspan="2">HSN Code</th>
+                                    <th style="border:1px solid #333;" rowspan="2">Quantity</th>
+                                    <th style="border:1px solid #333;" rowspan="2">UOM</th>
+                                    <th style="border:1px solid #333;" rowspan="2">Rate</th>
+                                    <th style="border:1px solid #333;" rowspan="2">Taxable Value</th>
+                                    <th style="border:1px solid #333;" colspan="2">CGST</th>
+                                    <th style="border:1px solid #333;" colspan="2">SGST</th>
+                                    <th style="border:1px solid #333;" colspan="2">IGST</th>
+                                    <th style="border:1px solid #333;" rowspan="2">Total Amount</th>
+                                </tr>
+
+                                <tr>
+                                    <th style="border:1px solid #333;">Rate</th>
+                                    <th style="border:1px solid #333;">Amt</th>
+                                    <th style="border:1px solid #333;">Rate</th>
+                                    <th style="border:1px solid #333;">Amt</th>
+                                    <th style="border:1px solid #333;">Rate</th>
+                                    <th style="border:1px solid #333;">Amt</th>
+                                </tr>
+                            </thead>
+                            <tbody style="background-color:#FFFFFF;">
+                                <t t-set="index" t-value="0"/>
+                                <t t-foreach="docs.order_line" t-as="line">
+                                    <tr>
+                                        <t t-if="not line.display_type">
+                                            <td class="text-center" style="text-align:center;border:1px solid #333;">
+                                                <t t-esc="index + 1"/>
+                                                <t t-set="index" t-value="index + 1"/>
+                                            </td>
+                                            <td class="text-left" style="text-align:left;border:1px solid #333;">
+                                                <span t-field="line.product_id.name"/>
+                                            </td>
+                                            <td class="text-center" style="text-align:center;border:1px solid #333;">
+                                                <span t-field="line.product_id.l10n_in_hsn_code"/>
+                                            </td>
+                                            <td class="text-end" style="text-align:right;border:1px solid #333;">
+                                                <span t-field="line.product_qty" t-options="{'widget': 'float'}"/>
+                                            </td>
+                                            <td class="text-center" style="text-align:center;border:1px solid #333;">
+                                                <span t-field="line.product_uom.name"/>
+                                            </td>
+                                            <td class="text-end" style="text-align:right; border:1px solid #333;">
+                                                <span t-field="line.price_unit"/>
+                                                <!--                                                        t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"/>-->
+                                            </td>
+                                            <td style="text-align:right;border:1px solid #333;">
+                                                <t class="text-end" t-esc="'{:.2f}'.format(round(line.price_subtotal, 2))"/>
+                                                <!--                                                  <span t-field="line.price_subtotal"/>-->
+                                                <!--                                                        t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"/>-->
+                                            </td>
+                                            <!--                                             <td class="text-center" style="border:1px solid #333;">-->
+                                            <!--                                                     <span t-field="line.taxes_id"/>-->
+                                            <!--                                             </td>-->
+
+                                            <!-- Tax calculations only if taxes_id is present -->
+                                            <t t-set="taxes"
+                                               t-value="line.taxes_id.compute_all(line.price_unit, line.currency_id, line.product_qty, line.product_id, docs.partner_id)"/>
+
+                                            <!-- Check if taxes exist and display tax details -->
+                                            <t t-if="taxes">
+                                                <t t-set="cgst_rate" t-value="0"/>
+                                                <t t-foreach="taxes['taxes']" t-as="tax1">
+                                                    <t t-if="'CGST' in tax1['name']">
+                                                        <td style="text-align:right;border:1px solid #333;">
+                                                            <t t-set="cgst_rate"
+                                                               t-value="doc.env['account.tax'].sudo().browse(tax1['id']).amount"/>
+                                                            <t t-esc="cgst_rate"/>
+                                                        </td>
+                                                    </t>
+
+                                                    <t t-if="'CGST' in tax1['name']">
+
+                                                        <td style="text-align:right;border:1px solid #333;">
+                                                            <t  t-esc="'{:.2f}'.format(round(tax1['amount'], 2))"/>
+
+
+                                                        </td>
+
+                                                    </t>
+                                                </t>
+                                                <t t-if="cgst_rate == 0">
+                                                    <td style="text-align:right;border:1px solid #333;">
+                                                            0.0
+                                                        </td>
+                                                    <td style="text-align:right;border:1px solid #333;">
+                                                            0.0
+                                                        </td>
+                                                </t>
+
+                                                <t t-set="sgst_rate" t-value="0"/>
+                                                <t t-foreach="taxes['taxes']" t-as="tax2">
+                                                    <t t-if="'SGST' in tax2['name']">
+                                                        <td style="text-align:right;border:1px solid #333;">
+                                                            <t t-set="sgst_rate"
+                                                               t-value="doc.env['account.tax'].sudo().browse(tax2['id']).amount"/>
+                                                            <t t-esc="sgst_rate"/>
+                                                        </td>
+                                                    </t>
+
+                                                    <t t-if="'SGST' in tax2['name']">
+
+                                                        <td style="text-align:right;border:1px solid #333;">
+
+                                                            <t  t-esc="'{:.2f}'.format(round(tax2['amount'], 2))"/>
+
+
+                                                        </td>
+
+                                                    </t>
+                                                </t>
+                                                <t t-if="sgst_rate == 0">
+                                                    <td style="text-align:right;border:1px solid #333;">
+                                                            0.0
+                                                        </td>
+                                                    <td style="text-align:right;border:1px solid #333;">
+                                                            0.0
+                                                        </td>
+                                                </t>
+
+
+                                                <t t-set="igst_rate" t-value="0"/>
+                                                <t t-foreach="taxes['taxes']" t-as="tax3">
+                                                    <t t-if="'IGST' in tax3['name']">
+                                                        <td style="text-align:right;border:1px solid #333;">
+                                                            <t t-set="igst_rate"
+                                                               t-value="doc.env['account.tax'].sudo().browse(tax3['id']).amount"/>
+                                                            <t t-esc="igst_rate"/>
+                                                        </td>
+                                                    </t>
+
+                                                    <t t-if="'IGST' in tax3['name']">
+
+                                                        <td style="text-align:right;border:1px solid #333;">
+
+                                                            <t  t-esc="'{:.2f}'.format(round(tax3['amount'], 2))"/>
+
+
+                                                        </td>
+
+                                                    </t>
+                                                </t>
+                                                <t t-if="igst_rate == 0">
+                                                    <td style="text-align:right;border:1px solid #333;">
+                                                            0.0
+                                                        </td>
+                                                    <td style="text-align:right;border:1px solid #333;">
+                                                            0.0
+                                                        </td>
+                                                </t>
+
+                                            </t>
+                                            <t t-else="">
+                                                <td style="text-align:right;border:1px solid #333;">
+                                                            0.0
+                                                        </td>
+                                                    <td style="text-align:right;border:1px solid #333;">
+                                                            0.0
+                                                        </td>
+                                                <td style="text-align:right;border:1px solid #333;">
+                                                            0.0
+                                                        </td>
+                                                    <td style="text-align:right;border:1px solid #333;">
+                                                            0.0
+                                                        </td>
+                                                <td style="text-align:right;border:1px solid #333;">
+                                                            0.0
+                                                        </td>
+                                                    <td style="text-align:right;border:1px solid #333;">
+                                                            0.0
+                                                        </td>
+                                            </t>
+
+
+
+                                            <td style="text-align:right;border:1px solid #333;">
+                                                <t t-esc="'{:.2f}'.format(round(line.price_total, 2))"/>
+                                                <!--                                                        t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"/>-->
+                                            </td>
+                                        </t>
+                                        <t t-if="line.display_type == 'line_section'">
+                                            <td colspan="99"  style="background-color: #e0e0e0; text-align:left;border:1px solid #333;">
+                                                <span t-field="line.name"/>
+                                            </td>
+                                        </t>
+                                        <t t-if="line.display_type == 'line_note'">
+                                            <td colspan="99"  style=" background-color: #e0e0e0;text-align:left;border:1px solid #333;">
+                                                <span t-field="line.name"/>
+                                            </td>
+                                          </t>
+                                    </tr>
+                                </t>
+                            </tbody>
+                            <tfoot>
+                                <tr style="background-color:#FFFFFF;">
+                                    <td colspan="1" style="border:1px solid #333;">
+
+                                    </td>
+                                    <td colspan="1"
+                                        style="text-align:left; font-weight:bold; border:1px solid #333;">Total
+                                    </td>
+
+                                    <td style="border:1px solid #333;"></td>
+                                    <td style="border:1px solid #333;"></td>
+                                    <td style="border:1px solid #333;"></td>
+                                    <td style="border:1px solid #333;"></td>
+                                    <td style="text-align:right;border:1px solid #333; font-weight:bold;">
+                                        <t t-esc="'{:.2f}'.format(round(sum(line.price_subtotal for line in docs.order_line), 2))"/>
+                                    </td>
+                                    <td colspan="2" style="border:1px solid #333;"></td>
+                                    <td colspan="2" style="border:1px solid #333;"></td>
+                                    <td colspan="2" style="border:1px solid #333;"></td>
+                                    <td style="text-align:right;border:1px solid #333; font-weight:bold;">
+                                        <!-- Total Amount -->
+                                        <t t-esc="'{:.2f}'.format(round(sum(line.price_total for line in docs.order_line), 2))"/>
+                                        <!--                                                 t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"/>-->
+                                    </td>
+                                </tr>
+                                <!--                                <tr style="border: 1px solid black;">-->
+                                <!--                                    <td colspan="10"-->
+                                <!--                                        style="font-size: 13px; padding: 2px; text-align:center;background-color:#FFFFFF;border-right: 1px solid black;"/>-->
+                                <!--                                </tr>-->
+
+                                <tr>
+                                    <td colspan="13" style="background-color:#FFFFFF;"></td>
+                                    <td colspan="6"
+                                        style="border: 1px solid black; border-right: 1px solid black; background-color:#FFFFFF; font-size: 10px !important;">
+                                        <table style="width: 100%; border-collapse: collapse;">
+                                            <tr>
+                                                <td style="text-align: left; font-size: 10px !important;">Untaxed
+                                                    Amount:
+                                                </td>
+                                                <td style="text-align: right; font-size: 10px !important;">
+                                                    <span t-esc="'{:.2f}'.format(round(sum(line.price_subtotal for line in docs.order_line), 2))"/>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+                                        <!--                                                   <span style="text-align: right">Untaxed Amount:</span> <t style="text-align:right;" t-esc="'{:.2f}'.format(round(sum(line.price_subtotal for line in docs.order_line), 2))"/>-->
+                                    </td>
+                                </tr>
+                                <!--                                         <t t-foreach="docs.tax_totals.get('subtotals')" t-as="subtotal">-->
+                                <!--                                                  <tr>-->
+                                <!--                                                 <td colspan="7" style="background-color:#FFFFFF;"/>-->
+                                <!--                                                  <td colspan="6" style="border: 1px solid black; border-right: 1px solid black; background-color:#FFFFFF;">-->
+                                <!--&lt;!&ndash;                                                        <t t-esc="subtotal['name']"/> : <t style="text-align:right;" t-esc="'{:.2f}'.format(round(subtotal['formatted_amount'], 2))"/>&ndash;&gt;-->
+                                <!--                                                        <t t-esc="subtotal['name']"/> :  <span  t-esc="subtotal['formatted_amount']" >27.00</span>-->
+                                <!--                                                  </td>-->
+                                <!--                                                </tr>-->
+                                <!--                                         </t>-->
+                                <!--                                      <t t-foreach="docs.tax_totals.get('subtotals')" t-as="subtotal">-->
+                                <t t-foreach="docs.tax_totals.get('groups_by_subtotal').get('Untaxed Amount')"
+                                   t-as="taxes">
+                                    <tr>
+                                        <td colspan="13" style="background-color:#FFFFFF;"/>
+                                        <td colspan="6"
+                                            style="border: 1px solid black; border-right: 1px solid black; background-color:#FFFFFF; font-size: 10px !important;">
+                                            <!--                                                        <t t-esc="subtotal['name']"/> : <t style="text-align:right;" t-esc="'{:.2f}'.format(round(subtotal['formatted_amount'], 2))"/>-->
+
+                                            <table style="width: 100%; border-collapse: collapse; font-size: 10px !important;">
+                                                <tr>
+                                                    <td style="text-align: left; font-size: 10px !important;"><span
+                                                            t-esc="taxes['tax_group_name']"/>:
+                                                    </td>
+                                                    <td style="text-align: right; font-size: 10px !important;">
+                                                        <span  t-esc="'{:.2f}'.format(round(taxes['tax_group_amount'], 2))"/>
+                                                    </td>
+                                                </tr>
+                                            </table>
+
+                                            <!--                                                   :-->
+                                            <!--                                                   <span style="text-align: right" t-esc="taxes['tax_group_amount']">27.00</span>-->
+                                        </td>
+                                    </tr>
+                                </t>
+                                <!--                                      </t>-->
+
+                                <tr>
+                                    <td colspan="13" style="background-color:#FFFFFF;"/>
+                                    <td colspan="6"
+                                        style="border: 1px solid black; border-right: 1px solid black; background-color:#FFFFFF; font-size: 10px !important;">
+                                        <table style="width: 100%; border-collapse: collapse; font-size: 10px !important;">
+                                            <tr>
+                                                <td style="text-align: left; font-size: 10px !important;">Total:</td>
+                                                <td style="text-align: right; font-size: 10px !important;">
+                                                    <span t-esc="'{:.2f}'.format(round(sum(line.price_total for line in docs.order_line), 2))"/>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <!--                                                 Total: <t style="text-align:right;" t-esc="'{:.2f}'.format(round(sum(line.price_total for line in docs.order_line), 2))"/>-->
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                       <table style="width: 100%; border-collapse: collapse;">
+                                 <tr style="background-color: #73a640; text-align: left;">
+                                     <td colspan="3" style="font-size:12px; font-weight: bold; padding-top:5px; padding-bottom: 0px; border-bottom: 1px solid black;">
+                                         <t t-if="doc.amount_total">
+                                             <t t-set="amount_in_words"
+                                                t-value="doc.company_id.currency_id.amount_to_text(doc.amount_total)"/>
+                                             <p>Amount in Words:
+                                                 <span style="padding-right:3px;" t-esc="amount_in_words"/> Only
+                                             </p>
+                                         </t>
+                                         <t t-else="">
+                                             <p>Amount in Words: N/A</p>
+                                         </t>
+                                     </td>
+                                 </tr>
+                                 <tr style="background-color: #e0e0e0; text-align: center;">
+                                     <td style="border: 1px solid black; padding: 10px; padding-top:45px !important;font-weight: bold; font-size:12px;">
+                                         Prepared By
+                                     </td>
+                                     <td style="border: 1px solid black; padding: 10px; padding-top:45px !important;font-weight: bold; font-size:12px;">
+                                         Verified By
+                                     </td>
+                                     <td style="border: 1px solid black; padding: 10px; padding-top:45px !important;font-weight: bold; font-size:12px;">
+                                         Authorized Signature
+                                     </td>
+                                 </tr>
+<!--                                  <tr style="border: 1px solid black;">-->
+<!--                                     <td colspan="3" style="font-size: 10px; padding-top: 5px; text-align:left;">-->
+<!--&lt;!&ndash;                                         <strong>Note</strong>: This is an electronically generated document; therefore, it does not&ndash;&gt;-->
+<!--&lt;!&ndash;                                         require a physical signature.&ndash;&gt;-->
+<!--                                        <strong>Note:</strong> <t-field="docs.notes"/>-->
+<!--                                     </td>-->
+<!--                                  </tr>-->
+                                   <tr style="border: 1px solid black;">
+                                        <td colspan="3" style="font-size: 10px; padding-top: 5px; text-align:left;">
+                                            <strong>Note:</strong>
+<!--                                            <span style="padding:0px;margin:0px;" t-field="docs.remarks"/>-->
+                                        </td>
+                                    </tr>
+                                   <tr style="border: 1px solid black;">
+                                     <td colspan="3" style="font-size: 13px; padding-top: 5px; text-align:center;background-color: #73a640;">
+                                          <strong>Terms &amp; Condition</strong>
+                                     </td>
+                                   </tr>
+                                   <tr style="border: 1px solid black; background-color: #FFFFFF;">
+                                     <td colspan="3" style="font-size: 13px; padding: 5px; text-align:left !important;">
+                                        <span style="padding:0px;margin:0px;" t-field="docs.notes"/>
+                                     </td>
+                                   </tr>
+                             </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+
+    <template id="external_layout_custom_purchase_report">
+        <t t-call="web.html_container">
+            <div class="page" style="border: none !important;background-color: #FFFFFF;">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-set="company" t-value="docs.company_id"/>
+                    <div class="header" style="border: none;">
+                        <table class="table table-bordered"
+                               style="border-color:white; width: 100%; border-collapse: collapse;">
+                            <tr style="border: none !important;">
+                                <td style="border: none;width: 50%; background-color: #FFFFFF;">
+                                    <t t-if="company.logo">
+                                        <!--                                     <img t-if="company.logo" t-att-src="image_data_uri(company.logo)"  alt="Logo"/>-->
+                                        <img t-att-src="image_data_uri(company.logo)"
+                                             style="padding-left:35px;padding-top:20px;width:200px; height: 100px;padding-bottom:0px;"
+                                             alt="Company Logo"/>
+                                    </t>
+                                </td>
+                                <td style="border: none;width: 50%; text-align: right; padding: 10px; height:100px;font-size:10px;">
+                                    <strong t-esc="doc.company_id.name"/>
+                                    <br/>
+                                    <span t-esc="doc.company_id.street or ''"/>
+                                    <t t-if="doc.company_id.street2">
+                                        <br/>
+                                        <span t-esc="doc.company_id.street2"/>
+                                    </t>
+                                    <br/>
+                                    <span t-esc="doc.company_id.city or ''"/>
+                                    <t t-if="doc.company_id.state_id">
+                                        <span t-esc="doc.company_id.state_id.name"/>
+                                    </t>
+                                    ,
+                                    <span t-esc="doc.company_id.zip or ''"/>
+                                    <br/>
+                                    <span t-esc="doc.company_id.country_id.name if doc.company_id.country_id else ''"/>
+                                    <br/>
+                                    Website:
+                                    <span t-esc="doc.company_id.website or ''"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <t t-raw="0"/>
+                </t>
+            </div>
+        </t>
+
+    </template>
+
+    <report
+            id="action_report_custom_purchase_order"
+            model="purchase.order"
+            string="Purchase Order CCL Report"
+            report_type="qweb-pdf"
+            name="custom_report_module.custom_purchase_report"
+            file="custom_report_module.custom_purchase_report"/>
+
+</odoo>

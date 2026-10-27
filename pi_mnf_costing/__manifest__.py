@@ -1,0 +1,21 @@
+{
+    'name': 'Manufacturing Costing',
+    'version': '17.0.1.10',
+    'summary': 'Manufacturing costing',
+    'author': 'Primacy Infotech Pvt Ltd',
+    'category': 'Manufacturing',
+        'depends': ['stock','mrp','stock_landed_costs','hms_meters_base', 'mrp_landed_costs'],
+    'license': 'OPL-1',
+    'post_init_hook': 'post_init_hook',
+    'data': [
+        'security/ir.model.access.csv',
+        'data/cron.xml',
+        'views/mrp_bom_category_views.xml',
+        'views/mrp_bom_views.xml',
+        'views/mrp_production_views.xml',
+        'views/hr_contract_views.xml',
+        'views/stock_landed_cost_views.xml',
+    ],
+    'installable': True,
+    'application': False,
+}

@@ -1,0 +1,13 @@
+<odoo>
+<!--    <record id="action_report_accounting_bill" model="ir.actions.report">-->
+<!--        <field name="name">Bill Invoice CCL Report</field>-->
+<!--        <field name="model">account.move</field>-->
+<!--        <field name="report_type">qweb-pdf</field>-->
+<!--        <field name="report_name">custom_report_module.custom_account_bill_report</field>-->
+<!--        <field name="report_file">custom_report_module.custom_account_bill_report</field>-->
+<!--        <field name="binding_type">report</field>-->
+<!--        <field name="binding_model_id" ref="sale.model_account_move"/>-->
+
+<!--&lt;!&ndash;        <field name="domain">[('state', '!=', 'draft')]</field>&ndash;&gt;-->
+<!--    </record>-->
+</odoo>

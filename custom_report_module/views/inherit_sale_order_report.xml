@@ -1,0 +1,11 @@
+<odoo>
+    <record id="action_report_purchase" model="ir.actions.report">
+        <field name="name">Sale Order CCL</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">custom_report_module.custom_sale_report</field>
+        <field name="report_file">custom_report_module.custom_sale_report</field>
+        <field name="binding_type">report</field>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+    </record>
+</odoo>

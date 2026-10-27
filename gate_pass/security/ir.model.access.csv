@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_gate_pass_user,gate.pass.user,model_gate_pass,base.group_user,1,1,1,1
+access_inward_operation_user,inward.operation.user,model_inward_operation,base.group_user,1,1,1,0
+access_inward_operation_line_user,inward.operation.line.user,model_inward_operation_line,base.group_user,1,1,1,1
+access_outward_gate_entry_user,outward.gate.entry.user,model_outward_gate_entry,base.group_user,1,1,1,0
+access_outward_gate_entry_line_user,outward.gate.entry.line.user,model_outward_gate_entry_line,base.group_user,1,1,1,1
+access_inward_operation_admin,inward.operation.admin,model_inward_operation,base.group_system,1,1,1,1
+access_outward_gate_entry_admin,outward.gate.entry.admin,model_outward_gate_entry,base.group_system,1,1,1,1

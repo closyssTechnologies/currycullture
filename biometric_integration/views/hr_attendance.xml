@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="biometric_hr_attendance_form_inherit" model="ir.ui.view">
+            <field name="name">hr.attendance.form</field>
+            <field name="model">hr.attendance</field>
+            <field name="inherit_id" ref="hr_attendance.hr_attendance_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='in_mode']" position="after">
+                    <field name="in_biometric_device" readonly="1" invisible="in_mode != 'biometric_device'"/>
+                </xpath>
+                <xpath expr="//field[@name='out_mode']" position="after">
+                     <field name="out_biometric_device" readonly="1" invisible="in_mode != 'biometric_device'"/>
+                     <field name="is_single_punch" readonly="1"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

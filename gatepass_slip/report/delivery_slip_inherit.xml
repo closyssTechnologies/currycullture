@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <template id="report_delivery_document_inherit" inherit_id="stock.report_delivery_document">
+        <xpath expr="//div[@name='div_sched_date']" position="after">
+            <div t-if="o.gate_pass_no" class="col-auto col-3 mw-100 mb-2" name="div_delivery">
+                <strong>Gate Pass No:</strong>
+                <p t-field="o.gate_pass_no" class="m-0">PL/CCL/GET-24-25-000001</p>
+            </div>
+        </xpath>
+
+
+    </template>
+
+</odoo>
