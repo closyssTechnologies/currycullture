@@ -16,7 +16,7 @@
     'website': "https://www.primacyinfotech.com",
     'support': "odoo@primacyinfotech.com",
     'category': 'Extra Tools',
-    'version': '17.0.1.1',
+    'version': '19.0.1.0.0',
     'images': ['static/description/meter_data.png'],
     'depends': ['base', 'mail'],
 
@@ -40,6 +40,6 @@
     'installable': True,
     'application': True,
     "price": 49,
-    "currency": "EUR"
+    "currency": "EUR",
+    'license': 'LGPL-3',
 }
-

@@ -5,9 +5,9 @@
       <field name="name">hms meter type tree</field>
       <field name="model">hms.meter.type</field>
       <field name="arch" type="xml">
-        <tree string="HMS Meter Types">
+        <list string="HMS Meter Types">
           <field name="name"/>
-        </tree>
+        </list>
       </field>
     </record>
     

@@ -5,13 +5,13 @@
             <field name="name">hms meter tree</field>
             <field name="model">hms.meter</field>
             <field name="arch" type="xml">
-                <tree string="HMS Meters">
+                <list string="HMS Meters">
                     <field name="name"/>
                     <field name="code" optional="show"/>
                     <field name="meter_type_id" optional="show"/>
                     <field name="latest_data_datetime" optional="show"/>
                     <field name="latest_data" optional="show"/>
-                </tree>
+                </list>
             </field>
         </record>
 
@@ -75,13 +75,13 @@
                             <field name="latest_closing_data" invisible="latest_data_id == False"/> -->
                         </group>
                         <hr/>
-                        <field name="meter_data_ids" context="{'default_meter_id': active_id}" nolabel="1">
-                            <tree editable="bottom">
+                        <field name="meter_data_ids" nolabel="1">
+                            <list editable="bottom">
                                 <field name="data_datetime"/>
                                 <field name="opening_data"/>
                                 <field name="closing_data"/>
                                 <field name="data"/>
-                            </tree>
+                            </list>
                         </field>
                     </sheet>
                     <div class="o_attachment_preview"/>

@@ -15,11 +15,14 @@ class HmsMeterData(models.Model):
     _mail_post_access = 'read'
     _order = 'data_datetime desc'
 
+    def _compute_display_name(self):
+        for r in self:
+            r.display_name = "%s [%s - %s]" % (r.meter_id.name or '', r.data_datetime or '', r.data or '')
+
     def name_get(self):
         result = []
         for r in self:
             result.append((r.id, "%s [%s - %s]" % (r.meter_id.name, r.data_datetime, r.data)))
-
         return result
 
     meter_id = fields.Many2one(comodel_name='hms.meter', string='Meter', required=True)

@@ -5,7 +5,7 @@
       <field name="name">hms meter data tree</field>
       <field name="model">hms.meter.data</field>
       <field name="arch" type="xml">
-        <tree string="HMS Meters Data">
+        <list string="HMS Meters Data">
           <field name="meter_id"/>
           <field name="meter_type_id"/>
           <field name="data_datetime"/>
@@ -14,7 +14,7 @@
           <field name="data"/>
           <field name="create_uid" optional="hide"/>
           <field name="create_date" optional="hide"/>
-        </tree>
+        </list>
       </field>
     </record>
     
