@@ -177,7 +177,7 @@
                                     <tr>
                                         <t t-if="not line.display_type">
                                             <td class="text-center" style="text-align:center;border:1px solid #333;">
-                                                <t t-esc="index + 1"/>
+                                                <t t-out="index + 1"/>
                                                 <t t-set="index" t-value="index + 1"/>
                                             </td>
                                             <td class="text-left" style="text-align:left;border:1px solid #333;">
@@ -197,7 +197,7 @@
                                                 <!--                                                        t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"/>-->
                                             </td>
                                             <td style="text-align:right;border:1px solid #333;">
-                                                <t class="text-end" t-esc="'{:.2f}'.format(round(line.price_subtotal, 2))"/>
+                                                <t class="text-end" t-out="'{:.2f}'.format(round(line.price_subtotal, 2))"/>
                                                 <!--                                                  <span t-field="line.price_subtotal"/>-->
                                                 <!--                                                        t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"/>-->
                                             </td>
@@ -217,14 +217,14 @@
                                                         <td style="text-align:right;border:1px solid #333;">
                                                             <t t-set="cgst_rate"
                                                                t-value="doc.env['account.tax'].sudo().browse(tax1['id']).amount"/>
-                                                            <t t-esc="cgst_rate"/>
+                                                            <t t-out="cgst_rate"/>
                                                         </td>
                                                     </t>
 
                                                     <t t-if="'CGST' in tax1['name']">
 
                                                         <td style="text-align:right;border:1px solid #333;">
-                                                            <t  t-esc="'{:.2f}'.format(round(tax1['amount'], 2))"/>
+                                                            <t  t-out="'{:.2f}'.format(round(tax1['amount'], 2))"/>
 
 
                                                         </td>
@@ -246,7 +246,7 @@
                                                         <td style="text-align:right;border:1px solid #333;">
                                                             <t t-set="sgst_rate"
                                                                t-value="doc.env['account.tax'].sudo().browse(tax2['id']).amount"/>
-                                                            <t t-esc="sgst_rate"/>
+                                                            <t t-out="sgst_rate"/>
                                                         </td>
                                                     </t>
 
@@ -254,7 +254,7 @@
 
                                                         <td style="text-align:right;border:1px solid #333;">
 
-                                                            <t  t-esc="'{:.2f}'.format(round(tax2['amount'], 2))"/>
+                                                            <t  t-out="'{:.2f}'.format(round(tax2['amount'], 2))"/>
 
 
                                                         </td>
@@ -277,7 +277,7 @@
                                                         <td style="text-align:right;border:1px solid #333;">
                                                             <t t-set="igst_rate"
                                                                t-value="doc.env['account.tax'].sudo().browse(tax3['id']).amount"/>
-                                                            <t t-esc="igst_rate"/>
+                                                            <t t-out="igst_rate"/>
                                                         </td>
                                                     </t>
 
@@ -285,7 +285,7 @@
 
                                                         <td style="text-align:right;border:1px solid #333;">
 
-                                                            <t  t-esc="'{:.2f}'.format(round(tax3['amount'], 2))"/>
+                                                            <t  t-out="'{:.2f}'.format(round(tax3['amount'], 2))"/>
 
 
                                                         </td>
@@ -326,7 +326,7 @@
 
 
                                             <td style="text-align:right;border:1px solid #333;">
-                                                <t t-esc="'{:.2f}'.format(round(line.price_total, 2))"/>
+                                                <t t-out="'{:.2f}'.format(round(line.price_total, 2))"/>
                                                 <!--                                                        t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"/>-->
                                             </td>
                                         </t>
@@ -357,14 +357,14 @@
                                     <td style="border:1px solid #333;"></td>
                                     <td style="border:1px solid #333;"></td>
                                     <td style="text-align:right;border:1px solid #333; font-weight:bold;">
-                                        <t t-esc="'{:.2f}'.format(round(sum(line.price_subtotal for line in docs.order_line), 2))"/>
+                                        <t t-out="'{:.2f}'.format(round(sum(line.price_subtotal for line in docs.order_line), 2))"/>
                                     </td>
                                     <td colspan="2" style="border:1px solid #333;"></td>
                                     <td colspan="2" style="border:1px solid #333;"></td>
                                     <td colspan="2" style="border:1px solid #333;"></td>
                                     <td style="text-align:right;border:1px solid #333; font-weight:bold;">
                                         <!-- Total Amount -->
-                                        <t t-esc="'{:.2f}'.format(round(sum(line.price_total for line in docs.order_line), 2))"/>
+                                        <t t-out="'{:.2f}'.format(round(sum(line.price_total for line in docs.order_line), 2))"/>
                                         <!--                                                 t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"/>-->
                                     </td>
                                 </tr>
@@ -383,20 +383,20 @@
                                                     Amount:
                                                 </td>
                                                 <td style="text-align: right; font-size: 10px !important;">
-                                                    <span t-esc="'{:.2f}'.format(round(sum(line.price_subtotal for line in docs.order_line), 2))"/>
+                                                    <span t-out="'{:.2f}'.format(round(sum(line.price_subtotal for line in docs.order_line), 2))"/>
                                                 </td>
                                             </tr>
                                         </table>
 
-                                        <!--                                                   <span style="text-align: right">Untaxed Amount:</span> <t style="text-align:right;" t-esc="'{:.2f}'.format(round(sum(line.price_subtotal for line in docs.order_line), 2))"/>-->
+                                        <!--                                                   <span style="text-align: right">Untaxed Amount:</span> <t style="text-align:right;" t-out="'{:.2f}'.format(round(sum(line.price_subtotal for line in docs.order_line), 2))"/>-->
                                     </td>
                                 </tr>
                                 <!--                                         <t t-foreach="docs.tax_totals.get('subtotals')" t-as="subtotal">-->
                                 <!--                                                  <tr>-->
                                 <!--                                                 <td colspan="7" style="background-color:#FFFFFF;"/>-->
                                 <!--                                                  <td colspan="6" style="border: 1px solid black; border-right: 1px solid black; background-color:#FFFFFF;">-->
-                                <!--&lt;!&ndash;                                                        <t t-esc="subtotal['name']"/> : <t style="text-align:right;" t-esc="'{:.2f}'.format(round(subtotal['formatted_amount'], 2))"/>&ndash;&gt;-->
-                                <!--                                                        <t t-esc="subtotal['name']"/> :  <span  t-esc="subtotal['formatted_amount']" >27.00</span>-->
+                                <!--&lt;!&ndash;                                                        <t t-out="subtotal['name']"/> : <t style="text-align:right;" t-out="'{:.2f}'.format(round(subtotal['formatted_amount'], 2))"/>&ndash;&gt;-->
+                                <!--                                                        <t t-out="subtotal['name']"/> :  <span  t-out="subtotal['formatted_amount']" >27.00</span>-->
                                 <!--                                                  </td>-->
                                 <!--                                                </tr>-->
                                 <!--                                         </t>-->
@@ -407,21 +407,21 @@
                                         <td colspan="13" style="background-color:#FFFFFF;"/>
                                         <td colspan="6"
                                             style="border: 1px solid black; border-right: 1px solid black; background-color:#FFFFFF; font-size: 10px !important;">
-                                            <!--                                                        <t t-esc="subtotal['name']"/> : <t style="text-align:right;" t-esc="'{:.2f}'.format(round(subtotal['formatted_amount'], 2))"/>-->
+                                            <!--                                                        <t t-out="subtotal['name']"/> : <t style="text-align:right;" t-out="'{:.2f}'.format(round(subtotal['formatted_amount'], 2))"/>-->
 
                                             <table style="width: 100%; border-collapse: collapse; font-size: 10px !important;">
                                                 <tr>
                                                     <td style="text-align: left; font-size: 10px !important;"><span
-                                                            t-esc="taxes['tax_group_name']"/>:
+                                                            t-out="taxes['tax_group_name']"/>:
                                                     </td>
                                                     <td style="text-align: right; font-size: 10px !important;">
-                                                        <span  t-esc="'{:.2f}'.format(round(taxes['tax_group_amount'], 2))"/>
+                                                        <span  t-out="'{:.2f}'.format(round(taxes['tax_group_amount'], 2))"/>
                                                     </td>
                                                 </tr>
                                             </table>
 
                                             <!--                                                   :-->
-                                            <!--                                                   <span style="text-align: right" t-esc="taxes['tax_group_amount']">27.00</span>-->
+                                            <!--                                                   <span style="text-align: right" t-out="taxes['tax_group_amount']">27.00</span>-->
                                         </td>
                                     </tr>
                                 </t>
@@ -435,11 +435,11 @@
                                             <tr>
                                                 <td style="text-align: left; font-size: 10px !important;">Total:</td>
                                                 <td style="text-align: right; font-size: 10px !important;">
-                                                    <span t-esc="'{:.2f}'.format(round(sum(line.price_total for line in docs.order_line), 2))"/>
+                                                    <span t-out="'{:.2f}'.format(round(sum(line.price_total for line in docs.order_line), 2))"/>
                                                 </td>
                                             </tr>
                                         </table>
-                                        <!--                                                 Total: <t style="text-align:right;" t-esc="'{:.2f}'.format(round(sum(line.price_total for line in docs.order_line), 2))"/>-->
+                                        <!--                                                 Total: <t style="text-align:right;" t-out="'{:.2f}'.format(round(sum(line.price_total for line in docs.order_line), 2))"/>-->
                                     </td>
                                 </tr>
                             </tfoot>
@@ -451,7 +451,7 @@
                                              <t t-set="amount_in_words"
                                                 t-value="doc.company_id.currency_id.amount_to_text(doc.amount_total)"/>
                                              <p>Amount in Words:
-                                                 <span style="padding-right:3px;" t-esc="amount_in_words"/> Only
+                                                 <span style="padding-right:3px;" t-out="amount_in_words"/> Only
                                              </p>
                                          </t>
                                          <t t-else="">
@@ -519,25 +519,25 @@
                                     </t>
                                 </td>
                                 <td style="border: none;width: 50%; text-align: right; padding: 10px; height:100px;font-size:10px;">
-                                    <strong t-esc="doc.company_id.name"/>
+                                    <strong t-out="doc.company_id.name"/>
                                     <br/>
-                                    <span t-esc="doc.company_id.street or ''"/>
+                                    <span t-out="doc.company_id.street or ''"/>
                                     <t t-if="doc.company_id.street2">
                                         <br/>
-                                        <span t-esc="doc.company_id.street2"/>
+                                        <span t-out="doc.company_id.street2"/>
                                     </t>
                                     <br/>
-                                    <span t-esc="doc.company_id.city or ''"/>
+                                    <span t-out="doc.company_id.city or ''"/>
                                     <t t-if="doc.company_id.state_id">
-                                        <span t-esc="doc.company_id.state_id.name"/>
+                                        <span t-out="doc.company_id.state_id.name"/>
                                     </t>
                                     ,
-                                    <span t-esc="doc.company_id.zip or ''"/>
+                                    <span t-out="doc.company_id.zip or ''"/>
                                     <br/>
-                                    <span t-esc="doc.company_id.country_id.name if doc.company_id.country_id else ''"/>
+                                    <span t-out="doc.company_id.country_id.name if doc.company_id.country_id else ''"/>
                                     <br/>
                                     Website:
-                                    <span t-esc="doc.company_id.website or ''"/>
+                                    <span t-out="doc.company_id.website or ''"/>
                                 </td>
                             </tr>
                         </table>
