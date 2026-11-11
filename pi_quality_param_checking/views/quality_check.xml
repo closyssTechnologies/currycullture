@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <record id="view_quality_check_form" model="ir.ui.view">
         <field name="name">quality.check.form</field>
@@ -8,14 +9,14 @@
             <xpath expr="//notebook" position="inside">
                 <page string="CCL Parameters">
                     <field name="ccl_parameter_ids" widget="one2many_list" nolabel="1">
-                        <tree editable="bottom">
+                        <list editable="bottom">
                             <field name="parameter_id" string="Parameter" readonly="1"/>
                             <field name="type_id" string="Type" readonly="1"/>
                             <field name="range" string="Range" readonly="1"/>
                             <field name="result" string="Result" />
                             <field name="remarks" string="Remarks" />
                             <field name="visibility" string="Visible" widget="boolean_toggle" />
-                        </tree>
+                        </list>
                         <form>
                             <group>
                                 <field name="parameter_id" readonly="1"/>
