@@ -69,7 +69,7 @@
                                                             <td style="padding: 8px; text-align: center; border-bottom: 1px solid #ddd;"><span t-field="move.product_uom_qty"/></td>
                                                             <td style="padding: 8px; text-align: center; border-bottom: 1px solid #ddd;"><span t-field="move.quantity"/></td>
                                                             <td style="padding: 8px; text-align: center; border-bottom: 1px solid #ddd;">
-                                                                <t t-esc="move.product_uom_qty - move.quantity"/>
+                                                                <t t-out="move.product_uom_qty - move.quantity"/>
                                                             </td>
                                                             <td style="padding: 8px; text-align: center; border-bottom: 1px solid #ddd;"><span t-field="move.product_uom.name"/></td>
                                                         </tr>
@@ -174,7 +174,7 @@
                                                             <td style="padding: 8px; text-align: center; border-bottom: 1px solid #ddd;"><span t-field="move.product_uom_qty"/></td>
                                                             <td style="padding: 8px; text-align: center; border-bottom: 1px solid #ddd;"><span t-field="move.quantity"/></td>
                                                             <td style="padding: 8px; text-align: center; border-bottom: 1px solid #ddd;">
-                                                                <t t-esc="move.product_uom_qty - move.quantity"/>
+                                                                <t t-out="move.product_uom_qty - move.quantity"/>
                                                             </td>
                                                             <td style="padding: 8px; text-align: center; border-bottom: 1px solid #ddd;"><span t-field="move.product_uom.name"/></td>
                                                         </tr>

@@ -1,6 +1,6 @@
 {
     'name': 'Gate Pass',
-    'version': '17.0.1.1.2',
+    'version': '19.0.1.0.0',
     'summary': 'Manage Inward and Outward Gate Operations',
     'description': """
 Gate Pass Management Module
@@ -33,4 +33,5 @@ Key Features:
     },
     'installable': True,
     'application': True,
+    'license': 'LGPL-3',
 }

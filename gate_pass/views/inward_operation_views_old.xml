@@ -27,14 +27,14 @@
                         <notebook>
                             <page string="Products">
                                 <field name="product_line_ids" readonly="1" force_save="1">
-                                    <tree editable="bottom">
+                                    <list editable="bottom">
                                         <field name="product_id"/>
                                         <field name="ordered_qty"/>
                                         <field name="receiving_qty"/>
                                         <field name="balance_qty" readonly="1"/>
                                         <field name="bill_quantity"/>
                                         <field name="uom_id"/>
-                                    </tree>
+                                    </list>
                                 </field>
                             </page>
                         </notebook>
@@ -48,14 +48,14 @@
             <field name="name">inward.operation.tree</field>
             <field name="model">inward.operation</field>
             <field name="arch" type="xml">
-                <tree string="Inward Operations">
+                <list string="Inward Operations">
                     <field name="name"/>
                     <field name="purchase_order_id"/>
                     <field name="vendor_id"/>
                     <field name="vehicle_no"/>
                     <field name="invoice_date"/>
                     <field name="receiving_date"/>
-                </tree>
+                </list>
             </field>
         </record>
 
@@ -63,7 +63,7 @@
         <record id="action_inward_operation" model="ir.actions.act_window">
             <field name="name">Inward Operation</field>
             <field name="res_model">inward.operation</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">list,form</field>
         </record>
 
         <!-- Sequence for Inward Operation -->

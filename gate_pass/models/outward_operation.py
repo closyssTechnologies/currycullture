@@ -80,12 +80,13 @@ class OutwardGateEntry(models.Model):
     product_count = fields.Integer(string='Product Count',
                                    compute='_compute_totals', store=True)
 
-    @api.model
-    def create(self, vals):
-        if vals.get('gate_entry_no', _('New')) == _('New'):
-            vals['gate_entry_no'] = self.env['ir.sequence'].next_by_code('outward.gate.entry') or _('New')
-            vals['name'] = vals['gate_entry_no']
-        return super(OutwardGateEntry, self).create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if vals.get('gate_entry_no', _('New')) == _('New'):
+                vals['gate_entry_no'] = self.env['ir.sequence'].next_by_code('outward.gate.entry') or _('New')
+                vals['name'] = vals['gate_entry_no']
+        return super().create(vals_list)
 
     def write(self, vals):
         for record in self:
@@ -229,8 +230,16 @@ class OutwardGateEntry(models.Model):
                     body=_('All products have been dispatched through gate entry %s') % self.gate_entry_no
                 )
 
+    def _compute_display_name(self):
+        """Display gate entry number in dropdowns (Odoo 18/19)"""
+        for record in self:
+            name = record.gate_entry_no or ''
+            if record.state == 'draft':
+                name = _('%s (Draft)') % name
+            record.display_name = name
+
     def name_get(self):
-        """Display gate entry number in dropdowns"""
+        """Display gate entry number in dropdowns (Backwards compatibility)"""
         result = []
         for record in self:
             name = record.gate_entry_no

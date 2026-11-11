@@ -31,12 +31,12 @@
                         </group>
 
                         <field name="outward_line_ids" nolabel="1" readonly="state == 'exit'">
-                            <tree editable="bottom" create="true" delete="true">
+                            <list editable="bottom" create="true" delete="true">
                                 <field name="product_id" string="Product" options="{'no_create': True}"/>
                                 <field name="ordered_quantity" string="Ordered Qty" readonly="1" force_save="1"/>
                                 <field name="product_uom_id" string="UOM" options="{'no_create': True}" force_save="1"/>
                                 <field name="gate_quantity" string="Gate Outward Quantity"/>
-                            </tree>
+                            </list>
                         </field>
                     </sheet>
                 </form>
@@ -48,7 +48,7 @@
             <field name="name">outward.gate.entry.tree</field>
             <field name="model">outward.gate.entry</field>
             <field name="arch" type="xml">
-                <tree string="Outward Gate Entries" decoration-info="state == 'entry'" decoration-muted="state == 'exit'">
+                <list string="Outward Gate Entries" decoration-info="state == 'entry'" decoration-muted="state == 'exit'">
                     <field name="gate_entry_no"/>
                     <field name="sale_order_id" optional="show"/>
                     <field name="customer_id" optional="show"/>
@@ -56,7 +56,7 @@
                     <field name="eway_bill_no" optional="show"/>
                     <field name="tax_invoice_no" optional="show"/>
                     <field name="state" widget="badge" decoration-success="state == 'entry'" decoration-warning="state == 'hold'" decoration-danger="state == 'exit'"/>
-                </tree>
+                </list>
             </field>
         </record>
 
@@ -64,7 +64,7 @@
         <record id="action_outward_gate_entry" model="ir.actions.act_window">
             <field name="name">Outward Gate Entry</field>
             <field name="res_model">outward.gate.entry</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">list,form</field>
         </record>
 
         <!-- Sequence for Outward Gate Entry -->

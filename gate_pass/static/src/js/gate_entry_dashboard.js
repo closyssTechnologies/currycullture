@@ -42,7 +42,7 @@ class GateEntryDashboard extends Component {
             type: 'ir.actions.act_window',
             name: 'Inward Operation',
             res_model: 'inward.operation',
-            view_mode: 'tree,form',
+            view_mode: 'list,form',
             views: [[false, 'list'], [false, 'form']],
             target: 'current',
         });
@@ -53,7 +53,7 @@ class GateEntryDashboard extends Component {
             type: 'ir.actions.act_window',
             name: 'Outward Gate Entry',
             res_model: 'outward.gate.entry',
-            view_mode: 'tree,form',
+            view_mode: 'list,form',
             views: [[false, 'list'], [false, 'form']],
             target: 'current',
         });

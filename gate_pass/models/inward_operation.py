@@ -171,7 +171,7 @@ class InwardOperation(models.Model):
         ('entry', 'Entry'),
         ('hold', 'Hold'),
         ('exit', 'Exit'),
-    ], string='State', default='entry', tracking=True)
+    ], string='State', default='entry')
 
     def action_entry(self):
         self.state = 'entry'
@@ -207,17 +207,17 @@ class InwardOperation(models.Model):
         ], limit=1)
         return manager.id if manager else False
 
-    @api.model
-    def create(self, vals):
-        if vals.get('name', 'New') == 'New':
-            sequence = self.env['ir.sequence'].next_by_code('inward.operation')
-            if not sequence:
-                current_date = fields.Date.today()
-                vals['name'] = 'GI/%s/%s/0001' % (current_date.year, str(current_date.month).zfill(2))
-            else:
-                vals['name'] = sequence
-
-        return super(InwardOperation, self).create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if vals.get('name', 'New') == 'New':
+                sequence = self.env['ir.sequence'].next_by_code('inward.operation')
+                if not sequence:
+                    current_date = fields.Date.today()
+                    vals['name'] = 'GI/%s/%s/0001' % (current_date.year, str(current_date.month).zfill(2))
+                else:
+                    vals['name'] = sequence
+        return super().create(vals_list)
 
     @api.onchange('purchase_order_id')
     def _onchange_purchase_order(self):

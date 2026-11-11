@@ -61,12 +61,12 @@
             <field name="name">gate.pass.tree</field>
             <field name="model">gate.pass</field>
             <field name="arch" type="xml">
-                <tree>
+                <list>
                     <field name="name"/>
                     <field name="visitor_name"/>
                     <field name="purpose"/>
                     <field name="entry_type"/>
-                </tree>
+                </list>
             </field>
         </record>
 
@@ -74,7 +74,7 @@
         <record id="action_inward_gate_entry" model="ir.actions.act_window">
             <field name="name">Inward Gate Entry</field>
             <field name="res_model">gate.pass</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">list,form</field>
             <field name="domain">[('entry_type', '=', 'inward')]</field>
         </record>
 
@@ -82,7 +82,7 @@
         <record id="action_outward_gate_entry" model="ir.actions.act_window">
             <field name="name">Outward Gate Entry</field>
             <field name="res_model">gate.pass</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">list,form</field>
             <field name="domain">[('entry_type', '=', 'outward')]</field>
         </record>
 
@@ -90,13 +90,12 @@
         <record id="action_gate_pass" model="ir.actions.act_window">
             <field name="name">Gate Pass</field>
             <field name="res_model">gate.pass</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">list,form</field>
         </record>
 
         <!-- Create Security Group for Gate Pass Managers -->
         <record id="group_gate_pass_manager" model="res.groups">
             <field name="name">Gate Pass Manager</field>
-            <field name="category_id" ref="base.module_category_hidden"/>
         </record>
 
         <!-- Main Gate Entry Menu -->
