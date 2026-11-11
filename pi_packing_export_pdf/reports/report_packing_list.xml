@@ -184,7 +184,7 @@
                             </tr>
                             
                              <!-- Items: Iterate directly over move lines (Handles Waiting, Ready, and Done statuses) -->
-                             <t t-set="move_lines" t-value="o.move_ids_without_package or o.move_line_ids"/>
+                             <t t-set="move_lines" t-value="o.move_ids or o.move_line_ids"/>
                              <t t-if="move_lines">
                                  <t t-foreach="move_lines" t-as="l">
                                      <!-- Find the Sale Order Line by traversing links or matching by product in the Sale Order -->

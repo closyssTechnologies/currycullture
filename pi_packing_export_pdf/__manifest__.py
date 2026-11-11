@@ -1,6 +1,6 @@
 {
     'name': 'Packing List for Export PDF',
-    'version': '1.0',
+    'version': '19.0.1.0.0',
     'summary': 'Generates a hardcoded Packing List for Export PDF from Delivery',
     'category': 'Inventory/Delivery',
     'author': 'Primacy Infotech Pvt. Ltd.',
