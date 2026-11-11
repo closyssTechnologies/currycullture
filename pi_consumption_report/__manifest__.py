@@ -1,6 +1,6 @@
 {
     'name': 'PI Consumption Report',
-    'version': '17.0',
+    'version': '19.0.1.0.0',
     'category': 'Inventory/Reporting',
     'summary': 'Daily Material Consumption Report',
     'author': 'Primacy Infotech Pvt Ltd',

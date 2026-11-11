@@ -1,5 +1,6 @@
 from odoo import models, fields, api, tools
 
+
 class PiConsumptionReport(models.Model):
     _name = 'pi.consumption.report'
     _description = 'Daily Consumption Report'
@@ -20,13 +21,14 @@ class PiConsumptionReport(models.Model):
                 SELECT
                     sml.id AS id,
                     sml.date::date AS date,
-                    sml.reference AS source,
+                    sm.reference AS source,
                     sml.product_id AS product_id,
                     pt.categ_id AS category_id,
                     sml.product_uom_id AS uom_id,
                     sml.quantity AS quantity
                 FROM
                     stock_move_line sml
+                    LEFT JOIN stock_move sm ON sml.move_id = sm.id
                     JOIN product_product pp ON sml.product_id = pp.id
                     JOIN product_template pt ON pp.product_tmpl_id = pt.id
                     JOIN stock_location sl_src ON sml.location_id = sl_src.id

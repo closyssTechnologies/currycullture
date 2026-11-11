@@ -23,7 +23,7 @@ class PiConsumptionReportWizard(models.TransientModel):
             'name': _('Daily Consumption Report'),
             'type': 'ir.actions.act_window',
             'res_model': 'pi.consumption.report',
-            'view_mode': 'tree,pivot',
+            'view_mode': 'list,pivot',
             'domain': domain,
             'context': {'search_default_group_by_date': 1},
         }
