@@ -16,31 +16,31 @@ class StockLandedCost(models.Model):
         prefetch=False   # ⭐ THIS IS THE ACTUAL FIX
     )
 
-    def check_field_access_rights(self, operation, fields=None):
-        # Allow inventory users to read mrp_production_ids
-        if fields and 'mrp_production_ids' in fields:
-            return True
-        return super().check_field_access_rights(operation, fields)
-
-    @api.model
-    def create(self, vals):
-        res = super().create(vals)
-
-        # If it's tied to a manufacturing order with manual landed cost
-        if 'picking_ids' in vals and res.picking_ids:
-            for picking in res.picking_ids:
-                # FIX: Correct search domain - 'picking_ids' is a One2many
-                mo = self.env['mrp.production'].search([('picking_ids', 'in', picking.id)], limit=1)
-                if mo and mo.landed_cost:
-                    product = self._get_or_create_landed_cost_product()
-                    res.cost_lines = [(0, 0, {
-                        'name': 'Manual MRP Landed Cost',
-                        'product_id': product.id,
-                        'account_id': res._get_default_account_id(),  # You can customize this if needed
-                        'price_unit': mo.landed_cost,
-                        'split_method': 'equal',
-                    })]
+    def check_field_access_rights(self, operation: str, field_names: list[str] | None = None, *args, **kwargs) -> list[str]:
+        fnames = field_names if field_names is not None else kwargs.get('fields')
+        res = super().check_field_access_rights(operation, field_names=fnames, *args, **kwargs)
+        if fnames and 'mrp_production_ids' in fnames and isinstance(res, list) and 'mrp_production_ids' not in res:
+            res.append('mrp_production_ids')
         return res
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        records = super().create(vals_list)
+        for res, vals in zip(records, vals_list):
+            if 'picking_ids' in vals and res.picking_ids:
+                for picking in res.picking_ids:
+                    mo = self.env['mrp.production'].search([('picking_ids', 'in', picking.id)], limit=1)
+                    if mo and mo.landed_cost:
+                        product = self._get_or_create_landed_cost_product('Manual MRP')
+                        account_id = res._get_default_account_id() if hasattr(res, '_get_default_account_id') else False
+                        res.cost_lines = [(0, 0, {
+                            'name': 'Manual MRP Landed Cost',
+                            'product_id': product.id,
+                            'account_id': account_id,
+                            'price_unit': mo.landed_cost,
+                            'split_method': 'equal',
+                        })]
+        return records
 
     def _landed_cost_cron(self):
         today = fields.Date.today()

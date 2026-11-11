@@ -302,14 +302,8 @@ class MrpProduction(models.Model):
         _, days_in_month = calendar.monthrange(year, month)
 
         for emp in employee_ids:
-            contract = self.env['hr.contract'].sudo().search([
-                ('employee_id', '=', emp.id),
-                ('state', '=', 'open'),
-            ], limit=1)
-
-            # if emp in present_employee_ids and contract:
-            if emp.id in considered_employee_ids and contract:
-                cal_wage = contract.per_day_wage or 0.0
+            if emp.id in considered_employee_ids:
+                cal_wage = getattr(emp, 'per_day_wage', 0.0) or getattr(emp, 'wage', 0.0) or 0.0
                 daily_wage = cal_wage / days_in_month
 
                 emp_workcenters = self.env['mrp.workcenter'].search([
