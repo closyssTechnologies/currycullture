@@ -1,6 +1,6 @@
 {
     'name': 'Product Serial Number Range',
-    'version': '1.0',
+    'version': '19.0.1.0.0',
     'summary': 'Add cumulative serial number range to sale order lines',
     'category': 'Sales',
     'author': 'Primacy Infotech Pvt. Ltd.',
