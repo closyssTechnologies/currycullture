@@ -23,46 +23,46 @@
 <!--&lt;!&ndash;                    </div>&ndash;&gt;-->
 <!--                    <div class="o_label_data">-->
 <!--                        <div style="margin-bottom: 1mm;padding-top:15px;">-->
-<!--                           <span style="font-weight: bold; font-size:15px;">Receiving Date:-<t t-esc="docs.move_ids.picking_id.scheduled_date.date()"/></span>-->
+<!--                           <span style="font-weight: bold; font-size:15px;">Receiving Date:-<t t-out="docs.move_ids.picking_id.scheduled_date.date()"/></span>-->
 <!--                        </div>-->
 <!--                    </div>-->
 <!--                     <div class="o_label_data">-->
 <!--                        <div style="margin-bottom: 1mm;padding-top:15px;">-->
-<!--                           <span style="font-weight: bold;font-size:15px;">GRN NO:-<t t-esc="docs.move_ids.picking_id.name.split('/')[-1]"/></span>-->
+<!--                           <span style="font-weight: bold;font-size:15px;">GRN NO:-<t t-out="docs.move_ids.picking_id.name.split('/')[-1]"/></span>-->
 <!--                        </div>-->
 <!--                    </div>-->
 <!--                     <div class="o_label_data">-->
 <!--                        <div style="margin-bottom: 1mm;font-size:15px;padding-top:15px;">-->
-<!--                           <span style="font-weight: bold;">Supplier Name:-<t t-esc="docs.move_ids.picking_id.partner_id.name"/></span>-->
+<!--                           <span style="font-weight: bold;">Supplier Name:-<t t-out="docs.move_ids.picking_id.partner_id.name"/></span>-->
 <!--                        </div>-->
 <!--                    </div>-->
 <!--                    <div class="o_label_data">-->
 <!--                        <div style="margin-bottom: 1mm;font-size:15px;padding-top:15px;padding-top:15px;">-->
-<!--                           <span style="font-weight: bold;">Product Name:- <t t-esc="moves.product_id.name"/></span>-->
+<!--                           <span style="font-weight: bold;">Product Name:- <t t-out="moves.product_id.name"/></span>-->
 <!--                        </div>-->
 <!--                    </div>-->
 <!--                    <div class="o_label_data">-->
 <!--                        <div style="margin-bottom: 1mm;font-size:15px;padding-top:15px;">-->
-<!--                           <span style="font-weight: bold;">Batch No:- <t t-esc="moves.move_line_ids.lot_name"/></span>-->
+<!--                           <span style="font-weight: bold;">Batch No:- <t t-out="moves.move_line_ids.lot_name"/></span>-->
 <!--                        </div>-->
 <!--                    </div>-->
 <!--                    <div class="o_label_data">-->
 <!--                        <div style="margin-bottom: 1mm;font-size:15px;padding-top:15px;">-->
-<!--                           <span style="font-weight: bold;">MFG Date:-<t t-esc="moves.mfg_date"/></span>-->
+<!--                           <span style="font-weight: bold;">MFG Date:-<t t-out="moves.mfg_date"/></span>-->
 <!--                        </div>-->
 
 <!--                    </div>-->
 <!--                     <div class="o_label_data">-->
 <!--                        <div style="margin-bottom: 1mm;font-size:15px;padding-top:15px;">-->
-<!--                           <span style="font-weight: bold;">Best Before:-<t t-esc="moves.best_before"/></span>-->
+<!--                           <span style="font-weight: bold;">Best Before:-<t t-out="moves.best_before"/></span>-->
 <!--                        </div>-->
-<!--                     &lt;!&ndash;  <span><t t-esc="doc.receiving_date"/></span>&ndash;&gt;-->
+<!--                     &lt;!&ndash;  <span><t t-out="doc.receiving_date"/></span>&ndash;&gt;-->
 <!--                    </div>-->
 <!--                     <div class="o_label_data">-->
 <!--                        <div style="margin-bottom: 1mm;font-size:15px;padding-top:15px;">-->
-<!--                           <span style="font-weight: bold;">Net Wt:-<t t-esc="moves.net_wt"/><t t-esc="moves.product_uom.name"/></span>-->
+<!--                           <span style="font-weight: bold;">Net Wt:-<t t-out="moves.net_wt"/><t t-out="moves.product_uom.name"/></span>-->
 <!--                        </div>-->
-<!--                     &lt;!&ndash;  <span><t t-esc="doc.receiving_date"/></span>&ndash;&gt;-->
+<!--                     &lt;!&ndash;  <span><t t-out="doc.receiving_date"/></span>&ndash;&gt;-->
 <!--                    </div>-->
 
 <!--                </div>-->
@@ -75,38 +75,38 @@
               <div style="text-align:left; font-size:24px; padding-top:15px;">
                 <div class="o_label_data" style="margin-bottom: 1mm; padding-top: 15px; font-size:24px; padding-top:10px;">
                     <span style="font-weight: bold; font-size: 15px;">Receiving Date:
-                        <t t-esc="moves.picking_id.scheduled_date.date()"/>
+                        <t t-out="moves.picking_id.scheduled_date.date()"/>
                     </span>
                 </div>
                 <div class="o_label_data" style="margin-bottom: 1mm; padding-top: 15px;font-size:24px;">
                     <span style="font-weight: bold; font-size: 15px;">GRN NO:-
-                        <t t-esc="moves.picking_id.name.split('/')[-1]"/>
+                        <t t-out="moves.picking_id.name.split('/')[-1]"/>
                     </span>
                 </div>
                 <div class="o_label_data" style="margin-bottom: 1mm; padding-top: 15px;font-size:24px;">
                     <span style="font-weight: bold; font-size: 15px;">Supplier Name:-
-                        <t t-esc="moves.picking_id.partner_id.name"/>
+                        <t t-out="moves.picking_id.partner_id.name"/>
                     </span>
                 </div>
                 <div class="o_label_data" style="margin-bottom: 1mm; padding-top: 15px;font-size:24px;">
                     <span style="font-weight: bold; font-size: 15px;">Product Name:-
-                        <t t-esc="moves.product_id.name"/>
+                        <t t-out="moves.product_id.name"/>
                     </span>
                 </div>
                 <div class="o_label_data" style="margin-bottom: 1mm; padding-top: 15px;font-size:24px">
                     <span style="font-weight: bold; font-size: 15px;">Batch No:-
-                        <t t-esc="moves.move_line_ids.lot_name"/>
+                        <t t-out="moves.move_line_ids.lot_name"/>
                     </span>
                 </div>
                 <div class="o_label_data" style="margin-bottom: 1mm; padding-top: 15px;font-size:24px">
                     <span style="font-weight: bold; font-size: 15px;">MFG Date:-
-                        <t t-esc="moves.mfg_date"/>
+                        <t t-out="moves.mfg_date"/>
                     </span>
                 </div>
                 <div class="o_label_data" style="margin-bottom: 1mm; padding-top: 15px;font-size:24px">
                     <span style="font-weight: bold; font-size: 15px;">Best Before:-
                         <t t-if="moves.best_before">
-                            <t t-esc="moves.best_before.strftime('%B - %Y') "/>
+                            <t t-out="moves.best_before.strftime('%B - %Y') "/>
                         </t>
                         <t t-else="">
                             <span/>
@@ -116,7 +116,7 @@
                 </div>
                 <div class="o_label_data" style="margin-bottom: 1mm; padding-top: 15px;font-size:24px">
                     <span style="font-weight: bold; font-size: 15px;">Net Wt :
-                        <t t-esc="moves.net_wt"/> :- <t t-esc="moves.product_uom.name"/>
+                        <t t-out="moves.net_wt"/> :- <t t-out="moves.product_uom.name"/>
                     </span>
                 </div>
               </div>
