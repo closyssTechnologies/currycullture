@@ -31,18 +31,18 @@
                                     </div>
                                     <strong>
                                         <t t-if="o.gate_received_date">
-                                            <div class="mt-1">MRN DATE: <t t-esc="context_timestamp(o.gate_received_date).strftime('%d-%m-%Y')"/> </div>
+                                            <div class="mt-1">MRN DATE: <t t-out="context_timestamp(o.gate_received_date).strftime('%d-%m-%Y')"/> </div>
                                         </t>
                                         <t t-else="">
-                                            <div class="mt-1">MRN DATE: <t t-esc="o.scheduled_date and o.scheduled_date.strftime('%d-%m-%Y') or ''"/> </div>
+                                            <div class="mt-1">MRN DATE: <t t-out="o.scheduled_date and o.scheduled_date.strftime('%d-%m-%Y') or ''"/> </div>
                                         </t>
                                     </strong>
                                     <strong>
-                                        <div class="mt-1">MRN No.: <t t-esc="o.name or ''"/></div>
+                                        <div class="mt-1">MRN No.: <t t-out="o.name or ''"/></div>
                                     </strong>
                                     <strong>
                                         <t t-if="o.purchase_id.date_approve">
-                                             <div class="mt-1">Order DATE: <t t-esc="o.purchase_id.date_approve.strftime('%d-%m-%Y') or ''"/></div>
+                                             <div class="mt-1">Order DATE: <t t-out="o.purchase_id.date_approve.strftime('%d-%m-%Y') or ''"/></div>
                                         </t>
                                         <t t-else="">
                                             <div class="mt-1">Order DATE:</div>
@@ -50,17 +50,17 @@
 
                                     </strong>
                                     <strong>
-                                        <div class="mt-1">Order No.: <t t-esc="o.purchase_id.name or ''"/></div>
+                                        <div class="mt-1">Order No.: <t t-out="o.purchase_id.name or ''"/></div>
                                     </strong>
                                     <strong>
-                                        <div class="mt-1">Gate Entry Number: <t t-esc="o.gate_pass_no or ''"/></div>
+                                        <div class="mt-1">Gate Entry Number: <t t-out="o.gate_pass_no or ''"/></div>
                                     </strong>
                                     <strong>
-                                        <div class="mt-1">Vehicle Number: <t t-esc="o.vehicle_no or ''"/></div>
+                                        <div class="mt-1">Vehicle Number: <t t-out="o.vehicle_no or ''"/></div>
                                     </strong>
                                     <strong>
                                         <t t-if="o.gate_received_date">
-                                            <div class="mt-1">Received Date: <t t-esc="context_timestamp(o.gate_received_date).strftime('%d-%m-%Y') or ''"/></div>
+                                            <div class="mt-1">Received Date: <t t-out="context_timestamp(o.gate_received_date).strftime('%d-%m-%Y') or ''"/></div>
                                         </t>
                                         <t t-else="">
                                             <div class="mt-1">Received Date:</div>
@@ -69,18 +69,18 @@
                                     </strong>
                                     <strong>
                                         <t t-if="o.gate_received_date">
-                                            <div class="mt-1">Received Time: <t t-esc="context_timestamp(o.gate_received_date).strftime('%H:%M')"/></div>
+                                            <div class="mt-1">Received Time: <t t-out="context_timestamp(o.gate_received_date).strftime('%H:%M')"/></div>
                                         </t>
                                         <t t-else="">
                                             <div class="mt-1">Received Time:</div>
                                         </t>
                                     </strong>
                                     <strong>
-                                        <div class="mt-1">Vendor Invoice No: <t t-esc="o.gate_vendor_invoice_no or ''"/></div>
+                                        <div class="mt-1">Vendor Invoice No: <t t-out="o.gate_vendor_invoice_no or ''"/></div>
                                     </strong>
                                     <strong>
                                         <t t-if="o.gate_invoice_date">
-                                            <div class="mt-1">Vendor Invoice Date: <t t-esc="o.gate_invoice_date.strftime('%d-%m-%Y') or ''"/></div>
+                                            <div class="mt-1">Vendor Invoice Date: <t t-out="o.gate_invoice_date.strftime('%d-%m-%Y') or ''"/></div>
                                         </t>
                                         <t t-else="">
                                             <div class="mt-1">Vendor Invoice Date:</div>
@@ -93,7 +93,7 @@
                                         <ul class="list-unstyled">
                                             <li>
                                                 <t t-if="o.company_id">
-                                                    <t t-esc="o.company_id.name"/>
+                                                    <t t-out="o.company_id.name"/>
                                                 </t>
                                                 <t t-else="">
 
@@ -101,14 +101,14 @@
                                             </li>
                                             <li class="mt-1">
                                                 <t t-if="o.company_id.street">
-                                                    <t t-esc="o.company_id.street"/>
+                                                    <t t-out="o.company_id.street"/>
                                                 </t>
                                                 <t t-else="">
                                                 </t>
                                             </li>
                                             <li class="mt-1">
                                                 <t t-if="o.company_id.street2">
-                                                    <t t-esc="o.company_id.street2"/>
+                                                    <t t-out="o.company_id.street2"/>
                                                 </t>
                                                 <t t-else="">
                                                 </t>
@@ -116,7 +116,7 @@
 
                                             <li class="mt-1">
                                                 <t t-if="o.company_id.city">
-                                                    <t t-esc="o.company_id.city"/>
+                                                    <t t-out="o.company_id.city"/>
                                                 </t>
                                                 <t t-else="">
                                                 </t>
@@ -124,7 +124,7 @@
 
                                             <li class="mt-1">
                                                 <t t-if="o.company_id.state_id">
-                                                    <t t-esc="o.company_id.state_id.name"/>
+                                                    <t t-out="o.company_id.state_id.name"/>
                                                 </t>
                                                 <t t-else="">
                                                 </t>
@@ -132,7 +132,7 @@
 
                                             <li class="mt-1">
                                                 <t t-if="o.company_id.country_id">
-                                                    <t t-esc="o.company_id.country_id.name"/>
+                                                    <t t-out="o.company_id.country_id.name"/>
                                                 </t>
                                                 <t t-else="">
                                                 </t>
@@ -140,12 +140,12 @@
 
 
                                             <li class="mt-1">
-                                                GSTIN: <t t-esc="o.company_id.vat"/>
+                                                GSTIN: <t t-out="o.company_id.vat"/>
                                             </li>
                                             <li class="mt-1">
                                                 Phone No:
                                                 <t t-if="o.company_id.phone">
-                                                    <t t-esc="o.company_id.phone"/>
+                                                    <t t-out="o.company_id.phone"/>
                                                 </t>
                                                 <t t-else="">
                                                 </t>
@@ -153,7 +153,7 @@
                                             <li class="mt-1">
                                                 Website:
                                                 <t t-if="o.company_id.website">
-                                                    <t t-esc="o.company_id.website"/>
+                                                    <t t-out="o.company_id.website"/>
                                                 </t>
                                                 <t t-else="">
                                                 </t>
@@ -161,7 +161,7 @@
                                             <li class="mt-1">
                                                 Email:
                                                 <t t-if="o.company_id.email">
-                                                    <t t-esc="o.company_id.email"/>
+                                                    <t t-out="o.company_id.email"/>
                                                 </t>
                                                 <t t-else="">
                                                 </t>
@@ -169,7 +169,7 @@
                                             <li class="mt-1">
                                                 Bank Name:
                                                 <t t-if="o.company_id.partner_id.bank_account_name">
-                                                    <t t-esc="o.company_id.partner_id.bank_account_name.bank_id.name"/>
+                                                    <t t-out="o.company_id.partner_id.bank_account_name.bank_id.name"/>
                                                 </t>
                                                 <t t-else="">
                                                 </t>
@@ -177,7 +177,7 @@
                                             <li class="mt-1">
                                                 Account Number:
                                                 <t t-if="o.company_id.partner_id.bank_account_name">
-                                                    <t t-esc="o.company_id.partner_id.bank_account_no"/>
+                                                    <t t-out="o.company_id.partner_id.bank_account_no"/>
                                                 </t>
                                                 <t t-else="">
                                                 </t>
@@ -227,34 +227,34 @@
                                         <t t-set="o_index" t-value="0"/>
                                         <t t-set="sub_total_price" t-value="0"/>
                                         <tbody style="border: 1px solid black !important;">
-                                            <tr t-foreach="o.move_ids_without_package" t-as="line"
+                                            <tr t-foreach="o.move_ids" t-as="line"
                                                 style="border: 1px solid black !important;">
                                                 <t t-if="round(line.quantity, 3) > 0.000">
                                                     <td class="text-center">
-                                                        <t t-esc="o_index + 1"/>
+                                                        <t t-out="o_index + 1"/>
                                                         <t t-set="o_index" t-value="o_index + 1"/>
                                                     </td>
                                                     <td class="text-center">
-                                                        <t t-esc="line.product_id.default_code"/>
+                                                        <t t-out="line.product_id.default_code"/>
                                                     </td>
                                                     <td class="text-center">
-                                                        <t t-esc="line.product_id.name"/>
+                                                        <t t-out="line.product_id.name"/>
                                                     </td>
                                                     <td class="text-center">
-                                                        <t t-esc="line.product_id.uom_id.name"/>
+                                                        <t t-out="line.product_id.uom_id.name"/>
                                                     </td>
                                                     <td class="text-end">
-                                                        <t t-esc="'{:.3f}'.format(round(line.product_uom_qty, 3))"/>
+                                                        <t t-out="'{:.3f}'.format(round(line.product_uom_qty, 3))"/>
                                                     </td>
                                                     <td class="text-end">
-                                                        <t t-esc="'{:.3f}'.format(round(line.quantity, 3))"/>
+                                                        <t t-out="'{:.3f}'.format(round(line.quantity, 3))"/>
                                                     </td>
                                                     <td class="text-end">
-                                                         <t t-esc="'{:.2f}'.format(round(line.purchase_line_id.price_unit, 2))"/>
+                                                         <t t-out="'{:.2f}'.format(round(line.purchase_line_id.price_unit, 2))"/>
                                                     </td>
                                                     <td class="text-end">
 
-                                                        <t t-esc="'{:.2f}'.format(round(line.purchase_line_id.price_unit*line.quantity, 2))"/>
+                                                        <t t-out="'{:.2f}'.format(round(line.purchase_line_id.price_unit*line.quantity, 2))"/>
 
                                                         <t t-set="sub_total_price" t-value="sub_total_price+round(line.purchase_line_id.price_unit*line.quantity, 2)"/>
                                                     </td>
@@ -273,7 +273,7 @@
 <!--                                                    </t>-->
                                                     <strong>
                                                         <t t-if="sub_total_price">
-                                                             <t t-esc="'{:.2f}'.format(round(sub_total_price, 2))"/>
+                                                             <t t-out="'{:.2f}'.format(round(sub_total_price, 2))"/>
 
                                                         </t>
                                                         <t t-else="">
