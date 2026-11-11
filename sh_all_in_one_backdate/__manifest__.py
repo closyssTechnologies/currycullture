@@ -9,7 +9,7 @@
     "category": "Extra Tools",
     "summary": "Mass Backdate Sale order backdate Purchase order backdate Bill backdate Credit Note backdate Payment backdate Picking order backdate stock backdate inventory adjustment backdate stock operation backdate all stock back-date backdate Odoo",
     "description": """Our module is useful for confirm sales, purchase, accounting, MRP & inventory orders with selected confirmation backdate. You can put a custom backdate and remarks. You can mass assign backdate in one click. This selected date and remarks are also reflects in the stock moves, product moves & journal entries.""",
-    "version": "0.0.1",
+    "version": "19.0.1.0.0",
     "depends": ["stock_account", "purchase", "sale_management"],
     "data": [
 
