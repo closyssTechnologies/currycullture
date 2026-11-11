@@ -1,5 +1,6 @@
 from odoo import models, fields, tools
 
+
 class SaleRegisterReport(models.Model):
     _name = 'sale.register.report'
     _description = 'Sales Register Report'
@@ -25,6 +26,12 @@ class SaleRegisterReport(models.Model):
     def init(self):
         tools.drop_view_if_exists(self.env.cr, self._table)
         self.env.cr.execute("""
+            SELECT 1 FROM information_schema.columns 
+            WHERE table_name = 'product_template' AND column_name = 'l10n_in_hsn_code'
+        """)
+        hsn_field = "pt.l10n_in_hsn_code" if self.env.cr.fetchone() else "NULL::varchar"
+
+        self.env.cr.execute("""
             CREATE OR REPLACE VIEW %s AS (
                 SELECT
                     sol.id AS id,
@@ -33,12 +40,12 @@ class SaleRegisterReport(models.Model):
                     so.partner_id AS partner_id,
                     sol.product_id AS product_id,
                     pt.categ_id AS categ_id,
-                    sol.product_uom AS product_uom,
+                    sol.product_uom_id AS product_uom,
                     sol.product_uom_qty AS product_qty,
                     sol.qty_delivered AS qty_delivered,
                     (sol.product_uom_qty * pt.weight) AS net_weight,
                     sol.price_unit AS price_unit,
-                    pt.l10n_in_hsn_code AS hsn_code,
+                    %s AS hsn_code,
                     sol.discount AS discount,
                     sol.price_tax AS price_tax,
                     (
@@ -59,4 +66,4 @@ class SaleRegisterReport(models.Model):
                 WHERE
                     so.state IN ('sale', 'done')
             )
-        """ % self._table)
+        """ % (self._table, hsn_field))

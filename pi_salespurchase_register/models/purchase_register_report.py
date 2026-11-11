@@ -1,5 +1,6 @@
 from odoo import models, fields, tools
 
+
 class PurchaseRegisterReport(models.Model):
     _name = 'purchase.register.report'
     _description = 'Purchase Register Report'
@@ -17,7 +18,6 @@ class PurchaseRegisterReport(models.Model):
     discount = fields.Float(string='Discount (%)', readonly=True)
     product_qty = fields.Float(string='Demand Quantity', readonly=True)
     qty_received = fields.Float(string='Received', readonly=True)
-    # net_weight = fields.Float(string='Net Weight', readonly=True)
     remaining_qty = fields.Float(string='Remaining Qty', readonly=True)
     transfer_no = fields.Char(string='Transfer No.', readonly=True)
     is_billed = fields.Selection([('yes', 'Yes'), ('no', 'No')], string='Billed', readonly=True)
@@ -27,6 +27,12 @@ class PurchaseRegisterReport(models.Model):
 
     def init(self):
         tools.drop_view_if_exists(self.env.cr, self._table)
+        self.env.cr.execute("""
+            SELECT 1 FROM information_schema.columns 
+            WHERE table_name = 'product_template' AND column_name = 'l10n_in_hsn_code'
+        """)
+        hsn_field = "pt.l10n_in_hsn_code" if self.env.cr.fetchone() else "NULL::varchar"
+
         self.env.cr.execute("""
             CREATE OR REPLACE VIEW %s AS (
                 SELECT
@@ -55,9 +61,9 @@ class PurchaseRegisterReport(models.Model):
                     po.partner_id AS partner_id,
                     pol.product_id AS product_id,
                     pt.categ_id AS categ_id,
-                    pol.product_uom AS product_uom,
+                    pol.product_uom_id AS product_uom,
                     pol.price_unit AS price_unit,
-                    pt.l10n_in_hsn_code AS hsn_code,
+                    %s AS hsn_code,
                     pol.discount AS discount,
                     pol.product_qty AS product_qty,
                     pol.qty_received AS qty_received,
@@ -65,7 +71,7 @@ class PurchaseRegisterReport(models.Model):
                     (pol.product_qty - pol.qty_received) AS remaining_qty,
                     pol.price_tax AS price_tax,
                     (
-                        SELECT string_agg(at.amount::text || '%%', ', ')
+                        SELECT string_agg(at.amount::text || '%%%%', ', ')
                         FROM account_tax_purchase_order_line_rel rel
                         JOIN account_tax at ON rel.account_tax_id = at.id
                         WHERE rel.purchase_order_line_id = pol.id
@@ -82,4 +88,4 @@ class PurchaseRegisterReport(models.Model):
                 WHERE
                     po.state IN ('purchase', 'done')
             )
-        """ % self._table)
+        """ % (self._table, hsn_field))

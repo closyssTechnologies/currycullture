@@ -1,6 +1,6 @@
 {
     'name': 'Sales & Purchase Register Report',
-    'version': '17.1',
+    'version': '19.0.1.0.0',
     'category': 'Extra Tools',
     'summary': 'Add Sales and Purchase Register report in Reporting',
     'description': """
