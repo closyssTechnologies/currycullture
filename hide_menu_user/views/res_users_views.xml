@@ -8,9 +8,7 @@
         <field name="arch" type="xml">
             <xpath expr="//notebook" position="inside">
                 <page string="Hide Specific Menu" invisible="is_admin">
-                    <tree>
-                        <field name="hide_menu_ids"/>
-                    </tree>
+                    <field name="hide_menu_ids"/>
                 </page>
             </xpath>
             <field name="name" position="after">
@@ -26,9 +24,7 @@
         <field name="arch" type="xml">
             <xpath expr="//notebook" position="inside">
                 <page string="Restrict users" name="restrict_users">
-                    <tree>
-                        <field name="restrict_user_ids"/>
-                    </tree>
+                    <field name="restrict_user_ids"/>
                 </page>
             </xpath>
         </field>
