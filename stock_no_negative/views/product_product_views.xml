@@ -13,8 +13,7 @@
             <field name="categ_id" position="after">
                 <field
                     name="allow_negative_stock"
-                    invisible="type != 'product'"
-
+                    invisible="not is_storable"
                 />
             </field>
         </field>
