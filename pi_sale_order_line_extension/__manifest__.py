@@ -1,6 +1,6 @@
 {
     'name': 'PI Sale Order Line Extension',
-    'version': '17.0.1.2',
+    'version': '19.0.1.0.0',
     'category': 'Sales',
     'summary': 'Add Total Weight and Total Value fields to Sale Order Lines',
     'description': """

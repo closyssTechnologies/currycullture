@@ -1,7 +1,6 @@
 import base64
 
 from odoo import api, fields, models, _, exceptions, Command
-from odoo.addons.test_convert.tests.test_env import record
 from datetime import datetime
 
 
