@@ -9,7 +9,7 @@
     "category": "Manufacturing",
     "summary": "Backdate and Remarks Backdate Remarks in Odoo Force Date manufacturing backdate Confirmation Backdate Mass Confirmation Backdate Mass Backdate confirm date confirm past date BOM Backdate old date Work Order Backdate MRP order backdate Change effective date change effective dates effective date changes in effective date effective date change mrp effective date change mrp effective date change Manufacturing effective date change stock move effective date change product move effective date change in mrp effective date change in manufacturing Odoo",
     "description": """In odoo, while you confirm the manufacturing orders it will take the current date as confirmation date and you can not change the date after confirming it so our module is useful for confirm MRP orders with selected confirmation backdate. You can put a custom backdate and remarks in the MRP orders. You can mass assign backdate in one click. When you mass assign backdate, it asks for remarks in the mass assign wizard. This selected date and remarks are also reflects in the stock moves, product moves & journal entries.""",
-    "version": "1.2",
+    "version": "19.0.1.0.0",
     "depends": ["stock_account","mrp","mrp_account"],
     "data": [
 
