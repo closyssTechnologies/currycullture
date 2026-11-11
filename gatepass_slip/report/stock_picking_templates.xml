@@ -67,10 +67,10 @@
                                         <span t-field="o.corresponding_company"/>
                                     </td>
                                     <td style="border: 1px solid black;">
-                                        <span t-esc="datetime.datetime.now().strftime('%Y-%m-%d')"/>
+                                        <span t-out="datetime.datetime.now().strftime('%Y-%m-%d')"/>
                                     </td>
                                     <td style="border: 1px solid black;">
-                                        <span t-esc="datetime.datetime.now().strftime('%H:%M:%S %p')"/>
+                                        <span t-out="datetime.datetime.now().strftime('%H:%M:%S %p')"/>
                                     </td>
                                 </tr>
                             </tbody>
@@ -120,23 +120,23 @@
         </t>
         <div class="header">
             <div class="pull-left">
-                <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/>
+                <span t-out="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/>
                 <br/>
-                <span t-esc="company.name"/>
+                <span t-out="company.name"/>
                 <br/>
-                <span t-esc="company.street"/>
+                <span t-out="company.street"/>
                 <br/>
                 <br/>
             </div>
             <div class="pull-right">
                 <t t-foreach="docs" t-as="o">
                     <h4>Shipping Address</h4>
-                    <span t-esc="o.partner_id.street"/>
+                    <span t-out="o.partner_id.street"/>
                     <br/>
-                    <span t-esc="o.partner_id.city"/>
-                    <span t-esc="o.partner_id.zip"/>
+                    <span t-out="o.partner_id.city"/>
+                    <span t-out="o.partner_id.zip"/>
                     <br/>
-                    <span t-esc="o.partner_id.country_id.name"/>
+                    <span t-out="o.partner_id.country_id.name"/>
                 </t>
             </div>
         </div>
