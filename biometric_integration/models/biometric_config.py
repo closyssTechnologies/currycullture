@@ -91,7 +91,7 @@ class BiometricConfig(models.Model):
         return {
             'type': 'ir.actions.act_window',
             'name': 'Attendance',
-            'view_mode': 'tree,form',
+            'view_mode': 'list,form',
             'res_model': 'biometric.attendance.log',
 
             'context': dict(self.env.context, create=False),
@@ -110,7 +110,7 @@ class BiometricConfig(models.Model):
         return {
             'type': 'ir.actions.act_window',
             'name': 'Attendance',
-            'view_mode': 'tree,form',
+            'view_mode': 'list,form',
             'res_model': 'hr.attendance',
             'domain' : [('in_mode','=','biometric_device')],
             'context': dict(self.env.context, create=False),
@@ -126,7 +126,7 @@ class BiometricConfig(models.Model):
         return {
             'type': 'ir.actions.act_window',
             'name': 'HrAttendance',
-            'view_mode': 'tree',
+            'view_mode': 'list',
             'res_model': 'hr.employee',
             'domain': [('biometric_group_id', '!=', False)],
             'context': dict(self.env.context,create=False),
@@ -157,7 +157,7 @@ class BiometricConfig(models.Model):
             "type": "ir.actions.act_window",
             "name": _("Device List"),
             "res_model": "biometric.device",
-            "views": [[False, "tree"], [False, "form"]],
+            "views": [[False, "list"], [False, "form"]],
             "context": {
                 "create": 0
             },
@@ -169,7 +169,7 @@ class BiometricConfig(models.Model):
             "type": "ir.actions.act_window",
             "name": _("Group(OU) List"),
             "res_model": "biometric.ou",
-            "views": [[False, "tree"], [False, "form"]],
+            "views": [[False, "list"], [False, "form"]],
             "context": {
                 "create": 0
             },

@@ -74,7 +74,7 @@
 
                             <field  name="device_ids" readonly="1">
 
-                                    <tree string="Company Device List" create="0" delete="0" >
+                                    <list string="Company Device List" create="0" delete="0" >
                                         <field name="cpuid" />
                                         <field name="device_name" />
                                         <field name="sub_type" />
@@ -82,7 +82,7 @@
                                         <field name="ou_code" />
                                         <field name="device_status"/>
                                         <field name="device_last_sync" />
-                                    </tree>
+                                    </list>
 
                             </field>
 
