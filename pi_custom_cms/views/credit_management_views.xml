@@ -16,7 +16,7 @@
         <field name="name">credit.management.sheet.tree</field>
         <field name="model">credit.management.sheet</field>
         <field name="arch" type="xml">
-            <tree string="Credit Management Sheet" create="true" delete="true">
+            <list string="Credit Management Sheet" create="true" delete="true">
                 <header>
                     <button name="action_export_to_excel"
                             string="Export Excel"
@@ -51,7 +51,7 @@
                 <field name="bene_bank_name" column_invisible="1"/>
                 <field name="bene_bank_branch_name"/>
                 <field name="beneficiary_email"/>
-            </tree>
+            </list>
         </field>
     </record>
 
@@ -151,7 +151,7 @@
                 <filter string="NEFT (N)" name="filter_neft" domain="[('transaction_type','=','N')]"/>
                 <filter string="RTGS (R)" name="filter_rtgs" domain="[('transaction_type','=','R')]"/>
 
-                <group expand="1" string="Group By">
+                <group>
                     <filter string="Transaction Type" name="group_transaction_type" context="{'group_by':'transaction_type'}"/>
                     <filter string="Vendor" name="group_vendor" context="{'group_by':'vendor_id'}"/>
                 </group>
@@ -170,7 +170,7 @@
     <record id="action_credit_management_sheet" model="ir.actions.act_window">
         <field name="name">Credit Management Sheet</field>
         <field name="res_model">credit.management.sheet</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="search_view_id" ref="view_credit_management_sheet_search"/>
     </record>
 

@@ -1,6 +1,6 @@
 {
     'name': 'Credit Management Sheet',
-    'version': '17.0.1.2',
+    'version': '19.0.1.0.0',
     'summary': 'Manage daily vendor payments and generate credit management sheets',
     'description': """
 Credit Management Sheet
@@ -10,7 +10,7 @@ It generates a credit management sheet (CMS) for bank submission.
     """,
     'author': 'Primacy Infotech Pvt Ltd',
     'website': 'https://primacyinfotech.com/',
-    'depends': ['account','base'],  # links this to the Accounting app
+    'depends': ['account', 'base', 'mail'],
     'data': [
         'security/ir.model.access.csv',
         'views/credit_management_views.xml',
