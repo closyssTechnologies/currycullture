@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 # Part of Softhealer Technologies
 
-from odoo import fields, models, api
 from datetime import date
+from odoo import api, fields, models
 
 
 class PurchaseOrder(models.Model):
@@ -34,31 +34,13 @@ class PurchaseOrder(models.Model):
     def _prepare_invoice(self):
         """Prepare the dict of values to create the new invoice for a purchase order.
         """
-        self.ensure_one()
-        move_type = self._context.get('default_move_type', 'in_invoice')
-
-        partner_invoice = self.env['res.partner'].browse(
-            self.partner_id.address_get(['invoice'])['invoice'])
-        partner_bank_id = self.partner_id.commercial_partner_id.bank_ids.filtered_domain(
-            ['|', ('company_id', '=', False), ('company_id', '=', self.company_id.id)])[:1]
-
-        invoice_vals = {
-            'ref': self.partner_ref or '',
-            'move_type': move_type,
-            'narration': self.notes,
-            'currency_id': self.currency_id.id,
-            'invoice_user_id': self.user_id and self.user_id.id or self.env.user.id,
-            'partner_id': partner_invoice.id,
-            'fiscal_position_id': (self.fiscal_position_id or self.fiscal_position_id._get_fiscal_position(partner_invoice)).id,
-            'payment_reference': self.partner_ref or '',
-            'partner_bank_id': partner_bank_id.id,
-            'invoice_origin': self.name,
-            'invoice_payment_term_id': self.payment_term_id.id,
-            'invoice_line_ids': [],
-            'company_id': self.company_id.id,
-            'invoice_date': self.date_approve if self.company_id.backdate_for_bill else date.today(),
-            'remarks_for_purchase': self.remarks if self.remarks else False
-        }
+        invoice_vals = super()._prepare_invoice()
+        if self.company_id.backdate_for_bill:
+            approve_date = self.date_approve or self.date_order
+            if approve_date:
+                invoice_vals['invoice_date'] = fields.Date.to_date(approve_date)
+        if self.remarks:
+            invoice_vals['remarks_for_purchase'] = self.remarks
         return invoice_vals
 
 
@@ -68,9 +50,6 @@ class PurchaseOrderLine(models.Model):
     def _prepare_stock_move_vals(self, picking, price_unit, product_uom_qty, product_uom):
         res = super()._prepare_stock_move_vals(
             picking, price_unit, product_uom_qty, product_uom)
-        if self.company_id.sh_po_backdate_for_stock_move:
-            res.update({
-                'date': self.order_id.date_order,
-                'date_deadline': self.order_id.date_order,
-            })
+        if self.order_id.remarks:
+            res['remarks_for_purchase'] = self.order_id.remarks
         return res
