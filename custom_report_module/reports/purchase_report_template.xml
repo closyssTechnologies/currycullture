@@ -549,12 +549,14 @@
 
     </template>
 
-    <report
-            id="action_report_custom_purchase_order"
-            model="purchase.order"
-            string="Purchase Order CCL Report"
-            report_type="qweb-pdf"
-            name="custom_report_module.custom_purchase_report"
-            file="custom_report_module.custom_purchase_report"/>
+    <record id="action_report_custom_purchase_order" model="ir.actions.report">
+        <field name="name">Purchase Order CCL Report</field>
+        <field name="model">purchase.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">custom_report_module.custom_purchase_report</field>
+        <field name="report_file">custom_report_module.custom_purchase_report</field>
+        <field name="binding_model_id" ref="purchase.model_purchase_order"/>
+        <field name="binding_type">report</field>
+    </record>
 
 </odoo>

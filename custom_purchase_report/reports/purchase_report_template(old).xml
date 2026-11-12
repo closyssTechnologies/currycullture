@@ -279,11 +279,5 @@
         </div>
     </t>
    </template>
-    <report
-        id="action_report_custom_purchase"
-        model="purchase.order"
-        string="Custom Purchase Report"
-        report_type="qweb-html"
-        name="custom_purchase_report.custom_purchase_report"
-        file="custom_purchase_report.custom_purchase_report"/>
+    
 </odoo>
