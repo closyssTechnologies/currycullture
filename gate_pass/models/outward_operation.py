@@ -181,7 +181,7 @@ class OutwardGateEntry(models.Model):
 
                 # DON'T update demand quantity - keep it as is
                 # Only update the actual quantity (quantity field) which appears in the Quantity column
-                for move_line in delivery_picking.move_line_ids_without_package:
+                for move_line in delivery_picking.move_line_ids:
                     if move_line.product_id.id in gate_quantities:
                         # Update the actual delivered quantity (this shows in Quantity column)
                         move_line.write({'quantity': gate_quantities[move_line.product_id.id]})
@@ -190,8 +190,8 @@ class OutwardGateEntry(models.Model):
                         move_line.write({'quantity': 0.0})
 
                 # If no move lines exist, create them
-                if not delivery_picking.move_line_ids_without_package:
-                    for move in delivery_picking.move_ids_without_package:
+                if not delivery_picking.move_line_ids:
+                    for move in delivery_picking.move_ids:
                         if move.product_id.id in gate_quantities:
                             # Create move line with the gate quantity
                             self.env['stock.move.line'].create({
@@ -424,7 +424,7 @@ class StockPicking(models.Model):
                     gate_quantities[gate_line.product_id.id] = gate_line.gate_quantity
 
             # Update move lines - keep demand same, update quantity field
-            for move_line in self.move_line_ids_without_package:
+            for move_line in self.move_line_ids:
                 if move_line.product_id.id in gate_quantities:
                     # Update quantity field to match gate entry
                     move_line.quantity = gate_quantities[move_line.product_id.id]
@@ -433,8 +433,8 @@ class StockPicking(models.Model):
                     move_line.quantity = 0.0
 
             # If no detailed operations exist yet, create them
-            if not self.move_line_ids_without_package and self.state in ['assigned', 'partially_available']:
-                for move in self.move_ids_without_package:
+            if not self.move_line_ids and self.state in ['assigned', 'partially_available']:
+                for move in self.move_ids:
                     if move.product_id.id in gate_quantities:
                         # Create move line with gate quantity
                         move_line_vals = {

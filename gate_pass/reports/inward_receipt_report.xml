@@ -62,8 +62,8 @@
                                             </thead>
                                             <tbody>
                                                 <!-- Show actual receipt operations data from stock.picking -->
-                                                <t t-if="doc.move_ids_without_package">
-                                                    <t t-foreach="doc.move_ids_without_package" t-as="move">
+                                                <t t-if="doc.move_ids">
+                                                    <t t-foreach="doc.move_ids" t-as="move">
                                                         <tr>
                                                             <td style="padding: 8px; border-bottom: 1px solid #ddd;"><span t-field="move.product_id.name"/></td>
                                                             <td style="padding: 8px; text-align: center; border-bottom: 1px solid #ddd;"><span t-field="move.product_uom_qty"/></td>
@@ -76,7 +76,7 @@
                                                     </t>
                                                 </t>
                                                 <!-- Fallback if no moves available -->
-                                                <t t-if="not doc.move_ids_without_package">
+                                                <t t-if="not doc.move_ids">
                                                     <tr>
                                                         <td colspan="5" style="padding: 20px; text-align: center; color: #666;">
                                                             No product operations found in this receipt.
@@ -168,7 +168,7 @@
                                             <t t-set="related_pickings" t-value="request.env['stock.picking'].search([('gate_inward_id', '=', doc.id), ('picking_type_code', '=', 'incoming')])"/>
                                             <t t-if="related_pickings">
                                                 <t t-foreach="related_pickings" t-as="picking">
-                                                    <t t-foreach="picking.move_ids_without_package" t-as="move">
+                                                    <t t-foreach="picking.move_ids" t-as="move">
                                                         <tr>
                                                             <td style="padding: 8px; border-bottom: 1px solid #ddd;"><span t-field="move.product_id.name"/></td>
                                                             <td style="padding: 8px; text-align: center; border-bottom: 1px solid #ddd;"><span t-field="move.product_uom_qty"/></td>

@@ -47,7 +47,7 @@ class StockPicking(models.Model):
                 self.owner_id = self.gate_inward_id.gatekeeper_user_id.id
             
             # Sync quantities from gate inward
-            for move in self.move_ids_without_package:
+            for move in self.move_ids:
                 # Find matching inward line
                 inward_line = self.gate_inward_id.product_line_ids.filtered(
                     lambda x: x.product_id == move.product_id
@@ -99,7 +99,7 @@ class StockPicking(models.Model):
     def sync_quantities_with_gate_entry(self):
         """Manually sync quantities with gate entry"""
         if self.gate_inward_id and self.state not in ['done', 'cancel']:
-            for move in self.move_ids_without_package:
+            for move in self.move_ids:
                 # Find matching inward line
                 inward_line = self.gate_inward_id.product_line_ids.filtered(
                     lambda x: x.product_id == move.product_id
