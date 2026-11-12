@@ -52,30 +52,32 @@ class HmsMeterData(models.Model):
                 else:
                     record.opening_data = 0.0
 
-    @api.model
-    def create(self, vals):
-        meter_id = vals.get('meter_id')
-        data_datetime = vals.get('data_datetime')
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            meter_id = vals.get('meter_id')
+            data_datetime = vals.get('data_datetime')
 
-        if meter_id and data_datetime and not vals.get('opening_data'):
-            # Find the latest earlier data entry for the same meter
-            previous_data = self.env['hms.meter.data'].search([
-                ('meter_id', '=', meter_id),
-                ('data_datetime', '<', data_datetime)
-            ], order='data_datetime desc', limit=1)
+            if meter_id and data_datetime and not vals.get('opening_data'):
+                # Find the latest earlier data entry for the same meter
+                previous_data = self.env['hms.meter.data'].search([
+                    ('meter_id', '=', meter_id),
+                    ('data_datetime', '<', data_datetime)
+                ], order='data_datetime desc', limit=1)
 
-            if previous_data:
-                vals['opening_data'] = previous_data.closing_data or 0.0
-            else:
-                vals['opening_data'] = 0.0
+                if previous_data:
+                    vals['opening_data'] = previous_data.closing_data or 0.0
+                else:
+                    vals['opening_data'] = 0.0
 
-        ret = super().create(vals)
+        records = super().create(vals_list)
 
         # if it is the latest data - switch off is_data_needed
-        if ret and ret.meter_id.latest_data_id == ret:
-            ret.meter_id.write({'is_data_needed': False})
+        for ret in records:
+            if ret and ret.meter_id.latest_data_id == ret:
+                ret.meter_id.write({'is_data_needed': False})
 
-        return ret
+        return records
 
     @api.depends('opening_data' , 'closing_data')
     def _compute_data(self):

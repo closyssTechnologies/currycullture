@@ -209,7 +209,7 @@
 <!--                                                <span t-field="line.product_uom_qty" t-options="{'widget': 'float'}"/>-->
 <!--                                            </td>-->
                                             <td class="text-center" style="text-align:center;border:1px solid #333;">
-                                                <span t-field="line.product_uom.name"/>
+                                                <span t-out="line.product_uom_id.name if getattr(line, 'product_uom_id', False) else (line.product_uom.name if hasattr(line, 'product_uom') else '')"/>
                                             </td>
                                             <td class="text-end" style="text-align:right; border:1px solid #333;">
 <!--                                                <span t-field="line.price_unit"/>-->
@@ -480,8 +480,9 @@
                                 <!--                                                </tr>-->
                                 <!--                                         </t>-->
                                 <!--                                      <t t-foreach="docs.tax_totals.get('subtotals')" t-as="subtotal">-->
-                                <t t-foreach="docs.tax_totals.get('groups_by_subtotal').get('Untaxed Amount')"
-                                   t-as="taxes">
+                                <t t-set="tax_subtotals" t-value="(docs.tax_totals and isinstance(docs.tax_totals, dict) and docs.tax_totals.get('subtotals')) or []"/>
+                                <t t-set="all_tax_groups" t-value="[tg for sub in tax_subtotals for tg in sub.get('tax_groups', [])] if tax_subtotals else ((docs.tax_totals.get('groups_by_subtotal', {}).get('Untaxed Amount', [])) if (docs.tax_totals and isinstance(docs.tax_totals, dict) and docs.tax_totals.get('groups_by_subtotal')) else [])"/>
+                                <t t-foreach="all_tax_groups" t-as="taxes">
                                     <tr>
                                         <td colspan="13" style="background-color:#FFFFFF;"/>
                                         <td colspan="6"
@@ -491,16 +492,16 @@
                                             <table style="width: 100%; border-collapse: collapse; font-size: 10px !important;">
                                                 <tr>
                                                     <td style="text-align: left; font-size: 10px !important;"><span
-                                                            t-out="taxes['tax_group_name']"/>:
+                                                            t-out="taxes.get('group_name') or taxes.get('tax_group_name')"/>:
                                                     </td>
                                                     <td style="text-align: right; font-size: 10px !important;">
-                                                        <span  t-out="'{:.2f}'.format(round(taxes['tax_group_amount'], 2))"/>
+                                                        <span  t-out="'{:.2f}'.format(round(taxes.get('tax_amount', taxes.get('tax_group_amount', 0.0)), 2))"/>
                                                     </td>
                                                 </tr>
                                             </table>
 
                                             <!--                                                   :-->
-                                            <!--                                                   <span style="text-align: right" t-out="taxes['tax_group_amount']">27.00</span>-->
+                                            <!--                                                   <span style="text-align: right" t-out="taxes.get('tax_amount', taxes.get('tax_group_amount', 0.0))">27.00</span>-->
                                         </td>
                                     </tr>
                                 </t>

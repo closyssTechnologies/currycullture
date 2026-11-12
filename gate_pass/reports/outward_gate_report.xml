@@ -80,7 +80,7 @@
                                                             <td style="padding: 8px; border-bottom: 1px solid #ddd;"><span t-field="so_line.product_id.name"/></td>
                                                             <td style="padding: 8px; text-align: center; border-bottom: 1px solid #ddd;"><span t-field="so_line.product_uom_qty"/></td>
                                                             <td style="padding: 8px; text-align: center; border-bottom: 1px solid #ddd;"><span t-field="so_line.product_uom_qty"/></td>
-                                                            <td style="padding: 8px; text-align: center; border-bottom: 1px solid #ddd;"><span t-field="so_line.product_uom.name"/></td>
+                                                            <td style="padding: 8px; text-align: center; border-bottom: 1px solid #ddd;"><span t-out="so_line.product_uom_id.name if getattr(so_line, 'product_uom_id', False) else (so_line.product_uom.name if hasattr(so_line, 'product_uom') else '')"/></td>
                                                         </tr>
                                                     </t>
                                                 </t>
@@ -91,7 +91,7 @@
                                                             <td style="padding: 8px; border-bottom: 1px solid #ddd;"><span t-field="move.product_id.name"/></td>
                                                             <td style="padding: 8px; text-align: center; border-bottom: 1px solid #ddd;"><span t-field="move.product_uom_qty"/></td>
                                                             <td style="padding: 8px; text-align: center; border-bottom: 1px solid #ddd;"><span t-field="move.quantity"/></td>
-                                                            <td style="padding: 8px; text-align: center; border-bottom: 1px solid #ddd;"><span t-field="move.product_uom.name"/></td>
+                                                            <td style="padding: 8px; text-align: center; border-bottom: 1px solid #ddd;"><span t-out="move.product_uom_id.name if getattr(move, 'product_uom_id', False) else (move.product_uom.name if hasattr(move, 'product_uom') else '')"/></td>
                                                         </tr>
                                                     </t>
                                                 </t>
@@ -193,7 +193,7 @@
                                                         <td style="padding: 8px; border-bottom: 1px solid #ddd;"><span t-field="so_line.product_id.name"/></td>
                                                         <td style="padding: 8px; text-align: center; border-bottom: 1px solid #ddd;"><span t-field="so_line.product_uom_qty"/></td>
                                                         <td style="padding: 8px; text-align: center; border-bottom: 1px solid #ddd;"><span t-field="so_line.product_uom_qty"/></td>
-                                                        <td style="padding: 8px; text-align: center; border-bottom: 1px solid #ddd;"><span t-field="so_line.product_uom.name"/></td>
+                                                        <td style="padding: 8px; text-align: center; border-bottom: 1px solid #ddd;"><span t-out="so_line.product_uom_id.name if getattr(so_line, 'product_uom_id', False) else (so_line.product_uom.name if hasattr(so_line, 'product_uom') else '')"/></td>
                                                     </tr>
                                                 </t>
                                             </t>

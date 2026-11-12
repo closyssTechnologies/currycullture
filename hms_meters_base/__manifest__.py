@@ -16,7 +16,7 @@
     'website': "https://www.primacyinfotech.com",
     'support': "odoo@primacyinfotech.com",
     'category': 'Extra Tools',
-    'version': '19.0.1.0.0',
+    'version': '19.0.1.0.1',
     'images': ['static/description/meter_data.png'],
     'depends': ['base', 'mail'],
 

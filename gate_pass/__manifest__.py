@@ -1,6 +1,6 @@
 {
     'name': 'Gate Pass',
-    'version': '19.0.1.0.0',
+    'version': '19.0.1.0.1',
     'summary': 'Manage Inward and Outward Gate Operations',
     'description': """
 Gate Pass Management Module

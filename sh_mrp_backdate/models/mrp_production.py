@@ -23,10 +23,9 @@ class MrpProductionn(models.Model):
             product_moves = self.env['stock.move.line'].search(
                 [('move_id', 'in', stock_moves.ids)])
 
-            account_moves = self.env['account.move'].search(
-                [('stock_move_id', 'in', stock_moves.ids)])
             valuation_layers = self.env['stock.valuation.layer'].search(
                 [('stock_move_id', 'in', stock_moves.ids)])
+            account_moves = valuation_layers.account_move_id
 
             for account_move in account_moves:
                 account_move.button_draft()

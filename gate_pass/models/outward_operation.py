@@ -124,7 +124,7 @@ class OutwardGateEntry(models.Model):
                     if remaining_qty > 0:
                         lines.append((0, 0, {
                             'product_id': line.product_id.id,
-                            'product_uom_id': line.product_uom.id,
+                            'product_uom_id': (line.product_uom_id.id if getattr(line, 'product_uom_id', False) else (line.product_uom.id if hasattr(line, 'product_uom') else line.product_id.uom_id.id)),
                             'ordered_quantity': line.product_uom_qty,  # This is the actual ordered quantity from SO
                             'gate_quantity': 0.0,  # Changed: Start with zero quantity - manual entry required
                             'sale_line_id': line.id,

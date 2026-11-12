@@ -240,7 +240,7 @@ class InwardOperation(models.Model):
                         'ordered_qty': po_line.product_qty,
                         'receiving_qty': po_line.product_qty,  # Default receiving qty = ordered qty
                         'bill_quantity': po_line.product_qty,
-                        'uom_id': po_line.product_uom.id if po_line.product_uom else po_line.product_id.uom_id.id,
+                        'uom_id': (po_line.product_uom_id.id if getattr(po_line, 'product_uom_id', False) else (po_line.product_uom.id if hasattr(po_line, 'product_uom') else po_line.product_id.uom_id.id)),
                     }
                     lines.append((0, 0, line_vals))
 
