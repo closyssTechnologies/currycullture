@@ -21,9 +21,5 @@ class SaleOrderLine(models.Model):
 
     def _prepare_invoice_line(self, **optional_values):
         res = super()._prepare_invoice_line(**optional_values)
-        res.update(
-            {
-                'product_packaging_quantity': self.product_packaging_qty,
-            }
-        )
+        res['product_packaging_quantity'] = getattr(self, 'product_packaging_qty', 0.0) or 0.0
         return res
