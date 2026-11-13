@@ -78,17 +78,11 @@ class MrpBackdateWizard(models.TransientModel):
                 stock_moves = self.env['stock.move'].search(['|', '|', '|', ('production_id', '=', mrp_production.id), (
                     'created_production_id', '=', mrp_production.id), ('raw_material_production_id', '=', mrp_production.id), ('origin', '=', mrp_production.name)])
 
-                print('\n\n\n\n\n stock move', stock_moves)
                 product_moves = self.env['stock.move.line'].search(
                     [('move_id', 'in', stock_moves.ids)])
 
-                account_moves = self.env['account.move'].search(
-                    [('stock_move_id', 'in', stock_moves.ids)])
+                account_moves = stock_moves.account_move_id if hasattr(stock_moves, 'account_move_id') else self.env['account.move']
 
-                valuation_layers = self.env['stock.valuation.layer'].search(
-                    [('stock_move_id', 'in', stock_moves.ids)])
-
-                print("\n\n\n\n\n account_moves", account_moves)
                 for account_move in account_moves:
                     account_move.button_draft()
                     account_move.name = False
@@ -101,11 +95,6 @@ class MrpBackdateWizard(models.TransientModel):
 
                 for move in product_moves:
                     move.date = self.date_start
-
-                for layer in valuation_layers:
-                    self.env.cr.execute("""
-                        Update stock_valuation_layer set create_date='%s' where id=%s; 
-                    """ % (self.date_start, layer.id))
 
                 mrp_production.with_context(force_date=True).write({
                     'date_start': self.date_start,

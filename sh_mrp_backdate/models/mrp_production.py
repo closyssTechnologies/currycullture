@@ -15,17 +15,15 @@ class MrpProductionn(models.Model):
     is_boolean = fields.Boolean()
 
     def write(self, vals):
-        res = super(models.Model, self).write(vals)
+        res = super().write(vals)
         for mrp_production in self:
-
             stock_moves = self.env['stock.move'].search(['|', '|', '|', ('production_id', '=', mrp_production.id), (
                 'created_production_id', '=', mrp_production.id), ('raw_material_production_id', '=', mrp_production.id), ('origin', '=', mrp_production.name)])
             product_moves = self.env['stock.move.line'].search(
                 [('move_id', 'in', stock_moves.ids)])
 
-            valuation_layers = self.env['stock.valuation.layer'].search(
-                [('stock_move_id', 'in', stock_moves.ids)])
-            account_moves = valuation_layers.account_move_id
+            # In Odoo 19, stock.move links directly to account_move_id (stock.valuation.layer is removed)
+            account_moves = stock_moves.account_move_id if hasattr(stock_moves, 'account_move_id') else self.env['account.move']
 
             for account_move in account_moves:
                 account_move.button_draft()
@@ -40,15 +38,11 @@ class MrpProductionn(models.Model):
             for move in product_moves:
                 move.date = mrp_production.date_start
 
-            for layer in valuation_layers:
-                self.env.cr.execute("""
-                    Update stock_valuation_layer set create_date='%s' where id=%s; 
-                """ % (mrp_production.date_start, layer.id))
         return res
 
     @api.onchange('date_start')
     def onchange_date_start(self):
-        if str(self.date_start.date()) < str(date.today()):
+        if self.date_start and str(self.date_start.date()) < str(date.today()):
             self.is_boolean = True
         else:
             self.is_boolean = False
